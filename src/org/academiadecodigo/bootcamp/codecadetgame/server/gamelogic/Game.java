@@ -1,5 +1,6 @@
 package org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic;
 
+import org.academiadecodigo.bootcamp.codecadetgame.server.connection.Server;
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.CollectiveChoosable;
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.EventType;
 
@@ -7,8 +8,22 @@ import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.EventT
  * Created by ToAlmeida, joaobonifacio, MicaelCruz and VCorrales-Carvajal on 2/18/17.
  * Rolls dice and controls turns
  */
-public class GameLogic {
-//TODO: When player chooses an option that is not available, assume it's wrong
+public class Game {
+
+    Server server;
+
+    public Game(Server server) {
+
+        this.server = server;
+    }
+
+    public void start() {
+
+        server.sendMsgToAll(Events.firstGreeting());
+
+    }
+
+    //TODO: When player chooses an option that is not available, assume it's wrong
     private String rollDice() {
 
         EventType eventType = EventType.values()[ProbManager.chooseEqual(EventType.values().length)];

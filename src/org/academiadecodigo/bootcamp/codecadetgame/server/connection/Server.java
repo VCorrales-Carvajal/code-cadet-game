@@ -1,5 +1,7 @@
 package org.academiadecodigo.bootcamp.codecadetgame.server.connection;
 
+import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.Game;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -16,22 +18,21 @@ import java.util.concurrent.Executors;
 public class Server {
     public static final int PORT = 8080;
     public static final int MAX_PLAYERS = 4;
-    private final List<PlayerDispatcher> playerDispatchers;
+    private final List<PlayerDispatcher> playerDispatcherList;
     private Hashtable<String, String> usernames;
-
-    public static void main(String[] args) {
-        Server server = new Server();
-        server.start();
-    }
+    private int playersInThisGame = 1;
+    private Game game;
 
     public Server() {
 
-        playerDispatchers = Collections.synchronizedList(new LinkedList<>());
+        playerDispatcherList = Collections.synchronizedList(new LinkedList<>());
         usernames = new Hashtable<>();
 
     }
 
-    private void start() {
+    public void start() {
+
+        int playerNumber = 0;
 
         ExecutorService pool = Executors.newFixedThreadPool(MAX_PLAYERS);
 
@@ -47,11 +48,16 @@ public class Server {
                         " is now connected");
 
                 // Add client dispatcher to container
-                PlayerDispatcher playerDispatcher = new PlayerDispatcher(clientSocket, this);
-                playerDispatchers.add(playerDispatcher);
+                playerNumber++;
+                if (playerNumber <= playersInThisGame) {
 
-                // Create new thread up to capacity of pool
-                pool.submit(playerDispatcher);
+                    PlayerDispatcher playerDispatcher = new PlayerDispatcher(clientSocket, this, playerNumber);
+                    playerDispatcherList.add(playerDispatcher);
+
+                    // Create new thread up to capacity of pool
+                    pool.submit(playerDispatcher);
+
+                }
 
             }
 
@@ -60,17 +66,34 @@ public class Server {
         }
     }
 
-    protected Hashtable<String,String> getUsernames() {
+    protected void setGame(Game game){
+
+        this.game = game;
+    }
+
+    protected int getPlayersInThisGame() {
+
+        return playersInThisGame;
+
+    }
+
+    protected int setPlayersInThisGame(int number) {
+
+        return playersInThisGame = number;
+
+    }
+
+    protected Hashtable<String, String> getUsernames() {
         return usernames;
     }
 
-    protected List<PlayerDispatcher> getPlayerDispatchers() {
-        return playerDispatchers;
+    protected List<PlayerDispatcher> getPlayerDispatcherList() {
+        return playerDispatcherList;
     }
 
-    protected void sendMsgToAll(String message) {
-        synchronized (playerDispatchers) {
-            for (PlayerDispatcher playerDispatcher : playerDispatchers) {
+    public void sendMsgToAll(String message) {
+        synchronized (playerDispatcherList) {
+            for (PlayerDispatcher playerDispatcher : playerDispatcherList) {
                 playerDispatcher.sendMsg(message);
             }
         }

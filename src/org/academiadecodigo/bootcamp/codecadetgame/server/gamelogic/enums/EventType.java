@@ -19,7 +19,7 @@ public enum EventType {
         return probability;
     }
 
-    public EventType choose() {
+    public static EventType choose() {
         double random = Math.random();
         for (int i = 0; i < EventType.values().length; i++) {
             if (random < EventType.values()[i].probability) {

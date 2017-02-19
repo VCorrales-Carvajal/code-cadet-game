@@ -13,6 +13,12 @@ public class Events {
      */
 
 
+    public static String firstGreeting() {
+
+        return "You are on your last day of your bootcamp and to graduate you have to answer a question: ";
+
+    }
+
     public static String questions() {
 
         return getQuestions()[ProbManager.chooseEqual(getQuestions().length)];
@@ -36,15 +42,15 @@ public class Events {
     /**
      *
 
-    CAREER
-            ( + ) “Spend your evenings improving your skills in a workshop”
-            ( - ) “You party all night long and drink like Keith Richards” → “You don’t manage to wake up and fail to deliver an important project and you get fired”
-    MONEY
-            ( + ) “Offer a meal to a homeless person” → “It turns out the homeless man is a millionaire and gives you lots of money”
-            ( - ) “Buy facebook stocks” → “But facebook collapses and you lose all the money”
-    HAPPINESS
-            ( * ) “Go on a blind date”
-            → ( + ) “You found the love of your life”
-    */
+     CAREER
+     ( + ) “Spend your evenings improving your skills in a workshop”
+     ( - ) “You party all night long and drink like Keith Richards” → “You don’t manage to wake up and fail to deliver an important project and you get fired”
+     MONEY
+     ( + ) “Offer a meal to a homeless person” → “It turns out the homeless man is a millionaire and gives you lots of money”
+     ( - ) “Buy facebook stocks” → “But facebook collapses and you lose all the money”
+     HAPPINESS
+     ( * ) “Go on a blind date”
+     → ( + ) “You found the love of your life”
+     */
 
 }

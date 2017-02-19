@@ -1,6 +1,5 @@
 package org.academiadecodigo.bootcamp.codecadetgame.server.connection;
 
-import com.sun.xml.internal.bind.v2.model.runtime.RuntimeBuiltinLeafInfo;
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.Factory;
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.Player;
 
@@ -20,11 +19,15 @@ public class PlayerDispatcher implements Runnable {
     private Socket clientSocket;
     private BufferedReader in;
     private PrintWriter out;
+    private int playerNumber;
 
-    public PlayerDispatcher(Socket clientSocket, Server server) {
+    public PlayerDispatcher(Socket clientSocket, Server server, int playerNumber) {
+
         this.clientSocket = clientSocket;
         this.server = server;
+        this.playerNumber = playerNumber;
         init();
+
     }
 
     public void sendMsg(String message) {
@@ -59,6 +62,26 @@ public class PlayerDispatcher implements Runnable {
 
             initialMsg();
 
+            if (playerNumber == 1) {
+
+                msgToFirstPlayer();
+                int playerAnswer = Integer.parseInt(in.readLine()); //TODO: Confirm que no és uma String
+                server.setPlayersInThisGame(playerAnswer);
+                while (playerAnswer < 1 || playerAnswer > 4) {
+
+                    msgToFirstPlayer();
+
+                }
+            }
+
+            if (playerNumber == server.getPlayersInThisGame()) {
+
+                server.setGame(Factory.createGame(server));
+                firstMessageToAllPlayers();
+
+            }
+
+
             String clientMsg;
             while ((clientMsg = in.readLine()) != null) {
 
@@ -92,7 +115,6 @@ public class PlayerDispatcher implements Runnable {
 
     }
 
-
     private void assignUsername(String userIPAddress) throws IOException {
         out.println(MsgHelper.serverMsg("Welcome to Scarlet chat. What's your username?"));
         player = Factory.createPlayer(in.readLine().toLowerCase());
@@ -108,12 +130,20 @@ public class PlayerDispatcher implements Runnable {
                 "(" + player.getUsername() + ") is back");
     }
 
+    private void msgToFirstPlayer() {
 
-    private void initialMsg() {
-        out.println(MsgHelper.serverMsg("Use the keyword /commands to see the commands of this chat" ));
-        server.sendMsgToAll(MsgHelper.serverMsg("< " + player.getUsername() + " > has joined the chat"));
+        out.println(MsgHelper.serverMsg("Please insert number of Players - minimum one, max four"));
     }
 
+    private void firstMessageToAllPlayers() {
+
+        out.println(MsgHelper.serverMsg("The Game is about to start, mis babies."));
+    }
+
+    private void initialMsg() {
+        out.println(MsgHelper.serverMsg("Use the keyword /commands to see the commands of this chat"));
+        server.sendMsgToAll(MsgHelper.serverMsg("< " + player.getUsername() + " > has joined the chat"));
+    }
 
 
     private void sendMsgToAll(String message) {
@@ -128,7 +158,7 @@ public class PlayerDispatcher implements Runnable {
                 clientMsg.indexOf(" ")).toLowerCase();
         String msgToTarget = clientMsg.substring(clientMsg.indexOf(" ") + 1);
 
-        synchronized (server.getPlayerDispatchers()) {
+        synchronized (server.getPlayerDispatcherList()) {
 
             if (!server.getUsernames().containsValue(targetUser)) {
 
@@ -136,7 +166,7 @@ public class PlayerDispatcher implements Runnable {
 
             } else {
 
-                for (PlayerDispatcher cd : server.getPlayerDispatchers()) {
+                for (PlayerDispatcher cd : server.getPlayerDispatcherList()) {
 
                     if (targetUser.equals(cd.getPlayer().getUsername())) {
                         cd.sendMsg(MsgHelper.pm(player.getUsername(), msgToTarget));
