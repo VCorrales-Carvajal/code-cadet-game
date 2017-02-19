@@ -9,5 +9,7 @@ public class Tester {
 
     public static void main(String[] args) {
 
+        EventType eventType = EventType.choose();
+        System.out.println(eventType);
     }
 }
