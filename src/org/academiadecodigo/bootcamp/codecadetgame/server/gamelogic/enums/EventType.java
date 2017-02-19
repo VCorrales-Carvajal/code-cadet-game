@@ -26,6 +26,6 @@ public enum EventType {
                 return EventType.values()[i];
             }
         }
-        return null;
+        return PERSONAL_NON_CHOOSABLE;
     }
 }
