@@ -23,7 +23,6 @@ public enum EventType {
         double random = Math.random();
         for (int i = 0; i < EventType.values().length; i++) {
             if (random < EventType.values()[i].probability) {
-                System.out.println(random);
                 return EventType.values()[i];
             }
         }
