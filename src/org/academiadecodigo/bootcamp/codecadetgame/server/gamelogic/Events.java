@@ -12,6 +12,8 @@ public class Events {
      * happinessEvents
      */
 
+    public static final int LENGTH_QUESTIONS = 2;
+    public static final int LENGTH_COLLECTIVE_EVENTS = 7;
 
     public static String firstGreeting() {
 
@@ -25,7 +27,7 @@ public class Events {
 
     }
 
-    private static String[] getQuestions() {
+    public static String[] getQuestions() {
         int numberOfQuestions = 2;
         String[] questions = new String[numberOfQuestions];
 
@@ -38,19 +40,92 @@ public class Events {
         return questions;
     }
 
+    public static String[] getCollectiveEvents() {
+        String[] ce = new String[LENGTH_COLLECTIVE_EVENTS];
 
-    /**
-     *
+        ce[0] = "Brexit causes all British tech companies to move to Portugal and everyone gets a better job";
+        ce[1] = "Artificial intelligence takes away everyone’s job";
+        ce[2] = "All tech companies moved to Romania and everyone loses the job";
+        ce[3] = "Lower taxes for all";
+        ce[4] = "More taxes due to the new war with North Korea";
+        ce[5] = "Portugal wins the World Cup";
+        ce[6] = "Donald Trump has died";
 
-     CAREER
-     ( + ) “Spend your evenings improving your skills in a workshop”
-     ( - ) “You party all night long and drink like Keith Richards” → “You don’t manage to wake up and fail to deliver an important project and you get fired”
-     MONEY
-     ( + ) “Offer a meal to a homeless person” → “It turns out the homeless man is a millionaire and gives you lots of money”
-     ( - ) “Buy facebook stocks” → “But facebook collapses and you lose all the money”
-     HAPPINESS
-     ( * ) “Go on a blind date”
-     → ( + ) “You found the love of your life”
-     */
+        return ce;
+    }
+
+    public static int getStepsChangedCollectiveEvents(int index) {
+
+        int[] stepsCE = new int[LENGTH_COLLECTIVE_EVENTS];
+        stepsCE[0] = 1;
+        stepsCE[1] = -1;
+        stepsCE[2] = -1;
+        stepsCE[3] = +1;
+        stepsCE[4] = -1;
+        stepsCE[5] = +1;
+        stepsCE[6] = +1;
+
+        return stepsCE[index];
+    }
+
+    public static LifeArea getAreaChangedCollectiveEvents(int index) {
+
+        LifeArea[] stepsCE = new LifeArea[LENGTH_COLLECTIVE_EVENTS];
+        stepsCE[0] = LifeArea.CAREER;
+        stepsCE[1] = LifeArea.CAREER;
+        stepsCE[2] = LifeArea.CAREER;
+        stepsCE[3] = LifeArea.MONEY;
+        stepsCE[4] = LifeArea.MONEY;
+        stepsCE[5] = LifeArea.HAPPINESS;
+        stepsCE[6] = LifeArea.HAPPINESS;
+
+        return stepsCE[index];
+    }
+
+    public static String getConsequenceCollectiveEvents(int index) {
+
+        String lifeAreaConsequence;
+        String changeString;
+        String direction;
+
+
+        int step = getStepsChangedCollectiveEvents(index);
+        changeString = getStringGivenStepCollectiveEvents(step,
+                Math.abs(step) + " step forward.", Math.abs(step) + " step back.");
+
+        switch (getAreaChangedCollectiveEvents(index)) {
+
+            case CAREER:
+                direction = getStringGivenStepCollectiveEvents(step,
+                        " is moving forward ", " has a setback ");
+                lifeAreaConsequence = "Everyone" + direction + "in their career!";
+                break;
+
+            case MONEY:
+                direction = getStringGivenStepCollectiveEvents(step,
+                        " earns ", " loses ");
+                lifeAreaConsequence = "Everyone" + direction + "money!";
+                break;
+
+            case HAPPINESS:
+                direction = getStringGivenStepCollectiveEvents(step, " happy!", " sad.");
+                lifeAreaConsequence = "Everyone is" + direction;
+
+            default:
+                lifeAreaConsequence = "Something is WRONG!!";
+
+        }
+
+        return lifeAreaConsequence + " " + changeString;
+    }
+
+
+    private static String getStringGivenStepCollectiveEvents(int step, String stringPositive, String stringNegative) {
+        if (step > 0) {
+            return stringPositive;
+        } else {
+            return stringNegative;
+        }
+    }
 
 }

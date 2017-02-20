@@ -103,4 +103,8 @@ public class Server {
         }
 
     }
+
+    public int getNumPlayersInGame() {
+        return playersInThisGame;
+    }
 }
