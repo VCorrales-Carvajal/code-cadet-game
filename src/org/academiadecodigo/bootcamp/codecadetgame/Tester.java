@@ -8,7 +8,7 @@ import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.EventT
 public class Tester {
 
     public static void main(String[] args) {
-
+        // Testing choosing probabilities are working in EventType enum
         int et1 = 0;
         int et2 = 0;
         int et3 = 0;

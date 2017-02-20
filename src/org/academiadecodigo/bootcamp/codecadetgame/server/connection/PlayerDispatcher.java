@@ -77,6 +77,7 @@ public class PlayerDispatcher implements Runnable {
             if (playerNumber == server.getPlayersInThisGame()) {
 
                 server.setGame(Factory.createGame(server));
+                server.getGame().start();
                 firstMessageToAllPlayers();
 
             }

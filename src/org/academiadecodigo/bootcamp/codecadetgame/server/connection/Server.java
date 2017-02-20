@@ -91,6 +91,10 @@ public class Server {
         return playerDispatcherList;
     }
 
+    public Game getGame() {
+        return game;
+    }
+
     public void sendMsgToAll(String message) {
         synchronized (playerDispatcherList) {
             for (PlayerDispatcher playerDispatcher : playerDispatcherList) {

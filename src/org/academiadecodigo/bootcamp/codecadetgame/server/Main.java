@@ -1,4 +1,4 @@
-package org.academiadecodigo.bootcamp.codecadetgame;
+package org.academiadecodigo.bootcamp.codecadetgame.server;
 
 import org.academiadecodigo.bootcamp.codecadetgame.server.connection.Server;
 

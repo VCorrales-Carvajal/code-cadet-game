@@ -46,4 +46,12 @@ public class MsgHelper {
         return ANSI_BLACK_BACKGROUND + ANSI_YELLOW +
                 msg + ANSI_RESET;
     }
+
+    public static void displayCowWisdomQuote() {
+        throw new UnsupportedOperationException();
+    }
+
+    public static void displayPlayersPosition() {
+        throw new UnsupportedOperationException();
+    }
 }

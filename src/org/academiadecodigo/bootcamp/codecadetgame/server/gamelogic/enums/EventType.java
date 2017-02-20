@@ -4,19 +4,25 @@ package org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums;
  * Created by codecadet on 2/18/17.
  */
 public enum EventType {
-    COLLECTIVE_CHOOSABLE(0.25),
-    COLLECTIVE_NON_CHOOSABLE(0.5),
-    PERSONAL_CHOOSABLE(0.75),
-    PERSONAL_NON_CHOOSABLE(1);
+    COLLECTIVE_CHOOSABLE(0.25, true),
+    COLLECTIVE_NON_CHOOSABLE(0.5, false),
+    PERSONAL_CHOOSABLE(0.75, true),
+    PERSONAL_NON_CHOOSABLE(1, false);
 
     private double probability;
+    private boolean choosable;
 
-    EventType(double probability) {
+    EventType(double probability, boolean choosable) {
         this.probability = probability;
+        this.choosable = choosable;
     }
 
     public double getProbability() {
         return probability;
+    }
+
+    public boolean isChoosable() {
+        return choosable;
     }
 
     public static EventType choose() {
