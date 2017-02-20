@@ -51,7 +51,25 @@ public class MsgHelper {
         throw new UnsupportedOperationException();
     }
 
-    public static void displayPlayersPosition() {
-        throw new UnsupportedOperationException();
+    public static String displayPlayersPosition(int playerCurrentPosition) {
+        String[] boneco = new String[3];
+        boneco[0] = "|\\(º_º)|";
+        boneco[1] = "|  ) )Z|";
+        boneco[2] = "|  / \\ |";
+        String emptyPosition = "|     |";
+        String field = "";
+
+        for (int i = 0; i < 3; i++) {
+            for (int j = 1; j <= 10; j++) {
+                if (j == playerCurrentPosition) {
+                    field += boneco[i];
+                } else {
+                    field += emptyPosition;
+                }
+            }
+            field += "\n";
+        }
+
+        return field;
     }
 }

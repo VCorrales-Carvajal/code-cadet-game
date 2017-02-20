@@ -1,5 +1,6 @@
 package org.academiadecodigo.bootcamp.codecadetgame;
 
+import org.academiadecodigo.bootcamp.codecadetgame.server.connection.MsgHelper;
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.EventType;
 
 /**
@@ -8,7 +9,18 @@ import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.EventT
 public class Tester {
 
     public static void main(String[] args) {
-        // Testing choosing probabilities are working in EventType enum
+
+        Tester tester = new Tester();
+        tester.probabilityTester();
+
+        MsgHelper msgHelper = new MsgHelper();
+        System.out.println(msgHelper.displayPlayersPosition(4));
+        System.out.println(msgHelper.displayPlayersPosition(2));
+        System.out.println(msgHelper.displayPlayersPosition(8));
+    }
+
+    private void probabilityTester() {
+
         int et1 = 0;
         int et2 = 0;
         int et3 = 0;
@@ -33,5 +45,6 @@ public class Tester {
         }
 
         System.out.println(et1 + " " + et2 + " " + et3 + " " + et4);
+
     }
 }

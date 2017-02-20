@@ -56,7 +56,7 @@ public class Game {
 
         displayConsequence(eventStringType, indexEventSelected);
 
-        MsgHelper.displayPlayersPosition();
+        //MsgHelper.displayPlayersPosition();
 
         if (Math.random() < Constants.PROB_COW_WISDOM_QUOTE) {
             MsgHelper.displayCowWisdomQuote();
