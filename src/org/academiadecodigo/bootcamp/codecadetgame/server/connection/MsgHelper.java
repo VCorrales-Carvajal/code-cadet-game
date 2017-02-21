@@ -51,7 +51,7 @@ public class MsgHelper {
         throw new UnsupportedOperationException();
     }
 
-    public static String displayPlayersPosition(int playerCurrentPosition) {
+    public static String displayPlayersPosition(int[] playerCurrentPositions) {
         String[] boneco = new String[3];
         boneco[0] = "|\\(º_º)|";
         boneco[1] = "|  ) )Z|";
@@ -61,7 +61,8 @@ public class MsgHelper {
 
         for (int i = 0; i < 3; i++) {
             for (int j = 1; j <= 10; j++) {
-                if (j == playerCurrentPosition) {
+                if (j == playerCurrentPositions[0]) {
+                    //TODO To: fori for all positions
                     field += boneco[i];
                 } else {
                     field += emptyPosition;

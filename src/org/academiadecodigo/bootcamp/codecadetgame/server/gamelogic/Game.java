@@ -56,11 +56,26 @@ public class Game {
 
         displayConsequence(eventStringType, indexEventSelected);
 
-        //MsgHelper.displayPlayersPosition();
+
+        MsgHelper.displayPlayersPosition(getPlayersPositions());
 
         if (Math.random() < Constants.PROB_COW_WISDOM_QUOTE) {
             MsgHelper.displayCowWisdomQuote();
         }
+
+    }
+
+    private int[] getPlayersPositions() {
+
+        int[] playersPositions = new int[server.getPlayerDispatcherList().size()];
+
+        for (int i = 0; i < server.getPlayerDispatcherList().size(); i++) {
+
+            playersPositions[i] = server.getPlayerDispatcherList().get(i).getPlayer().getPosition();
+
+        }
+
+        return playersPositions;
 
     }
 
