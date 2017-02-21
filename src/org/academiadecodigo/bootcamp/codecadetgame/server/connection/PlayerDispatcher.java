@@ -14,6 +14,7 @@ import java.net.Socket;
  */
 
 public class PlayerDispatcher implements Runnable {
+
     private Player player;
     private Server server;
     private Socket clientSocket;
@@ -117,7 +118,7 @@ public class PlayerDispatcher implements Runnable {
     }
 
     private void assignUsername(String userIPAddress) throws IOException {
-        out.println(MsgHelper.serverMsg("Welcome to Scarlet chat. What's your username?"));
+        out.println(MsgHelper.serverMsg("Welcome to our fantastic game server! What's your username?"));
         player = Factory.createPlayer(in.readLine().toLowerCase());
         server.getUsernames().put(userIPAddress, player.getUsername());
         out.println(MsgHelper.serverMsg("Hello " + player.getUsername() + "!"));

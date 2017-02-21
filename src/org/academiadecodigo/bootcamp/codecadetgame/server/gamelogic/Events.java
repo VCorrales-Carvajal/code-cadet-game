@@ -1,5 +1,7 @@
 package org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic;
 
+import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.LifeArea;
+
 /**
  * Created by codecadet on 2/18/17.
  */

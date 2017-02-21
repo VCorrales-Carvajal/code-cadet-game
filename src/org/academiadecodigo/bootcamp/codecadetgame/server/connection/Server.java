@@ -41,9 +41,9 @@ public class Server {
 
             while (true) {
                 // Connect to client (blocking operation)
-                System.out.println("Waiting for client connection...");
+                System.out.println("Waiting for player connection...");
                 Socket clientSocket = serverSocket.accept();
-                System.out.println("Client with IP address " +
+                System.out.println("Player with IP address " +
                         clientSocket.getInetAddress().getHostAddress() +
                         " is now connected");
 
@@ -87,7 +87,7 @@ public class Server {
         return usernames;
     }
 
-    protected List<PlayerDispatcher> getPlayerDispatcherList() {
+    public List<PlayerDispatcher> getPlayerDispatcherList() {
         return playerDispatcherList;
     }
 
@@ -107,4 +107,5 @@ public class Server {
     public int getNumPlayersInGame() {
         return playersInThisGame;
     }
+
 }

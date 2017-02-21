@@ -1,6 +1,7 @@
 package org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic;
 
 import org.academiadecodigo.bootcamp.codecadetgame.server.connection.MsgHelper;
+import org.academiadecodigo.bootcamp.codecadetgame.server.connection.PlayerDispatcher;
 import org.academiadecodigo.bootcamp.codecadetgame.server.connection.Server;
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.EventStringType;
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.EventType;
@@ -9,6 +10,7 @@ import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.EventT
  * Created by ToAlmeida, joaobonifacio, MicaelCruz and VCorrales-Carvajal on 2/18/17.
  * Rolls dice and controls turns
  */
+
 public class Game {
 
     private Server server;
@@ -18,7 +20,6 @@ public class Game {
 
     private int[] shuffledIndexesCollective;
     private int counterShuffledIndexesCollective = 0;
-    private int[] playerPositions;
 
 
 
@@ -31,7 +32,6 @@ public class Game {
 
         server.sendMsgToAll(Events.firstGreeting());
         shuffledIndexesCollective = shuffleIndex(Events.LENGTH_COLLECTIVE_EVENTS);
-        playerPositions = new int[server.getNumPlayersInGame()];
     }
 
     private int[] shuffleIndex(int lengthArray) {
@@ -143,6 +143,7 @@ public class Game {
                 break;
 
             case PERSONAL_EVENT:
+                //TODO: complete this
                 break;
         }
 
@@ -154,10 +155,12 @@ public class Game {
     }
 
     private void affectAllPlayers(int change) {
-        for (int i = 0; i < playerPositions.length; i++) {
-            playerPositions[i] = playerPositions[i] + change;
+        for (PlayerDispatcher pd : server.getPlayerDispatcherList()) {
+            pd.getPlayer().setPosition(pd.getPlayer().getPosition() + change);
         }
     }
+
+    //TODO Micael: create affectOnePlayer
 
     private int collectiveChoosable() {
 
