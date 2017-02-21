@@ -20,7 +20,7 @@ The game will present quizzes that will advance the career of whoever answers co
 - The game will only continue until all players can answer. The players that failed the answer don’t get a job.
 - The first player with the correct answer rolls the dice. 
 - The game continues in a loop of: roll-dice - answer - roll-dice:
-  - The winner is whoever reaches the end faster. To reach the end, the player needs to advance a finite number of steps.     Life events and decisions can move the player forward or backwards some steps. Three areas of life can be affected or       promoted: career, happiness and money.
+  - The winner is whoever reaches the end faster. To reach the end, the player needs to advance a finite number of steps.     Life events and decisions can move the player forward or backwards some steps. Three areas of life can be affected or       promoted: **career**, **happiness** and **money**.
   - When a player rolls the dice a choosable or non-choosable event comes up, both can be personal or collective:
        1. **Personal**: They can affect the life of the player that rolled the dice.
         1. _Choosable_: The player makes a choice that has an impact on his/her life.
