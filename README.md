@@ -22,15 +22,15 @@ The game will present quizzes that will advance the career of whoever answers co
 - The game continues in a loop of: roll-dice - answer - roll-dice:
   - The winner is whoever reaches the end faster. To reach the end, the player needs to advance a finite number of steps.     Life events and decisions can move the player forward or backwards some steps. Three areas of life can be affected or       promoted: career, happiness and money.
   - When a player rolls the dice a choosable or non-choosable event comes up, both can be personal or collective:
-       1. Personal: They can affect the life of the player that rolled the dice.
-        1. Choosable: The player makes a choice that has an impact on his/her life.
-        2. Non-choosable: The player doesn’t have any choice.
-       2. Collective: They affect all players.
-        1. Choosable: All players must choose. There are 3 kinds:
+       1. **Personal**: They can affect the life of the player that rolled the dice.
+        1. _Choosable_: The player makes a choice that has an impact on his/her life.
+        2. _Non-choosable_: The player doesn’t have any choice.
+       2. **Collective**: They affect all players.
+        1. _Choosable_: All players must choose. There are 3 kinds:
           1. Career: The first player who answers correctly earns points in this area.
           2. Money:The first player who picks the event earns or loses on the area depending on the               consequence of this selection.
           3. Happiness: Same as 2.
-        2. Non-choosable: The event affects all players in the same manner.
+        2. _Non-choosable_: The event affects all players in the same manner.
 - After each turn, the consequence of the choice or event is shown in the screen.
 - After this, the position of all players is shown in the screen (how close or far they are from the finish line).
 - From time to time a ascii cow shows up with a wisdom quote about java.
