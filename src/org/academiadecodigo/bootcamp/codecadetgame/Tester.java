@@ -13,10 +13,11 @@ public class Tester {
         Tester tester = new Tester();
         tester.probabilityTester();
 
+        int[] playersPositions = {4,2,8};
+
         MsgHelper msgHelper = new MsgHelper();
-        System.out.println(msgHelper.displayPlayersPosition(4));
-        System.out.println(msgHelper.displayPlayersPosition(2));
-        System.out.println(msgHelper.displayPlayersPosition(8));
+        System.out.println(msgHelper.displayPlayersPosition(playersPositions));
+
     }
 
     private void probabilityTester() {

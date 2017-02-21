@@ -59,18 +59,19 @@ public class MsgHelper {
         String emptyPosition = "|     |";
         String field = "";
 
-        for (int i = 0; i < 3; i++) {
-            for (int j = 1; j <= 10; j++) {
-                if (j == playerCurrentPositions[0]) {
-                    //TODO To: fori for all positions
-                    field += boneco[i];
-                } else {
-                    field += emptyPosition;
+        for (int player = 0; player < playerCurrentPositions.length; player++ ) {
+            for (int i = 0; i < 3; i++) {
+                for (int j = 1; j <= 10; j++) {
+                    if (j == playerCurrentPositions[player]) {
+                        field += boneco[i];
+                    } else {
+                        field += emptyPosition;
+                    }
                 }
+                field += "|SUCCESS \n";
             }
             field += "\n";
         }
-
         return field;
     }
 }
