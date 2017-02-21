@@ -3,7 +3,7 @@ Fun multi-player command-line game using multi-threading
 
 ##SUMMARY
 With this game, we want to look in a funny way at different aspects of a \<Code Cadet\>'s life. 
-The game will present quizzes that will advance the career of the player that answers them correctly. There will be all type of events that will affect the life of our players, such as “Portugal winning the WorldCup”, which increases all players’ happiness or “AI taking everybody’s job”, which represents a step back in everyone's career. From time to time there will be a JAVA wisdom quote provided by a sexy cow. Enjoy!
+The game will present quizzes that will advance the career of the player that answers them correctly. There will be all type of events that will affect the life of our players, such as “Portugal winning the WorldCup”, which increases all players' happiness or “AI taking everybody’s job”, which represents a step back in everyone's career. From time to time there will be a JAVA wisdom quote provided by a sexy cow. Enjoy!
 
 ##GAME LOGIC (step by step)
 - The game has one server and several players (max 4), connected by TCP protocol.
