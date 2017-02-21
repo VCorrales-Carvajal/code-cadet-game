@@ -11,7 +11,7 @@ The game will present quizzes that will advance the career of whoever answers co
 - The game works with two applications: one for the server and one for the players.
 - The game master executes server.jar which awaits for players to connect.
 - When players connect to the server to start a new game, a welcome menu is presented with the list of commands available during the game.
-- When a player starts the game, he/she is asked 3 questions
+- When a player starts the game, he/she is asked 3 questions:
   1. Username (two players cannot have the same username).
   2. How many players will be in this session (2-4 players).
   3. Fast or normal version (How many steps to the end of the game).
@@ -27,8 +27,9 @@ The game will present quizzes that will advance the career of whoever answers co
         2. Non-choosable: The player doesn’t have any choice.
        2. Collective: They affect all players.
         1. Choosable: All players must choose. There are 3 kinds:
-         1. Career: The first player who answers correctly earns points in this area.
-         2-3.Money and Happiness: The first player who picks the event earns or loses on the area depending on the               consequence of this selection.
+          1. Career: The first player who answers correctly earns points in this area.
+          2. Money:The first player who picks the event earns or loses on the area depending on the               consequence of this selection.
+          3. Happiness: Same as 2.
         2. Non-choosable: The event affects all players in the same manner.
 - After each turn, the consequence of the choice or event is shown in the screen.
 - After this, the position of all players is shown in the screen (how close or far they are from the finish line).
