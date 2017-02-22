@@ -3,8 +3,8 @@ package org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic;
 import org.academiadecodigo.bootcamp.codecadetgame.server.connection.MsgHelper;
 import org.academiadecodigo.bootcamp.codecadetgame.server.connection.PlayerDispatcher;
 import org.academiadecodigo.bootcamp.codecadetgame.server.connection.Server;
-import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.EventStringType;
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.EventType;
+import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.eventslogic.*;
 
 /**
  * Created by ToAlmeida, joaobonifacio, MicaelCruz and VCorrales-Carvajal on 2/18/17.
@@ -16,54 +16,83 @@ public class Game {
     private Server server;
 
     private String eventToDisplay;
-    private EventStringType eventStringType;
+    private EventType eventType;
 
-    private int[] shuffledIndexesCollective;
-    private int counterShuffledIndexesCollective = 0;
-
-
+    private Question question;
+    private TimeEvent timeEvent;
+    private LifeDecision lifeDecision;
+    private CollectiveEvent collectiveEvent;
+    private PersonalEvent personalEvent;
 
     public Game(Server server) {
 
         this.server = server;
+        question = new Question(server);
+        timeEvent = new TimeEvent(server);
+        lifeDecision = new LifeDecision(server);
+        collectiveEvent = new CollectiveEvent(server);
+
+
     }
 
     public void start() {
 
         server.sendMsgToAll(Events.firstGreeting());
-        shuffledIndexesCollective = shuffleIndex(Events.LENGTH_COLLECTIVE_EVENTS);
-    }
-
-    private int[] shuffleIndex(int lengthArray) {
-        //returns int[] with shuffled indexes;
-        throw new UnsupportedOperationException();
+        question.process();
+        turnCycle();
 
     }
+
 
     //TODO: When player chooses an option that is not available, assume it's wrong
     private void turnCycle() {
 
 
-        EventType eventType = EventType.choose();
+        while (noOneFinished()) {
 
-        int indexEventSelected;
-        if (eventType.isChoosable()) {
-            displayEvent(eventType);
-            indexEventSelected = getPlayerAnswer();
-        } else {
-            indexEventSelected = displayEvent(eventType);
+            EventType eventType = EventType.choose();
+            Event event = getEvent(eventType);
+            event.process();
+
+            MsgHelper.displayPlayersPosition(getPlayersPositions());
+
+            if (Math.random() < Constants.PROB_COW_WISDOM_QUOTE) {
+                MsgHelper.displayCowWisdomQuote();
+            }
         }
-
-        displayConsequence(eventStringType, indexEventSelected);
-
-
-        MsgHelper.displayPlayersPosition(getPlayersPositions());
-
-        if (Math.random() < Constants.PROB_COW_WISDOM_QUOTE) {
-            MsgHelper.displayCowWisdomQuote();
-        }
-
     }
+
+
+    private boolean noOneFinished() {
+        //TODO Antonio: compare each player's positions to server.stepsToFinish
+        throw new UnsupportedOperationException();
+    }
+
+    private Event getEvent(EventType eventType) {
+        Event event = null;
+
+        switch (eventType){
+            case QUESTION:
+                event = question;
+                break;
+            case TIME_EVENT:
+                event = timeEvent;
+                break;
+            case LIFE_DECISION:
+                event = lifeDecision;
+                break;
+            case COLLECTIVE_EVENT:
+                event = collectiveEvent;
+                break;
+            case PERSONAL_EVENT:
+                event = personalEvent;
+                break;
+        }
+        return event;
+    }
+
+
+
 
     private int[] getPlayersPositions() {
 
@@ -86,88 +115,6 @@ public class Game {
         //  Depends if Question or TimeEvent
     }
 
-    private int displayEvent(EventType eventType) {
-
-        int index;
-        switch (eventType) {
-            case COLLECTIVE_CHOOSABLE:
-                index = collectiveChoosable();
-                eventStringType = EventStringType.QUESTION;
-                break;
-
-            case COLLECTIVE_NON_CHOOSABLE:
-                index = collectiveNonChoosable();
-                eventStringType = EventStringType.COLLECTIVE_EVENT;
-                break;
-
-            case PERSONAL_CHOOSABLE:
-                index = personalChoosable();
-                eventStringType = EventStringType.LIFE_DECISION;
-                break;
-
-            case PERSONAL_NON_CHOOSABLE:
-                index = personalNonChoosable();
-                eventStringType = EventStringType.PERSONAL_EVENT;
-                break;
-
-            default:
-                eventToDisplay = "Something is WRONG!";
-                eventStringType = EventStringType.COLLECTIVE_EVENT;
-                index = 0;
-        }
-
-        server.sendMsgToAll(eventToDisplay);
-        return index;
-    }
-
-    private int personalChoosable() {
-        throw new UnsupportedOperationException();
-    }
-
-    private int personalNonChoosable() {
-        throw new UnsupportedOperationException();
-    }
-
-    private int collectiveNonChoosable() {
-        int index;
-        if (counterShuffledIndexesCollective == Events.LENGTH_COLLECTIVE_EVENTS) {
-            counterShuffledIndexesCollective = 0;
-        }
-        index = shuffledIndexesCollective[counterShuffledIndexesCollective];
-        eventToDisplay = Events.getCollectiveEvents()[index];
-        counterShuffledIndexesCollective++;
-
-        return index;
-    }
-
-    private void displayConsequence(EventStringType e, int indexEventSelected) {
-
-        String consequence = null;
-
-        switch (e){
-            case QUESTION:
-                break;
-            case TIME_EVENT:
-                break;
-            case LIFE_DECISION:
-                break;
-            case COLLECTIVE_EVENT:
-                consequence = Events.getConsequenceCollectiveEvents(indexEventSelected);
-                int change = Events.getStepsChangedCollectiveEvents(indexEventSelected);
-                affectAllPlayers(change);
-                break;
-
-            case PERSONAL_EVENT:
-                //TODO: complete this
-                break;
-        }
-
-        server.sendMsgToAll(consequence);
-
-        // Advance or retreat players accordingly
-        throw new UnsupportedOperationException();
-
-    }
 
     private void affectAllPlayers(int change) {
         for (PlayerDispatcher pd : server.getPlayerDispatcherList()) {
@@ -175,12 +122,12 @@ public class Game {
         }
     }
 
-    //TODO Micael: create affectOnePlayer
+    //TODO  : create affectOnePlayer
 
     private int collectiveChoosable() {
 
-        EventStringType cc = EventStringType.values()
-                [ProbManager.chooseEqual(EventStringType.values().length)];
+        EventType cc = EventType.values()
+                [ProbManager.chooseEqual(EventType.values().length)];
 
 
         switch (cc) {

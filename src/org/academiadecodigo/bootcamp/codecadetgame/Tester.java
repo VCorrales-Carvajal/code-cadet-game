@@ -1,7 +1,6 @@
 package org.academiadecodigo.bootcamp.codecadetgame;
 
 import org.academiadecodigo.bootcamp.codecadetgame.server.connection.MsgHelper;
-import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.EventType;
 
 /**
  * Created by codecadet on 2/19/17.

@@ -73,6 +73,7 @@ public class PlayerDispatcher implements Runnable {
                     msgToFirstPlayer();
 
                 }
+                //TODO Antonio: Ask for gamelength and set server.setStepsToFinish
             }
 
             if (playerNumber == server.getPlayersInThisGame()) {

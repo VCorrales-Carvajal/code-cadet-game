@@ -21,6 +21,7 @@ public class Server {
     private final List<PlayerDispatcher> playerDispatcherList;
     private Hashtable<String, String> usernames;
     private int playersInThisGame = 1;
+    private int stepsToFinish = 10;
     private Game game;
 
     public Server() {
@@ -108,4 +109,11 @@ public class Server {
         return playersInThisGame;
     }
 
+    public int getStepsToFinish() {
+        return stepsToFinish;
+    }
+
+    public void setStepsToFinish(int stepsToFinish) {
+        this.stepsToFinish = stepsToFinish;
+    }
 }
