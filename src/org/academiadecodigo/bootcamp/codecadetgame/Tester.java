@@ -1,6 +1,7 @@
 package org.academiadecodigo.bootcamp.codecadetgame;
 
 import org.academiadecodigo.bootcamp.codecadetgame.server.connection.MsgHelper;
+import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.GameHelper;
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.EventType;
 
 /**
@@ -15,8 +16,7 @@ public class Tester {
 
         int[] playersPositions = {4,2,8};
 
-        MsgHelper msgHelper = new MsgHelper();
-        System.out.println(msgHelper.displayPlayersPosition(playersPositions));
+        System.out.println(GameHelper.renderPlayersPosition(playersPositions));
 
     }
 

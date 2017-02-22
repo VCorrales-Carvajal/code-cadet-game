@@ -4,6 +4,8 @@ package org.academiadecodigo.bootcamp.codecadetgame.server.connection;
  * Created by codecadet on 2/18/17.
  */
 public class MsgHelper {
+
+
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_BLACK = "\u001B[30m";
     public static final String ANSI_RED = "\u001B[31m";
@@ -23,20 +25,8 @@ public class MsgHelper {
     public static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
     public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
 
-    public static String commands() {
-        //TODO: update
-        return "\t /quit \t closes your connection to this chat \n" +
-                "\t /pm@username \t sends a personal message to username \n" +
-                "\t /commands \t lists the commands of this chat \n";
 
-    }
-
-    public static String clientMsg(String username, String clientMsg) {
-        return "< " + ANSI_YELLOW + username + ANSI_RESET + " > " + ANSI_CYAN +
-                clientMsg + ANSI_RESET;
-    }
-
-    public static String pm(String username, String msgToTarget) {
+    public static String formatPm(String username, String msgToTarget) {
         return ANSI_YELLOW_BACKGROUND + ANSI_BLACK +
                 "PM< " + username + " > " + msgToTarget +
                 ANSI_RESET;
@@ -47,31 +37,6 @@ public class MsgHelper {
                 msg + ANSI_RESET;
     }
 
-    public static void displayCowWisdomQuote() {
-        throw new UnsupportedOperationException();
-    }
 
-    public static String displayPlayersPosition(int[] playerCurrentPositions) {
-        String[] boneco = new String[3];
-        boneco[0] = "|\\(º_º)|";
-        boneco[1] = "|  ) )Z|";
-        boneco[2] = "|  / \\ |";
-        String emptyPosition = "|     |";
-        String field = "";
 
-        for (int player = 0; player < playerCurrentPositions.length; player++ ) {
-            for (int i = 0; i < 3; i++) {
-                for (int j = 1; j <= 10; j++) {
-                    if (j == playerCurrentPositions[player]) {
-                        field += boneco[i];
-                    } else {
-                        field += emptyPosition;
-                    }
-                }
-                field += "|SUCCESS \n";
-            }
-            field += "\n";
-        }
-        return field;
-    }
 }

@@ -17,10 +17,9 @@ import java.util.concurrent.Executors;
  */
 public class Server {
     public static final int PORT = 8080;
-    public static final int MAX_PLAYERS = 4;
     private final List<PlayerDispatcher> playerDispatcherList;
     private Hashtable<String, String> usernames;
-    private int playersInThisGame = 1;
+    private int numberOfPlayers = 1; //Initialize as one to ask the first player for the actual number
     private Game game;
 
     public Server() {
@@ -34,7 +33,7 @@ public class Server {
 
         int playerNumber = 0;
 
-        ExecutorService pool = Executors.newFixedThreadPool(MAX_PLAYERS);
+        ExecutorService pool = Executors.newFixedThreadPool(ServerHelper.MAX_CONNECTIONS);
 
         try {
             ServerSocket serverSocket = new ServerSocket(PORT);
@@ -47,11 +46,12 @@ public class Server {
                         clientSocket.getInetAddress().getHostAddress() +
                         " is now connected");
 
-                // Add client dispatcher to container
+                // Restrict number of connections to the number of players to play this game
                 playerNumber++;
-                if (playerNumber <= playersInThisGame) {
+                if (playerNumber <= numberOfPlayers) {
 
-                    PlayerDispatcher playerDispatcher = new PlayerDispatcher(clientSocket, this, playerNumber);
+                    PlayerDispatcher playerDispatcher =
+                            new PlayerDispatcher(clientSocket, this, playerNumber);
                     playerDispatcherList.add(playerDispatcher);
 
                     // Create new thread up to capacity of pool
@@ -66,23 +66,24 @@ public class Server {
         }
     }
 
-    protected void setGame(Game game){
-
-        this.game = game;
-    }
-
-    protected int getPlayersInThisGame() {
-
-        return playersInThisGame;
+    public void sendMsgToAll(String message) {
+        synchronized (playerDispatcherList) {
+            for (PlayerDispatcher playerDispatcher : playerDispatcherList) {
+                playerDispatcher.sendMsg(message);
+            }
+        }
 
     }
 
-    protected int setPlayersInThisGame(int number) {
-
-        return playersInThisGame = number;
-
+    protected int getNumberOfPlayers() {
+        return numberOfPlayers;
     }
 
+    protected void setNumberOfPlayers(int number) {
+        numberOfPlayers = number;
+    }
+
+    //TODO: Change List of playerDispatchers to HashMap and remove the use of the HashTable with usernames
     protected Hashtable<String, String> getUsernames() {
         return usernames;
     }
@@ -95,17 +96,10 @@ public class Server {
         return game;
     }
 
-    public void sendMsgToAll(String message) {
-        synchronized (playerDispatcherList) {
-            for (PlayerDispatcher playerDispatcher : playerDispatcherList) {
-                playerDispatcher.sendMsg(message);
-            }
-        }
-
+    protected void setGame(Game game) {
+        this.game = game;
     }
 
-    public int getNumPlayersInGame() {
-        return playersInThisGame;
-    }
+
 
 }
