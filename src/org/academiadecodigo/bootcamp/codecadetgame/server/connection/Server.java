@@ -5,10 +5,7 @@ import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.Game;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Collections;
-import java.util.Hashtable;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -18,18 +15,10 @@ import java.util.concurrent.Executors;
 public class Server {
     public static final int PORT = 8080;
     public static final int MAX_PLAYERS = 4;
-    private final List<PlayerDispatcher> playerDispatcherList;
-    private Hashtable<String, String> usernames;
+    private Map<String, PlayerDispatcher> playerDispatcherTable = new Hashtable<>();
     private int playersInThisGame = 1;
     private int stepsToFinish = 10;
     private Game game;
-
-    public Server() {
-
-        playerDispatcherList = Collections.synchronizedList(new LinkedList<>());
-        usernames = new Hashtable<>();
-
-    }
 
     public void start() {
 
@@ -48,12 +37,11 @@ public class Server {
                         clientSocket.getInetAddress().getHostAddress() +
                         " is now connected");
 
-                // Add client dispatcher to container
+                // Create new thread with new player
                 playerNumber++;
                 if (playerNumber <= playersInThisGame) {
 
                     PlayerDispatcher playerDispatcher = new PlayerDispatcher(clientSocket, this, playerNumber);
-                    playerDispatcherList.add(playerDispatcher);
 
                     // Create new thread up to capacity of pool
                     pool.submit(playerDispatcher);
@@ -67,7 +55,28 @@ public class Server {
         }
     }
 
-    protected void setGame(Game game){
+    public void sendPM(String msg, PlayerDispatcher sender) {
+
+        String targetPlayer = msg.substring(msg.indexOf("@") + 1,
+                msg.indexOf(" ")).toLowerCase();
+        String msgToTarget = msg.substring(msg.indexOf(" ") + 1);
+
+        synchronized (playerDispatcherTable) {
+
+            if (!playerDispatcherTable.containsKey(targetPlayer)) {
+
+                sender.sendMsg("Sorry, user " + targetPlayer + " does not exist");
+
+            } else {
+
+                playerDispatcherTable.get(targetPlayer).sendMsg(MsgHelper.pm(sender.getPlayer().getUsername(), msgToTarget));
+
+            }
+
+        }
+    }
+
+    protected void setGame(Game game) {
 
         this.game = game;
     }
@@ -84,23 +93,19 @@ public class Server {
 
     }
 
-    protected Hashtable<String, String> getUsernames() {
-        return usernames;
-    }
-
-    public List<PlayerDispatcher> getPlayerDispatcherList() {
-        return playerDispatcherList;
-    }
-
     public Game getGame() {
         return game;
     }
 
     public void sendMsgToAll(String message) {
-        synchronized (playerDispatcherList) {
-            for (PlayerDispatcher playerDispatcher : playerDispatcherList) {
-                playerDispatcher.sendMsg(message);
+        synchronized (playerDispatcherTable) {
+
+            Set<String> usernames = playerDispatcherTable.keySet();
+
+            for (String username : usernames) {
+                playerDispatcherTable.get(username).sendMsg(message);
             }
+
         }
 
     }
@@ -115,5 +120,9 @@ public class Server {
 
     public void setStepsToFinish(int stepsToFinish) {
         this.stepsToFinish = stepsToFinish;
+    }
+
+    public Map<String, PlayerDispatcher> getPlayerDispatcherTable() {
+        return playerDispatcherTable;
     }
 }

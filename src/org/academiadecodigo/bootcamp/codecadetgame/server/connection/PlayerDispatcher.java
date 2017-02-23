@@ -54,14 +54,20 @@ public class PlayerDispatcher implements Runnable {
             //Send welcome message to client
             String userIPAddress = clientSocket.getInetAddress().getHostAddress();
 
-            if (!server.getUsernames().containsKey(userIPAddress)) {
-                assignUsername(userIPAddress);
+            // Ask player for username
+            out.println(MsgHelper.serverMsg("Welcome to our fantastic game server! What's your username?"));
+            String username = getUsernameFromPlayer();
 
-            } else {
-                welcomeBack(userIPAddress);
-            }
+            // Add Player Dispatcher to the server "list" (map)
+            server.getPlayerDispatcherTable().put(username, this);
 
-            initialMsg();
+            // Create player
+            player = Factory.createPlayer(username);
+
+            // Welcome and inform others new player joined
+            out.println(MsgHelper.serverMsg("Hello " + player.getUsername() + "!"));
+            System.out.println(player.getUsername() + " is user with IP address " + userIPAddress);
+            server.sendMsgToAll(MsgHelper.serverMsg("< " + player.getUsername() + " > has joined"));
 
             if (playerNumber == 1) {
 
@@ -95,7 +101,7 @@ public class PlayerDispatcher implements Runnable {
 
                 } else if (clientMsg.contains("/pm@")) {
 
-                    sendPM(clientMsg);
+                    server.sendPM(clientMsg, this);
                     continue;
 
                 } else if (clientMsg.toLowerCase().equals("/commands")) {
@@ -118,20 +124,15 @@ public class PlayerDispatcher implements Runnable {
 
     }
 
-    private void assignUsername(String userIPAddress) throws IOException {
-        out.println(MsgHelper.serverMsg("Welcome to our fantastic game server! What's your username?"));
-        player = Factory.createPlayer(in.readLine().toLowerCase());
-        server.getUsernames().put(userIPAddress, player.getUsername());
-        out.println(MsgHelper.serverMsg("Hello " + player.getUsername() + "!"));
-        System.out.println(player.getUsername() + " is user with IP address " + userIPAddress);
+    private String getUsernameFromPlayer() throws IOException {
+        String usernameInserted = in.readLine().toLowerCase();
+        while (server.getPlayerDispatcherTable().containsKey(usernameInserted)) {
+            out.println("That username already exist, please insert another one");
+            usernameInserted = in.readLine().toLowerCase();
+        }
+        return usernameInserted;
     }
 
-
-    private void welcomeBack(String userIPAddress) {
-        out.println(MsgHelper.serverMsg("Welcome back " + player.getUsername() + "!"));
-        System.out.println("User with IP address " + userIPAddress +
-                "(" + player.getUsername() + ") is back");
-    }
 
     private void msgToFirstPlayer() {
 
@@ -143,11 +144,6 @@ public class PlayerDispatcher implements Runnable {
         out.println(MsgHelper.serverMsg("The Game is about to start, mis babies."));
     }
 
-    private void initialMsg() {
-        out.println(MsgHelper.serverMsg("Use the keyword /commands to see the commands of this chat"));
-        server.sendMsgToAll(MsgHelper.serverMsg("< " + player.getUsername() + " > has joined the chat"));
-    }
-
 
     private void sendMsgToAll(String message) {
         server.sendMsgToAll(message);
@@ -155,32 +151,7 @@ public class PlayerDispatcher implements Runnable {
     }
 
 
-    private void sendPM(String clientMsg) {
 
-        String targetUser = clientMsg.substring(clientMsg.indexOf("@") + 1,
-                clientMsg.indexOf(" ")).toLowerCase();
-        String msgToTarget = clientMsg.substring(clientMsg.indexOf(" ") + 1);
-
-        synchronized (server.getPlayerDispatcherList()) {
-
-            if (!server.getUsernames().containsValue(targetUser)) {
-
-                sendMsg("Sorry, user " + targetUser + " does not exist");
-
-            } else {
-
-                for (PlayerDispatcher cd : server.getPlayerDispatcherList()) {
-
-                    if (targetUser.equals(cd.getPlayer().getUsername())) {
-                        cd.sendMsg(MsgHelper.pm(player.getUsername(), msgToTarget));
-                        //break;
-                    }
-
-                }
-            }
-
-        }
-    }
 
     public Player getPlayer() {
         return player;

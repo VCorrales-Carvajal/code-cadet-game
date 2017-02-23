@@ -6,6 +6,8 @@ import org.academiadecodigo.bootcamp.codecadetgame.server.connection.Server;
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.EventType;
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.eventslogic.*;
 
+import java.util.Set;
+
 /**
  * Created by ToAlmeida, joaobonifacio, MicaelCruz and VCorrales-Carvajal on 2/18/17.
  * Rolls dice and controls turns
@@ -36,7 +38,6 @@ public class Game {
     }
 
     public void start() {
-
         server.sendMsgToAll(Events.firstGreeting());
         question.process();
         turnCycle();
@@ -96,12 +97,14 @@ public class Game {
 
     private int[] getPlayersPositions() {
 
-        int[] playersPositions = new int[server.getPlayerDispatcherList().size()];
+        int[] playersPositions = new int[server.getPlayerDispatcherTable().size()];
 
-        for (int i = 0; i < server.getPlayerDispatcherList().size(); i++) {
+        Set<String> usernames = server.getPlayerDispatcherTable().keySet();
 
-            playersPositions[i] = server.getPlayerDispatcherList().get(i).getPlayer().getPosition();
-
+        int i = 0;
+        for (String username : usernames) {
+            playersPositions[i] = server.getPlayerDispatcherTable().get(username).getPlayer().getPosition();
+            i++;
         }
 
         return playersPositions;
@@ -117,31 +120,17 @@ public class Game {
 
 
     private void affectAllPlayers(int change) {
-        for (PlayerDispatcher pd : server.getPlayerDispatcherList()) {
+
+        Set<String> usernames = server.getPlayerDispatcherTable().keySet();
+
+        for (String username : usernames) {
+            PlayerDispatcher pd = server.getPlayerDispatcherTable().get(username);
             pd.getPlayer().setPosition(pd.getPlayer().getPosition() + change);
         }
     }
 
     //TODO  : create affectOnePlayer
 
-    private int collectiveChoosable() {
-
-        EventType cc = EventType.values()
-                [ProbManager.chooseEqual(EventType.values().length)];
-
-
-        switch (cc) {
-            case QUESTION:
-                eventToDisplay = Events.questions();
-                break;
-            case TIME_EVENT:
-
-
-        }
-
-        return 0; //TODO: Improve, since this return is not used (therefore unnecessary)
-
-    }
 
 
 }
