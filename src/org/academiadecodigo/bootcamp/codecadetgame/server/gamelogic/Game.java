@@ -109,11 +109,16 @@ public class Game {
         }
 
     }
-    //TODO  : create updateOnePlayerPosition
+
+    private void updateOnPlayerPosition(int change, String username) {
+        int prevPos = server.getPlayerDispatcherTable().get(username).getPlayer().getPosition();
+        //Set new position
+        server.getPlayerDispatcherTable().get(username).getPlayer().setPosition(prevPos + change);
+    }
 
 
     private boolean noOneFinished() {
-        //TODO Antonio: compare each player's positions to server.stepsToFinish
+        //TODO Bonifacio: compare each player's positions to server.stepsToFinish
         throw new UnsupportedOperationException();
     }
 

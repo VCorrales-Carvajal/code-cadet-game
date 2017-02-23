@@ -68,7 +68,7 @@ public class PlayerDispatcher implements Runnable {
                 server.setNumberOfPlayers(numPlayersAnswer);
 
                 // 2) Game length?
-                //TODO Antonio: Ask for gamelength and set server.setStepsToFinish
+                //TODO Bonifácio: Ask for gamelength and set server.setStepsToFinish
             }
 
             // When all players have connected, start the game
@@ -107,7 +107,7 @@ public class PlayerDispatcher implements Runnable {
 
         out.println(ServerHelper.insertNumOfPlayers());
 
-        int playerAnswer = Integer.parseInt(in.readLine()); //TODO: Confirm que no és uma String
+        int playerAnswer = Integer.parseInt(in.readLine()); //TODO Vero: Confirm que no és uma String
         while (playerAnswer < 1 || playerAnswer > ServerHelper.MAX_CONNECTIONS) {
             out.println(ServerHelper.insertNumOfPlayers());
         }
@@ -131,7 +131,6 @@ public class PlayerDispatcher implements Runnable {
         server.sendMsgToAll(message);
         System.out.println(message);
     }
-
 
     public Player getPlayer() {
         return player;

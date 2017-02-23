@@ -53,4 +53,6 @@ public class Tester {
                 " " + et[3] + " " + et[4]);
 
     }
+
+    //TODO Vero: Test if iteration in map with index works
 }
