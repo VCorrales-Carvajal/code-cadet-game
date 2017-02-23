@@ -6,11 +6,7 @@ package org.academiadecodigo.bootcamp.codecadetgame.server.utils;
 public class GameHelper {
 
     public static String gameCommands() {
-        //TODO: update
-        return "\t /quit \t closes your connection to this chat \n" +
-                "\t /pm@username \t sends a personal message to username \n" +
-                "\t /commands \t lists the commands of this chat \n";
-
+        return "\t /quit \t closes your connection to this chat \n";
     }
 
     public static int[] shuffleIndex(int lengthArray) {
@@ -20,7 +16,7 @@ public class GameHelper {
     }
 
     public static String gettingOutOfAC() {
-        return "You are on your last day of your bootcamp and to graduate you have to answer a question: ";
+        return MsgFormatter.serverMsg("You are on your last day of your bootcamp and to graduate you have to answer a question: ");
     }
 
     public static String renderPlayersPosition(int[] playerCurrentPositions) {

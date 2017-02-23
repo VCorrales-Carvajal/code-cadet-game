@@ -90,7 +90,7 @@ public class PlayerDispatcher implements Runnable {
                     break;
                 }
 
-                // TODO Micael&Vero:Send this player's answer (String playerInput) to server's blocking queue
+                // TODO Micael: Send this player's answer (String playerInput) to server's blocking queue
             }
 
             in.close();

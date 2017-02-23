@@ -14,6 +14,6 @@ public class LifeDecision implements Event {
 
     @Override
     public void process() {
-        //TODO MICAEL&VERO: Verifies event pe and asks respective Class to resolve (send message to players, check players answers/results and update players positions))
+        //TODO VERO: Verifies event pe and asks respective Class to resolve (send message to players, check players answers/results and update players positions))
     }
 }

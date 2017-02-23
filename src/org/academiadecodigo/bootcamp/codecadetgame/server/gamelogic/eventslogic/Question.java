@@ -14,7 +14,7 @@ public class Question implements Event  {
 
     @Override
     public void process() {
-        //TODO VERO&MICAEL: Verifies event type and asks respective Class to resolve (send message to players, check players answers/results and update players positions))
+        //TODO MICAEL: Verifies event type and asks respective Class to resolve (send message to players, check players answers/results and update players positions))
     }
 
 

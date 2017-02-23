@@ -55,4 +55,6 @@ public class Tester {
     }
 
     //TODO Vero: Test if iteration in map with index works
+
+    //TODO Vero: Design the tests for TDD!
 }
