@@ -1,4 +1,4 @@
-package org.academiadecodigo.bootcamp.codecadetgame.server.connection;
+package org.academiadecodigo.bootcamp.codecadetgame.server.utils;
 
 /**
  * Created by codecadet on 2/18/17.
@@ -26,7 +26,7 @@ public class MsgFormatter {
     public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
 
 
-    public static String formatPm(String username, String msgToTarget) {
+    public static String pm(String username, String msgToTarget) {
         return ANSI_YELLOW_BACKGROUND + ANSI_BLACK +
                 "PM< " + username + " > " + msgToTarget +
                 ANSI_RESET;

@@ -1,45 +1,39 @@
-package org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic;
+package org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.eventslogic;
 
+import org.academiadecodigo.bootcamp.codecadetgame.server.connection.Server;
+import org.academiadecodigo.bootcamp.codecadetgame.server.utils.GameHelper;
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.LifeArea;
 
 /**
- * Created by codecadet on 2/18/17.
+ * Created by codecadet on 2/22/17.
  */
-public class Events {
-
-    /**
-     * String arrays:
-     * questions
-     * moneyTimeEvents
-     * happinessEvents
-     */
-
-    public static final int LENGTH_QUESTIONS = 2;
+public class CollectiveEvent implements Event {
     public static final int LENGTH_COLLECTIVE_EVENTS = 7;
+    private final Server server;
 
-    public static String firstGreeting() {
+    private int[] shuffledIndexesCollective;
+    private int counterShuffledIndexesCollective = 0;
 
-        return "You are on your last day of your bootcamp and to graduate you have to answer a question: ";
-
+    public CollectiveEvent(Server server) {
+        this.server = server;
     }
 
-    public static String questions() {
 
-        return getQuestions()[ProbManager.chooseEqual(getQuestions().length)];
+    @Override
+    public void process() {
+        //TODO BONI: Verifies event type and asks respective Class to resolve (send message to players, check players answers/results and update players positions))
+        shuffledIndexesCollective = GameHelper.shuffleIndex(LENGTH_COLLECTIVE_EVENTS);
 
-    }
+        int index;
+        if (counterShuffledIndexesCollective == LENGTH_COLLECTIVE_EVENTS) {
+            counterShuffledIndexesCollective = 0;
+        }
+        index = shuffledIndexesCollective[counterShuffledIndexesCollective];
+        String eventToDisplay = getCollectiveEvents()[index];
+        counterShuffledIndexesCollective++;
 
-    public static String[] getQuestions() {
-        int numberOfQuestions = 2;
-        String[] questions = new String[numberOfQuestions];
 
-        questions[0] = "What runs on the JVM?\n" +
-                "\t1. Machine code\n" +
-                "\t2.Bytecode\n" +
-                "\t3.Morse code\n" +
-                "\t4.Usain Bolt\n";
 
-        return questions;
     }
 
     public static String[] getCollectiveEvents() {
@@ -121,7 +115,6 @@ public class Events {
         return lifeAreaConsequence + " " + changeString;
     }
 
-
     private static String getStringGivenStepCollectiveEvents(int step, String stringPositive, String stringNegative) {
         if (step > 0) {
             return stringPositive;
@@ -129,7 +122,4 @@ public class Events {
             return stringNegative;
         }
     }
-
-
-
 }

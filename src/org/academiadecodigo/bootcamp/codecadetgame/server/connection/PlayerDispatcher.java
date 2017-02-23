@@ -1,8 +1,8 @@
 package org.academiadecodigo.bootcamp.codecadetgame.server.connection;
 
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.Factory;
-import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.GameHelper;
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.Player;
+import org.academiadecodigo.bootcamp.codecadetgame.server.utils.ServerHelper;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -28,7 +28,6 @@ public class PlayerDispatcher implements Runnable {
         this.clientSocket = clientSocket;
         this.server = server;
         this.playerNumber = playerNumber;
-        init();
 
     }
 
@@ -36,77 +35,62 @@ public class PlayerDispatcher implements Runnable {
         out.println(message);
     }
 
-    private void init() {
-
-        // Setup streams
-        try {
-
-            out = new PrintWriter(clientSocket.getOutputStream(), true);
-            in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-
-        } catch (IOException e) {
-            e.getMessage();
-        }
-    }
-
     @Override
     public void run() {
         try {
-            //Send welcome message to client
-            String userIPAddress = clientSocket.getInetAddress().getHostAddress();
+            // Setup streams
+            out = new PrintWriter(clientSocket.getOutputStream(), true);
+            in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
-            if (!server.getUsernames().containsKey(userIPAddress)) {
-                assignUsername(userIPAddress);//TODO: Change key to username, use HashMap to get PlayerDispatchers
+            // Ask player for username
+            out.println(ServerHelper.welcome());
+            out.println(ServerHelper.askUsername());
+            String username = getUsernameFromPlayer();
 
-            } else {
-                welcomeBack(userIPAddress);
-            }
+            // Add Player Dispatcher to the server table (container of player dispatchers)
+            server.getPlayerDispatcherTable().put(username, this);
 
+            // Create player
+            player = Factory.createPlayer(username);
+
+            // Inform others that a new player has joined
             server.sendMsgToAll(ServerHelper.userJoined(player.getUsername()));
 
-            // Ask first player for Game configurations: 1) Number of players
+            // Show user IPAddress
+            String userIPAddress = clientSocket.getInetAddress().getHostAddress();
+            ServerHelper.informIPAddress(player.getUsername(), userIPAddress);
+
+            // Ask first player for Game configurations: Nº of players & Game length
             if (playerNumber == 1) {
 
-                out.println(MsgFormatter.serverMsg(GameHelper.insertNumOfPlayers()));
+                // 1) Number of players?
+                int numPlayersAnswer = askNumberOfPlayers();
+                server.setNumberOfPlayers(numPlayersAnswer);
 
-                int playerAnswer = Integer.parseInt(in.readLine()); //TODO: Confirm que no és uma String
-                server.setNumberOfPlayers(playerAnswer);
-                while (playerAnswer < 1 || playerAnswer > ServerHelper.MAX_CONNECTIONS) {
-
-                    out.println(MsgFormatter.serverMsg(GameHelper.insertNumOfPlayers()));
-
-                }
+                // 2) Game length?
+                //TODO Antonio: Ask for gamelength and set server.setStepsToFinish
             }
 
+            // When all players have connected, start the game
             if (playerNumber == server.getNumberOfPlayers()) {
 
                 server.setGame(Factory.createGame(server));
                 server.getGame().start();
-                firstMessageToAllPlayers();
+
+                out.println(ServerHelper.startGame());
 
             }
 
-
+            // Get player input throughout the game
             String playerInput;
             while ((playerInput = in.readLine()) != null) {
-                //TODO: Update commands to implement from playerInput
-                if (playerInput.toLowerCase().equals("/quit")) {
 
+                if (playerInput.toLowerCase().equals("/quit")) {
                     sendMsgToAll(ServerHelper.userLeft(player.getUsername()));
                     break;
-
-                } else if (playerInput.contains("/pm@")) {
-
-                    sendPM(playerInput);
-                    continue;
-
-                } else if (playerInput.toLowerCase().equals("/commands")) {
-
-                    sendMsg(GameHelper.gameCommands());
-                    continue;
-
                 }
-               //TODO: Put here method that uses String playerInput
+
+                // TODO Micael&Vero:Send this player's answer (String playerInput) to server's blocking queue
             }
 
             in.close();
@@ -119,62 +103,35 @@ public class PlayerDispatcher implements Runnable {
 
     }
 
-    private void assignUsername(String userIPAddress) throws IOException {
-        out.println(ServerHelper.welcome());
-        out.println(ServerHelper.askUsername());
+    private int askNumberOfPlayers() throws IOException {
 
-        player = Factory.createPlayer(in.readLine().toLowerCase());
-        server.getUsernames().put(userIPAddress, player.getUsername());
-        out.println(MsgFormatter.serverMsg("Hello " + player.getUsername() + "!"));
-        System.out.println(player.getUsername() + " is user with IP address " + userIPAddress);
+        out.println(ServerHelper.insertNumOfPlayers());
+
+        int playerAnswer = Integer.parseInt(in.readLine()); //TODO: Confirm que no és uma String
+        while (playerAnswer < 1 || playerAnswer > ServerHelper.MAX_CONNECTIONS) {
+            out.println(ServerHelper.insertNumOfPlayers());
+        }
+
+        return playerAnswer;
+
     }
 
+    private String getUsernameFromPlayer() throws IOException {
 
-    private void welcomeBack(String userIPAddress) {
-        out.println(MsgFormatter.serverMsg("Welcome back " + player.getUsername() + "!"));
-        System.out.println("User with IP address " + userIPAddress +
-                "(" + player.getUsername() + ") is back");
+        String usernameInserted = in.readLine().toLowerCase();
+        while (server.getPlayerDispatcherTable().containsKey(usernameInserted)) {
+            out.println(ServerHelper.userExistsTryAgain());
+            usernameInserted = in.readLine().toLowerCase();
+        }
+
+        return usernameInserted;
     }
-
-
-    private void firstMessageToAllPlayers() {
-
-        out.println(MsgFormatter.serverMsg("The Game is about to start, mis babies."));
-    }
-
 
     private void sendMsgToAll(String message) {
         server.sendMsgToAll(message);
         System.out.println(message);
     }
 
-
-    private void sendPM(String clientMsg) {
-
-        String targetUser = clientMsg.substring(clientMsg.indexOf("@") + 1,
-                clientMsg.indexOf(" ")).toLowerCase();
-        String msgToTarget = clientMsg.substring(clientMsg.indexOf(" ") + 1);
-
-        synchronized (server.getPlayerDispatcherList()) {
-
-            if (!server.getUsernames().containsValue(targetUser)) {
-
-                sendMsg("Sorry, user " + targetUser + " does not exist");
-
-            } else {
-
-                for (PlayerDispatcher cd : server.getPlayerDispatcherList()) {
-
-                    if (targetUser.equals(cd.getPlayer().getUsername())) {
-                        cd.sendMsg(MsgFormatter.formatPm(player.getUsername(), msgToTarget));
-                        //break;
-                    }
-
-                }
-            }
-
-        }
-    }
 
     public Player getPlayer() {
         return player;

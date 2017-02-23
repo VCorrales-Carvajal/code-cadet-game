@@ -1,12 +1,9 @@
-package org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic;
-
-import org.academiadecodigo.bootcamp.codecadetgame.server.connection.ServerHelper;
+package org.academiadecodigo.bootcamp.codecadetgame.server.utils;
 
 /**
  * Created by codecadet on 2/22/17.
  */
 public class GameHelper {
-
 
     public static String gameCommands() {
         //TODO: update
@@ -16,17 +13,14 @@ public class GameHelper {
 
     }
 
-
-    public static String insertNumOfPlayers() {
-        String msg = "Please insert number of Players (min 1, max " +
-                ServerHelper.MAX_CONNECTIONS + ")";
-        return  msg;
-    }
-
-    private int[] shuffleIndex(int lengthArray) {
+    public static int[] shuffleIndex(int lengthArray) {
         //returns int[] with shuffled indexes;
         throw new UnsupportedOperationException();
 
+    }
+
+    public static String gettingOutOfAC() {
+        return "You are on your last day of your bootcamp and to graduate you have to answer a question: ";
     }
 
     public static String renderPlayersPosition(int[] playerCurrentPositions) {
