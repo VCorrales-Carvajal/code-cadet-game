@@ -67,13 +67,13 @@ public class PlayerDispatcher implements Runnable {
             // Ask first player for Game configurations: 1) Number of players
             if (playerNumber == 1) {
 
-                out.println(MsgHelper.serverMsg(GameHelper.insertNumOfPlayers()));
+                out.println(MsgFormatter.serverMsg(GameHelper.insertNumOfPlayers()));
 
                 int playerAnswer = Integer.parseInt(in.readLine()); //TODO: Confirm que no és uma String
                 server.setNumberOfPlayers(playerAnswer);
                 while (playerAnswer < 1 || playerAnswer > ServerHelper.MAX_CONNECTIONS) {
 
-                    out.println(MsgHelper.serverMsg(GameHelper.insertNumOfPlayers()));
+                    out.println(MsgFormatter.serverMsg(GameHelper.insertNumOfPlayers()));
 
                 }
             }
@@ -125,13 +125,13 @@ public class PlayerDispatcher implements Runnable {
 
         player = Factory.createPlayer(in.readLine().toLowerCase());
         server.getUsernames().put(userIPAddress, player.getUsername());
-        out.println(MsgHelper.serverMsg("Hello " + player.getUsername() + "!"));
+        out.println(MsgFormatter.serverMsg("Hello " + player.getUsername() + "!"));
         System.out.println(player.getUsername() + " is user with IP address " + userIPAddress);
     }
 
 
     private void welcomeBack(String userIPAddress) {
-        out.println(MsgHelper.serverMsg("Welcome back " + player.getUsername() + "!"));
+        out.println(MsgFormatter.serverMsg("Welcome back " + player.getUsername() + "!"));
         System.out.println("User with IP address " + userIPAddress +
                 "(" + player.getUsername() + ") is back");
     }
@@ -139,7 +139,7 @@ public class PlayerDispatcher implements Runnable {
 
     private void firstMessageToAllPlayers() {
 
-        out.println(MsgHelper.serverMsg("The Game is about to start, mis babies."));
+        out.println(MsgFormatter.serverMsg("The Game is about to start, mis babies."));
     }
 
 
@@ -166,7 +166,7 @@ public class PlayerDispatcher implements Runnable {
                 for (PlayerDispatcher cd : server.getPlayerDispatcherList()) {
 
                     if (targetUser.equals(cd.getPlayer().getUsername())) {
-                        cd.sendMsg(MsgHelper.formatPm(player.getUsername(), msgToTarget));
+                        cd.sendMsg(MsgFormatter.formatPm(player.getUsername(), msgToTarget));
                         //break;
                     }
 

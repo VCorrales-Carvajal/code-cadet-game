@@ -3,7 +3,7 @@ package org.academiadecodigo.bootcamp.codecadetgame.server.connection;
 /**
  * Created by codecadet on 2/18/17.
  */
-public class MsgHelper {
+public class MsgFormatter {
 
 
     public static final String ANSI_RESET = "\u001B[0m";
