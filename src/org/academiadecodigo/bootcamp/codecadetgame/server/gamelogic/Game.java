@@ -3,6 +3,7 @@ package org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic;
 import org.academiadecodigo.bootcamp.codecadetgame.server.connection.MsgHelper;
 import org.academiadecodigo.bootcamp.codecadetgame.server.connection.PlayerDispatcher;
 import org.academiadecodigo.bootcamp.codecadetgame.server.connection.Server;
+import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.Events;
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.EventType;
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.eventslogic.*;
 
