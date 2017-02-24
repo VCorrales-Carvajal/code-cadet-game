@@ -28,7 +28,6 @@ public class PersonalEvent implements Event  {
 
     @Override
     public void process(String username) {
-        //TODO ANTÓNIO: Verifies event type and asks respective Class to resolve (send message to players, check players answers/results and update players positions))
 
         int index = shuffledIndexes[counterIndexes];
 
@@ -51,6 +50,7 @@ public class PersonalEvent implements Event  {
     public void setAnswer(String answer) {
         currentAnswer = answer;
     }
+
 
     private void init() {
         shuffledIndexes = GameHelper.shuffleIndexArray(LENGTH_PERSONAL_EVENTS);
@@ -116,68 +116,6 @@ public class PersonalEvent implements Event  {
 
     }
 
-    public static String[] getPersonalEvents() {
-        String[] personalEvents = new String[LENGTH_PERSONAL_EVENTS];
-
-        personalEvents[0] = "You have been promoted";
-        personalEvents[1] = "You were caught with the secretary and you got fired";
-        personalEvents[2] = "You are fired because you missed work a couple of times";
-        personalEvents[3] = "This is so great: your aunt has just died and left you lots of money!";
-        personalEvents[4] = "You lost all your money with you drug habit";
-        personalEvents[5] = "You spent a great evening with someone you met on Tinder";
-        personalEvents[6] = "You went to spend a week in Florence";
-        personalEvents[7] = "You have just fallen in love with a crocodile";
-        personalEvents[8] = "You just had the best awesome great delicious marvelous fantabulous meal in the world";
-        personalEvents[9] = "You delivered your project in time and then slept for 20h straight";
-        personalEvents[10] = "Someone broke your heart";
-        personalEvents[11] = "You are growing bald";
-        personalEvents[12] = "You just got an urinary infection";
-        personalEvents[13] = "You found your partner is cheating on you";
-
-        return personalEvents;
-    }
-
-    public static int getStepsChangedPersonalEvents(int index) {
-        int[] stepsPersonalEvents = new int[LENGTH_PERSONAL_EVENTS];
-
-        stepsPersonalEvents[0] = +1;
-        stepsPersonalEvents[1] = -2;
-        stepsPersonalEvents[2] = -1;
-        stepsPersonalEvents[3] = +1;
-        stepsPersonalEvents[4] = -1;
-        stepsPersonalEvents[5] = +1;
-        stepsPersonalEvents[6] = +1;
-        stepsPersonalEvents[7] = +1;
-        stepsPersonalEvents[8] = +1;
-        stepsPersonalEvents[9] = +1;
-        stepsPersonalEvents[10] = -1;
-        stepsPersonalEvents[11] = -1;
-        stepsPersonalEvents[12] = -1;
-        stepsPersonalEvents[13] = -1;
-
-        return stepsPersonalEvents[index];
-    }
-
-    public static LifeArea getAreaChangedPersonalEvents(int index) {
-        LifeArea[] lifeAreaPersonalEvents = new LifeArea[LENGTH_PERSONAL_EVENTS];
-
-        lifeAreaPersonalEvents[0] = LifeArea.CAREER;
-        lifeAreaPersonalEvents[1] = LifeArea.CAREER;
-        lifeAreaPersonalEvents[2] = LifeArea.CAREER;
-        lifeAreaPersonalEvents[3] = LifeArea.MONEY;
-        lifeAreaPersonalEvents[4] = LifeArea.MONEY;
-        lifeAreaPersonalEvents[5] = LifeArea.HAPPINESS;
-        lifeAreaPersonalEvents[6] = LifeArea.HAPPINESS;
-        lifeAreaPersonalEvents[7] = LifeArea.HAPPINESS;
-        lifeAreaPersonalEvents[8] = LifeArea.HAPPINESS;
-        lifeAreaPersonalEvents[9] = LifeArea.HAPPINESS;
-        lifeAreaPersonalEvents[10] = LifeArea.HAPPINESS;
-        lifeAreaPersonalEvents[11] = LifeArea.HAPPINESS;
-        lifeAreaPersonalEvents[12] = LifeArea.HAPPINESS;
-        lifeAreaPersonalEvents[13] = LifeArea.HAPPINESS;
-
-        return lifeAreaPersonalEvents[index];
-    }
 
     public String getConsequencePersonalEvents(int index) {
 
