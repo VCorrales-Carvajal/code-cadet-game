@@ -2,7 +2,8 @@ package org.academiadecodigo.bootcamp.codecadetgame.server.utils;
 
 import org.academiadecodigo.bootcamp.codecadetgame.server.connection.PlayerDispatcher;
 import org.academiadecodigo.bootcamp.codecadetgame.server.connection.Server;
-import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.LifeArea;
+import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.Player;
+import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.LifeAreas;
 
 import java.util.Random;
 import java.util.Set;
@@ -88,25 +89,27 @@ public class GameHelper {
     }
 
 
-    public static void updatePlayersPositions(int change, Server server) {
+    public static void updatePlayersPositions(int change, Server server, LifeAreas lifeArea) {
 
-        Set<String> usernames = server.getPlayerDispatcherTable().keySet();
-        for (String username : usernames) {
-            PlayerDispatcher pd = server.getPlayerDispatcherTable().get(username);
-            pd.getPlayer().setGlobalPosition(pd.getPlayer().getGlobalPosition() + change);
+        for (PlayerDispatcher pd : server.getPlayerDispatcherList()) {
+            Player player = pd.getPlayer();
+            player.setGlobalPosition(pd.getPlayer().getGlobalPosition() + change);
+            player.setLifeAreasPosition(pd.getPlayer().getLifeAreasPosition()[lifeArea.ordinal()] + change, lifeArea);
         }
 
     }
 
-    public static void updateOnePlayerPosition(int change, String username, Server server, LifeArea lifeArea) {
+    public static void updateOnePlayerPosition(int change, String username, Server server, LifeAreas lifeArea) {
 
-        int prevGlobalPos = server.getPlayerDispatcherTable().get(username).getPlayer().getGlobalPosition();
-        int prevLifePosition = server.getPlayerDispatcherTable().get(username).getPlayer().getLifeAreasPosition()[lifeArea.ordinal()];
+        Player player = server.getPlayerDispatcherTable().get(username).getPlayer();
 
-        //Set new position
-        server.getPlayerDispatcherTable().get(username).getPlayer().setGlobalPosition(prevGlobalPos + change);
+        //Set new global position
+        int prevGlobalPos = player.getGlobalPosition();
+        player.setGlobalPosition(prevGlobalPos + change);
 
-        server.getPlayerDispatcherTable().get(username).getPlayer().setLifeAreasPosition(prevLifePosition + change, lifeArea);
+        //Set new life area position
+        int prevLifePosition = player.getLifeAreasPosition()[lifeArea.ordinal()];
+        player.setLifeAreasPosition(prevLifePosition + change, lifeArea);
 
     }
 
@@ -128,6 +131,23 @@ public class GameHelper {
     }
 
     public static String happenedToYou() {
-        return ": this event just happened to you: \n";
+        return ": this event just happened to you:\n";
+    }
+
+    public static String happenedToEveryOne() {
+        return "This event just happened to everyone:\n";
+    }
+
+    public static String lifeDecision(String username) {
+        return username + ": You now have to take a life decision:\n";
+    }
+
+    public static String JAVAQuestion() {
+        return "Quizz for all! \n";
+    }
+
+
+    public static String TimeEvent() {
+        return "First to choose takes it! Think fast!";
     }
 }

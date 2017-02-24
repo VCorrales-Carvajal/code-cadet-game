@@ -33,8 +33,11 @@ public class MsgFormatter {
     }
 
     public static String serverMsg(String msg) {
-        return ANSI_BLACK_BACKGROUND + ANSI_YELLOW +
-                msg + ANSI_RESET;
+        return ANSI_BLACK_BACKGROUND + ANSI_YELLOW + msg + ANSI_RESET;
+    }
+
+    public static String gameMsg(String msg) {
+        return ANSI_BLUE_BACKGROUND + ANSI_GREEN + msg + ANSI_RESET;
     }
 
 

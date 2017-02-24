@@ -2,9 +2,9 @@ package org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.eventslogic
 
 import org.academiadecodigo.bootcamp.codecadetgame.server.connection.PlayerDispatcher;
 import org.academiadecodigo.bootcamp.codecadetgame.server.connection.Server;
+import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.LifeAreas;
 import org.academiadecodigo.bootcamp.codecadetgame.server.utils.GameHelper;
-
-import java.util.Scanner;
+import org.academiadecodigo.bootcamp.codecadetgame.server.utils.MsgFormatter;
 
 /**
  * Created by codecadet on 2/22/17.
@@ -13,9 +13,12 @@ public class Question implements ChoosableEvent {
 
     public static final int LENGTH_QUESTIONS = 5;
     private final Server server;
-    String[] questions = new String[LENGTH_QUESTIONS];
-    String[] correctAnswer = new String[LENGTH_QUESTIONS];
-    int[] numberOfSteps = new int[LENGTH_QUESTIONS];
+    String[] questions;
+    String[] correctAnswer;
+    int[] steps;
+
+    private int[] shuffledIndexes;
+    private int counterIndex = 0;
 
 
     public Question(Server server) {
@@ -33,36 +36,54 @@ public class Question implements ChoosableEvent {
             return;
         }
 
-        String eventToDisplay = getStatement();
-        server.sendMsgToAll(eventToDisplay);
+        // Display selected statement
+        //TODO: Include the first question and narrative about leaving the AC
+        int index = shuffledIndexes[counterIndex];
+        String eventToDisplay = GameHelper.JAVAQuestion() + questions[index];
+        server.sendMsgToAll(MsgFormatter.gameMsg(eventToDisplay));
 
+        // Listen to the answer of all players
         for (PlayerDispatcher pd : server.getPlayerDispatcherList()) {
             pd.setActive(true);
             pd.setCurrentEvent(this);
         }
 
-        processAnswer();
+        // Process answer
+        processAnswer(index);
 
+        // Increase counter
+        counterIndex++;
+        if (counterIndex == LENGTH_QUESTIONS) {
+            counterIndex = 0;
+        }
 
     }
 
-    private void processAnswer() {
+    private void processAnswer(int index) {
 
         //TODO Micael:
         // check if there's a winner and update consequence String.
         //If there's a winner call getConsequenceString, else send msg to all saying no one answered correctly
+        //When player chooses an option that is not available, assume it's wrong
 
-        server.sendMsgToAll(getConsequenceString(0,""));
+        String winner = null; // winner username
+
+        // Update winner's position
+        GameHelper.updateOnePlayerPosition(steps[index], winner, server, LifeAreas.CAREER);
+
+        // Send message to all showing what happened
+        server.sendMsgToAll(getConsequenceString(index, winner));
 
     }
 
 
-    //TODO: When player chooses an option that is not available, assume it's wrong
-    //TODO: Include the first question and narrative about leaving the AC
-
-
     private void init() {
 
+        shuffledIndexes = GameHelper.shuffleIndexArray(LENGTH_QUESTIONS);
+
+        questions = new String[LENGTH_QUESTIONS];
+        correctAnswer = new String[LENGTH_QUESTIONS];
+        steps = new int[LENGTH_QUESTIONS];
 
         questions[0] = "What is the difference between a class with only abstract methods and an interface?\n" +
                 "\t1. An interface can have multiple inheritance, while an abstract class cannot\n" +
@@ -70,7 +91,7 @@ public class Question implements ChoosableEvent {
                 "\t3. An abstract class can have properties and an interface cannot\n" +
                 "\t4. There is no difference\n";
         correctAnswer[0] = "1";
-        numberOfSteps[0] = 1;
+        steps[0] = 1;
 
         questions[1] = "What runs on the JVM?\n" +
                 "\t1. Machine code\n" +
@@ -78,7 +99,7 @@ public class Question implements ChoosableEvent {
                 "\t3. Morse code\n" +
                 "\t4. Usain Bolt\n";
         correctAnswer[1] = "2";
-        numberOfSteps[1] = 1;
+        steps[1] = 1;
 
 
     }
@@ -94,11 +115,13 @@ public class Question implements ChoosableEvent {
 
     public String getConsequenceString(int index, String winner) {
 
-        int step = numberOfSteps[index];
+        int step = steps[index];
         if (winner.equals("")){
             return "No one got it right! No one moves forward this turn!";
         }
-        return winner + ": you moved forward in your career! Advance " + step + "steps!";
+
+        String stepString = (step != 0) ? " steps" : " step";
+        return winner + ": you moved forward in your career! Advance " + step + stepString + "!";
 
     }
 }

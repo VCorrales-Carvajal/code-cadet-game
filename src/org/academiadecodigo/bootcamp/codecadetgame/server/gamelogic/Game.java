@@ -2,11 +2,9 @@ package org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic;
 
 import org.academiadecodigo.bootcamp.codecadetgame.server.connection.Server;
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.EventType;
-import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.LifeArea;
+import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.LifeAreas;
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.eventslogic.*;
 import org.academiadecodigo.bootcamp.codecadetgame.server.utils.GameHelper;
-
-import java.util.Set;
 
 /**
  * Created by ToAlmeida, joaobonifacio, MicaelCruz and VCorrales-Carvajal on 2/18/17.
@@ -61,8 +59,8 @@ public class Game implements Runnable {
             }
 
             String lifeAreaPositionString = "Dear " + currentPlayerUsername + ", your points in ";
-            for (int i = 0; i < LifeArea.values().length; i++) {
-                lifeAreaPositionString = lifeAreaPositionString + LifeArea.values()[i] + "are : " + server.getPlayerDispatcherTable().get(currentPlayerUsername).getPlayer().getLifeAreasPosition()[i] + "\n";
+            for (int i = 0; i < LifeAreas.values().length; i++) {
+                lifeAreaPositionString = lifeAreaPositionString + LifeAreas.values()[i] + "are : " + server.getPlayerDispatcherTable().get(currentPlayerUsername).getPlayer().getLifeAreasPosition()[i] + "\n";
             }
             server.sendMsgToAll(lifeAreaPositionString);
             GameHelper.renderPlayersPosition(GameHelper.getPlayersPositions(server));
