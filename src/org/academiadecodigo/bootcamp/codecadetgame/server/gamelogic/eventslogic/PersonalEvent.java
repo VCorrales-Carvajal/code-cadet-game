@@ -13,12 +13,12 @@ public class PersonalEvent implements Event  {
     private final Server server;
     private String currentAnswer;
 
-    private String[] personalEvents;
-    private int[] stepsPersonalEvents;
-    private LifeArea[] lifeAreaPersonalEvents;
+    private String[] statements;
+    private int[] steps;
+    private LifeArea[] lifeArea;
 
-    private int[] shuffledIndexPersonal;
-    private int counterShuffledIndexesPersonal = 0;
+    private int[] shuffledIndexes;
+    private int counterIndexes = 0;
 
     public PersonalEvent(Server server) {
         this.server = server;
@@ -30,31 +30,21 @@ public class PersonalEvent implements Event  {
     public void process(String username) {
         //TODO ANTÓNIO: Verifies event type and asks respective Class to resolve (send message to players, check players answers/results and update players positions))
 
-        PlayerDispatcher p = server.getPlayerDispatcherTable().get(username);
+        int index = shuffledIndexes[counterIndexes];
 
-        shuffledIndexPersonal = GameHelper.shuffleIndexArray(LENGTH_PERSONAL_EVENTS);
-
-        int index;
-        if (counterShuffledIndexesPersonal == LENGTH_PERSONAL_EVENTS) {
-            counterShuffledIndexesPersonal = 0;
-        }
-
-        index = shuffledIndexPersonal[counterShuffledIndexesPersonal];
-
-        String eventToDisplay = username + GameHelper.happenedToYou() + getPersonalEvents()[index];
+        String eventToDisplay = username + GameHelper.happenedToYou() + statements[index];
 
         server.sendMsgToAll(eventToDisplay);
 
-        p.setActive(true);
-        p.setCurrentEvent(this);
-        
-        processAnswer(currentAnswer);
-        
-        counterShuffledIndexesPersonal++;
+        GameHelper.updateOnPlayerPosition(steps[index], username, server);
 
-    }
+        server.sendMsgToAll(getConsequencePersonalEvents(index));
+        
+        counterIndexes++;
+        if (counterIndexes == LENGTH_PERSONAL_EVENTS) {
+            counterIndexes = 0;
+        }
 
-    private void processAnswer(String currentAnswer) {
     }
 
     @Override
@@ -63,65 +53,66 @@ public class PersonalEvent implements Event  {
     }
 
     private void init() {
-        personalEvents = new String[LENGTH_PERSONAL_EVENTS];
-        stepsPersonalEvents = new int[LENGTH_PERSONAL_EVENTS];
-        lifeAreaPersonalEvents = new LifeArea[LENGTH_PERSONAL_EVENTS];
+        shuffledIndexes = GameHelper.shuffleIndexArray(LENGTH_PERSONAL_EVENTS);
+        statements = new String[LENGTH_PERSONAL_EVENTS];
+        steps = new int[LENGTH_PERSONAL_EVENTS];
+        lifeArea = new LifeArea[LENGTH_PERSONAL_EVENTS];
 
-        personalEvents[0] = "You have been promoted";
-        stepsPersonalEvents[0] = +1;
-        lifeAreaPersonalEvents[0] = LifeArea.CAREER;
+        statements[0] = "You have been promoted";
+        steps[0] = +1;
+        lifeArea[0] = LifeArea.CAREER;
 
-        personalEvents[1] = "You were caught with the secretary and you got fired";
-        stepsPersonalEvents[1] = -2;
-        lifeAreaPersonalEvents[1] = LifeArea.CAREER;
+        statements[1] = "You were caught with the secretary and you got fired";
+        steps[1] = -2;
+        lifeArea[1] = LifeArea.CAREER;
 
-        personalEvents[2] = "You are fired because you missed work a couple of times";
-        stepsPersonalEvents[2] = -1;
-        lifeAreaPersonalEvents[2] = LifeArea.CAREER;
+        statements[2] = "You are fired because you missed work a couple of times";
+        steps[2] = -1;
+        lifeArea[2] = LifeArea.CAREER;
 
-        personalEvents[3] = "This is so great: your aunt has just died and left you lots of money!";
-        stepsPersonalEvents[3] = +1;
-        lifeAreaPersonalEvents[3] = LifeArea.MONEY;
+        statements[3] = "This is so great: your aunt has just died and left you lots of money!";
+        steps[3] = +1;
+        lifeArea[3] = LifeArea.MONEY;
 
-        personalEvents[4] = "You lost all your money with you drug habit";
-        stepsPersonalEvents[4] = -1;
-        lifeAreaPersonalEvents[4] = LifeArea.MONEY;
+        statements[4] = "You lost all your money with you drug habit";
+        steps[4] = -1;
+        lifeArea[4] = LifeArea.MONEY;
 
-        personalEvents[5] = "You spent a great evening with someone you met on Tinder";
-        stepsPersonalEvents[5] = +1;
-        lifeAreaPersonalEvents[5] = LifeArea.HAPPINESS;
+        statements[5] = "You spent a great evening with someone you met on Tinder";
+        steps[5] = +1;
+        lifeArea[5] = LifeArea.HAPPINESS;
 
-        personalEvents[6] = "You went to spend a week in Florence";
-        stepsPersonalEvents[6] = +1;
-        lifeAreaPersonalEvents[6] = LifeArea.HAPPINESS;
+        statements[6] = "You went to spend a week in Florence";
+        steps[6] = +1;
+        lifeArea[6] = LifeArea.HAPPINESS;
 
-        personalEvents[7] = "You have just fallen in love with a crocodile";
-        stepsPersonalEvents[7] = +1;
-        lifeAreaPersonalEvents[7] = LifeArea.HAPPINESS;
+        statements[7] = "You have just fallen in love with a crocodile";
+        steps[7] = +1;
+        lifeArea[7] = LifeArea.HAPPINESS;
 
-        personalEvents[8] = "You just had the best awesome great delicious marvelous fantabulous meal in the world";
-        stepsPersonalEvents[8] = +1;
-        lifeAreaPersonalEvents[8] = LifeArea.HAPPINESS;
+        statements[8] = "You just had the best awesome great delicious marvelous fantabulous meal in the world";
+        steps[8] = +1;
+        lifeArea[8] = LifeArea.HAPPINESS;
 
-        personalEvents[9] = "You delivered your project in time and then slept for 20h straight";
-        stepsPersonalEvents[9] = +1;
-        lifeAreaPersonalEvents[9] = LifeArea.HAPPINESS;
+        statements[9] = "You delivered your project in time and then slept for 20h straight";
+        steps[9] = +1;
+        lifeArea[9] = LifeArea.HAPPINESS;
 
-        personalEvents[10] = "Someone broke your heart";
-        stepsPersonalEvents[10] = -1;
-        lifeAreaPersonalEvents[10] = LifeArea.HAPPINESS;
+        statements[10] = "Someone broke your heart";
+        steps[10] = -1;
+        lifeArea[10] = LifeArea.HAPPINESS;
 
-        personalEvents[11] = "You are growing bald";
-        stepsPersonalEvents[11] = -1;
-        lifeAreaPersonalEvents[11] = LifeArea.HAPPINESS;
+        statements[11] = "You are growing bald";
+        steps[11] = -1;
+        lifeArea[11] = LifeArea.HAPPINESS;
 
-        personalEvents[12] = "You just got an urinary infection";
-        stepsPersonalEvents[12] = -1;
-        lifeAreaPersonalEvents[12] = LifeArea.HAPPINESS;
+        statements[12] = "You just got an urinary infection";
+        steps[12] = -1;
+        lifeArea[12] = LifeArea.HAPPINESS;
 
-        personalEvents[13] = "You found your partner is cheating on you";
-        stepsPersonalEvents[13] = -1;
-        lifeAreaPersonalEvents[13] = LifeArea.HAPPINESS;
+        statements[13] = "You found your partner is cheating on you";
+        steps[13] = -1;
+        lifeArea[13] = LifeArea.HAPPINESS;
 
     }
 
@@ -188,17 +179,17 @@ public class PersonalEvent implements Event  {
         return lifeAreaPersonalEvents[index];
     }
 
-    public static String getConsequencePersonalEvents(int index) {
+    public String getConsequencePersonalEvents(int index) {
 
         String lifeAreaConsequence;
         String changeString;
         String direction;
 
-        int step = getStepsChangedPersonalEvents(index);
+        int step = steps[index];
         changeString = GameHelper.getStringGivenStep(step,
                 Math.abs(step) + " step forward.", Math.abs(step) + " step back.");
 
-        switch (getAreaChangedPersonalEvents(index)) {
+        switch (lifeArea[index]) {
 
             case CAREER:
                 direction = GameHelper.getStringGivenStep(step,
