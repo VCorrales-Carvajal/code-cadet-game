@@ -2,6 +2,7 @@ package org.academiadecodigo.bootcamp.codecadetgame;
 
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.EventType;
 import org.academiadecodigo.bootcamp.codecadetgame.server.utils.GameHelper;
+import org.academiadecodigo.bootcamp.codecadetgame.server.utils.ServerHelper;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,7 +26,15 @@ public class Tester {
 //        tester.mapIterationTester();
 
         // Testing if shuffling indexes works
-        tester.shuffleIndicesTester();
+       // tester.shuffleIndicesTester();
+
+//        String s = EventType.QUESTION.toString();
+//        System.out.println(s);
+//
+//        tester.probabilityTester();
+
+        System.out.println(ServerHelper.insertNumberOfSteps());
+
 
     }
 

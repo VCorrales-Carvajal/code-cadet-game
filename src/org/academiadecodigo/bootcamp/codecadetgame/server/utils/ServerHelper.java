@@ -1,5 +1,8 @@
 package org.academiadecodigo.bootcamp.codecadetgame.server.utils;
 
+import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.EventType;
+import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.GameLength;
+
 import java.net.Socket;
 
 /**
@@ -56,4 +59,17 @@ public class ServerHelper {
     }
 
 
+    public static String insertNumberOfSteps() {
+
+        String numberOfSteps = MsgFormatter.serverMsg("Please insert your wished Game Length: \n " + showGameLength());
+        return numberOfSteps;
+    }
+
+    private static String showGameLength() {
+        String s = "";
+        for (int i = 0; i < GameLength.values().length; i++) {
+            s = s + (GameLength.values()[i].ordinal() + 1) + ". " + GameLength.values()[i].toString() + "\n ";
+        }
+        return s;
+    }
 }
