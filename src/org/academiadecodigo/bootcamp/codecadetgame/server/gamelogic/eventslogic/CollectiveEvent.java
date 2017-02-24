@@ -10,7 +10,6 @@ import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.LifeAr
 public class CollectiveEvent implements Event {
     public static final int LENGTH_COLLECTIVE_EVENTS = 7;
     private final Server server;
-    private String currentAnswer;
 
     private int[] shuffledIndexesCollective;
     private int counterShuffledIndexesCollective = 0;
@@ -45,10 +44,6 @@ public class CollectiveEvent implements Event {
     private void processAnswer() {
     }
 
-    @Override
-    public void setAnswer(String answer) {
-        currentAnswer = answer;
-    }
 
     public static String[] getCollectiveEvents() {
         String[] ce = new String[LENGTH_COLLECTIVE_EVENTS];

@@ -2,6 +2,7 @@ package org.academiadecodigo.bootcamp.codecadetgame.server.connection;
 
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.Factory;
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.Player;
+import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.eventslogic.ChoosableEvent;
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.eventslogic.Event;
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.GameLength;
 import org.academiadecodigo.bootcamp.codecadetgame.server.utils.ServerHelper;
@@ -25,7 +26,7 @@ public class PlayerDispatcher implements Runnable {
     private PrintWriter out;
     private int playerNumber;
     private boolean active;
-    private Event currentEvent;
+    private ChoosableEvent currentEvent;
     private GameLength gameLength;
 
     public PlayerDispatcher(Socket clientSocket, Server server, int playerNumber) {
@@ -100,7 +101,7 @@ public class PlayerDispatcher implements Runnable {
                     break;
                 }
 
-                currentEvent.setAnswer(playerInput);
+                currentEvent.chooseAnswer(playerInput);
 
                 active = false;
 
@@ -166,7 +167,7 @@ public class PlayerDispatcher implements Runnable {
         this.active = active;
     }
 
-    public void setCurrentEvent(Event currentEvent) {
+    public void setCurrentEvent(ChoosableEvent currentEvent) {
         this.currentEvent = currentEvent;
     }
 }

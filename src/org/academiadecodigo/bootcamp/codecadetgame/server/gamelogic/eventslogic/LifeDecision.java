@@ -10,7 +10,7 @@ import org.academiadecodigo.bootcamp.codecadetgame.server.utils.GameHelper;
  * Created by codecadet on 2/22/17.
  */
 //Personal choosable
-public class LifeDecision implements Event {
+public class LifeDecision implements ChoosableEvent {
 
     public final static int LIFE_DECISIONS_LENGTH = 2;
     public final static int NUMBER_OF_OPTIONS_SHOWN = 3;
@@ -73,14 +73,16 @@ public class LifeDecision implements Event {
         return null;
     }
 
-    @Override
-    public void setAnswer(String answer) {
-        currentAnswer = answer;
-    }
     private void init() {
         statements[0] = "Spend your evenings at a workshop learning more about programming";
         positiveConsequences[0] = "You get promoted for showing good results as a consequence of the new stuff you learned";
         negativeConsequences[0] = "You get promoted for showing good results as a consequence of the new stuff you learned";
+
+    }
+
+    @Override
+    public void chooseAnswer(String answer) {
+        currentAnswer = answer;
 
     }
 }

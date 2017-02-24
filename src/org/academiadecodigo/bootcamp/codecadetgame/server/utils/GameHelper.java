@@ -96,7 +96,7 @@ public class GameHelper {
 
     }
 
-    public static void updateOnPlayerPosition(int change, String username, Server server) {
+    public static void updateOnePlayerPosition(int change, String username, Server server) {
         int prevPos = server.getPlayerDispatcherTable().get(username).getPlayer().getPosition();
         //Set new position
         server.getPlayerDispatcherTable().get(username).getPlayer().setPosition(prevPos + change);

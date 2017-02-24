@@ -9,8 +9,9 @@ import java.util.Scanner;
 /**
  * Created by codecadet on 2/22/17.
  */
-public class Question implements Event  {
+public class Question implements ChoosableEvent  {
 
+    public static final int LENGTH_QUESTIONS = 5;
     private final Server server;
     private final int numberOfQuestions = 5;
     String[] questions = new String[numberOfQuestions];
@@ -83,12 +84,12 @@ public class Question implements Event  {
 
     }
 
-    @Override
-    public void setAnswer(String answer) {
-
-    }
-
     public String getStatement() {
         return "";
+    }
+
+    @Override
+    public void chooseAnswer(String answer) {
+
     }
 }

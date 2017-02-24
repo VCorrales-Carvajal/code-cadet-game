@@ -11,15 +11,16 @@ import java.util.concurrent.SynchronousQueue;
 /**
  * Created by codecadet on 2/22/17.
  */
-public class TimeEvent implements Event  {
+public class TimeEvent implements ChoosableEvent  {
 
+    public static final int LENGTH_TIME_EVENTS = 5;
     private final Server server;
     private BlockingQueue<String> queue = new SynchronousQueue<>();
-    private final int numberOfTimeEvents = 5;
-    String[] questions = new String[numberOfTimeEvents];
-    String[] positiveConsequence = new String[numberOfTimeEvents];
-    String[] negativeConsequence = new String[numberOfTimeEvents];
-    int[] numberOfSteps = new int[numberOfTimeEvents];
+    String[] questions = new String[LENGTH_TIME_EVENTS];
+    String[] positiveConsequence = new String[LENGTH_TIME_EVENTS];
+    String[] negativeConsequence = new String[LENGTH_TIME_EVENTS];
+    int[] numberOfSteps = new int[LENGTH_TIME_EVENTS];
+    private int[] shuffledIndexes;
 
     public TimeEvent(Server server) {
         this.server = server;
@@ -52,6 +53,8 @@ public class TimeEvent implements Event  {
 
     private void init(){
 
+
+
         questions[0] = "You invest in a promising tech startup\n" +
                 "\t1. Yes\n" +
                 "\t2. No\n";
@@ -69,16 +72,14 @@ public class TimeEvent implements Event  {
 
     }
 
-    @Override
-    public void setAnswer(String answer) {
+    public String getStatement() {
+        return "";
+    }
 
+    @Override
+    public void chooseAnswer(String answer) {
         synchronized (this) {
             queue.offer(answer);
         }
-
-    }
-
-    public String getStatement() {
-        return "";
     }
 }
