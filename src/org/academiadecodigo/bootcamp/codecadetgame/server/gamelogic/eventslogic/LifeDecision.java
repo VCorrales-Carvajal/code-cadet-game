@@ -6,29 +6,52 @@ import org.academiadecodigo.bootcamp.codecadetgame.server.utils.GameHelper;
 /**
  * Created by codecadet on 2/22/17.
  */
+//Personal choosable
 public class LifeDecision implements Event {
+
     public final static int LIFE_DECISIONS_LENGTH = 2;
+    public final static int NUMBER_OF_OPTIONS_SHOWN = 3;
 
     private final Server server;
     private String[] statements;
     private String[] positiveConsequences;
     private String[] negativeConsequences;
     private int[] shuffledIndexes;
+    private int lastIndexUsed = - 1;
+
+    private int[] currentIndices;
 
     public LifeDecision(Server server) {
         this.server = server;
-    }
-
-    @Override
-    public void process() {
         init();
-        //
-
-        //TODO VERO: Verifies event pe and asks respective Class to resolve
-        // (send message to players, check players answers/results and update players positions))
     }
 
     private void init() {
+    }
+
+    //TODO VERO: Verifies event pe and asks respective Class to resolve
+        // (send message to players, check players answers/results and update players positions))
+    @Override
+    public void process() {
+        String statement = getStatement();
+    }
+
+    private String getStatement() {
         shuffledIndexes = GameHelper.shuffleIndexArray(LIFE_DECISIONS_LENGTH);
+        int start = shuffledIndexes[lastIndexUsed + 1];
+        int end = shuffledIndexes[start + NUMBER_OF_OPTIONS_SHOWN - 1];
+
+        int[] statementIndices = new int[NUMBER_OF_OPTIONS_SHOWN];
+        String statement = "";
+        int j = 0;
+        for (int i = start; i <= end; i++) {
+            statementIndices[j++] = i;
+            statement = getLifeDecisions()[i];
+        }
+        return statement;
+    }
+
+    public String[] getLifeDecisions() {
+        return null;
     }
 }
