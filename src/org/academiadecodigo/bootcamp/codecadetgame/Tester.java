@@ -3,6 +3,10 @@ package org.academiadecodigo.bootcamp.codecadetgame;
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.EventType;
 import org.academiadecodigo.bootcamp.codecadetgame.server.utils.GameHelper;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
 /**
  * Created by codecadet on 2/19/17.
  */
@@ -11,13 +15,59 @@ public class Tester {
     public static void main(String[] args) {
 
         Tester tester = new Tester();
-        tester.probabilityTester();
 
-        int[] playersPositions = {4,2,8};
+//        tester.probabilityTester();
 
-        System.out.println(GameHelper.renderPlayersPosition(playersPositions));
+        // Testing rendering of player positions
+//        tester.renderPlayersPositionsTester();
+
+        // Testing if iteration of map works
+//        tester.mapIterationTester();
+
+        // Testing if shuffling indexes works
+        tester.shuffleIndicesTester();
 
     }
+
+    private void shuffleIndicesTester() {
+        int[] indices;
+        for (int i = 1; i < 11; i++) {
+            indices = GameHelper.shuffleIndexArray(i);
+
+            String s = "";
+            for (int j : indices) {
+                System.out.print(j + " ");
+                s = s + " " + j;
+            }
+            System.out.println();
+        }
+    }
+
+
+
+    private void renderPlayersPositionsTester() {
+        int[] playersPositions = {4,2,8};
+        System.out.println(GameHelper.renderPlayersPosition(playersPositions));
+    }
+
+    private void mapIterationTester() {
+        String[] array = new String[3];
+        Map<Integer, String> map = new HashMap<>();
+        map.put(1, "one");
+        map.put(2, "two");
+        map.put(3, "three");
+        Set<Integer> keys = map.keySet();
+        int i = 0;
+        for (Integer k : keys) {
+            array[i] = map.get(k);
+            i++;
+        }
+
+        for (String s : array) {
+            System.out.println("Position in map: " + s);
+        }
+    }
+
 
     private void probabilityTester() {
 
@@ -54,7 +104,4 @@ public class Tester {
 
     }
 
-    //TODO Vero: Test if iteration in map with index works
-
-    //TODO Vero: Design the tests for TDD!
 }

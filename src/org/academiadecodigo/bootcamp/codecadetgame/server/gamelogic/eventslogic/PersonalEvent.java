@@ -22,7 +22,7 @@ public class PersonalEvent implements Event  {
     public void process() {
         //TODO ANTÓNIO: Verifies event type and asks respective Class to resolve (send message to players, check players answers/results and update players positions))
 
-        shuffledIndexPersonal = GameHelper.shuffleIndex(LENGTH_PERSONAL_EVENTS);
+        shuffledIndexPersonal = GameHelper.shuffleIndexArray(LENGTH_PERSONAL_EVENTS);
 
         int index;
         if (counterShuffledIndexesPersonal == LENGTH_PERSONAL_EVENTS) {
