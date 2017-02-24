@@ -13,7 +13,6 @@ public enum EventType {
     private double probability;
     private boolean choosable;
 
-
     EventType(double probability, boolean choosable) {
         this.probability = probability;
         this.choosable = choosable;
@@ -36,5 +35,4 @@ public enum EventType {
         }
         return PERSONAL_EVENT;
     }
-
 }

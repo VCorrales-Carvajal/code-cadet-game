@@ -63,7 +63,7 @@ public class Game {
     private Event getEvent(EventType eventType) {
         Event event = null;
 
-        switch (eventType){
+        switch (eventType) {
             case QUESTION:
                 event = question;
                 break;
@@ -85,8 +85,14 @@ public class Game {
 
 
     private boolean noOneFinished() {
-        //TODO Bonifacio: compare each player's positions to server.stepsToFinish
-        throw new UnsupportedOperationException();
-    }
 
+        for (int i = 0; i < GameHelper.getPlayersPositions(server).length - 1; i++) {
+            if (GameHelper.getPlayersPositions(server)[i] == server.getStepsToFinish()) {
+
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
