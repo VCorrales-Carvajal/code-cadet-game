@@ -1,6 +1,5 @@
 package org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic;
 
-import org.academiadecodigo.bootcamp.codecadetgame.server.connection.PlayerDispatcher;
 import org.academiadecodigo.bootcamp.codecadetgame.server.connection.Server;
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.EventType;
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.eventslogic.*;
@@ -52,7 +51,7 @@ public class Game {
             Event event = getEvent(eventType);
             event.process();
 
-            GameHelper.renderPlayersPosition(getPlayersPositions());
+            GameHelper.renderPlayersPosition(GameHelper.getPlayersPositions(server));
 
             if (Math.random() < Constants.PROB_COW_WISDOM_QUOTE) {
                 GameHelper.displayCowWisdomQuote();
@@ -82,38 +81,6 @@ public class Game {
                 break;
         }
         return event;
-    }
-
-
-    private int[] getPlayersPositions() {
-
-        int[] playersPositions = new int[server.getPlayerDispatcherTable().size()];
-        Set<String> usernames = server.getPlayerDispatcherTable().keySet();
-
-        int i = 0;
-        for (String username : usernames) {
-            playersPositions[i] = server.getPlayerDispatcherTable().get(username).getPlayer().getPosition();
-            i++;
-        }
-
-        return playersPositions;
-    }
-
-
-    private void updatePlayersPositions(int change) {
-
-        Set<String> usernames = server.getPlayerDispatcherTable().keySet();
-        for (String username : usernames) {
-            PlayerDispatcher pd = server.getPlayerDispatcherTable().get(username);
-            pd.getPlayer().setPosition(pd.getPlayer().getPosition() + change);
-        }
-
-    }
-
-    private void updateOnPlayerPosition(int change, String username) {
-        int prevPos = server.getPlayerDispatcherTable().get(username).getPlayer().getPosition();
-        //Set new position
-        server.getPlayerDispatcherTable().get(username).getPlayer().setPosition(prevPos + change);
     }
 
 
