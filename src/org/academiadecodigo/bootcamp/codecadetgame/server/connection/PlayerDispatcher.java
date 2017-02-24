@@ -2,6 +2,7 @@ package org.academiadecodigo.bootcamp.codecadetgame.server.connection;
 
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.Factory;
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.Player;
+import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.eventslogic.Event;
 import org.academiadecodigo.bootcamp.codecadetgame.server.utils.ServerHelper;
 
 import java.io.BufferedReader;
@@ -22,6 +23,8 @@ public class PlayerDispatcher implements Runnable {
     private BufferedReader in;
     private PrintWriter out;
     private int playerNumber;
+    private boolean active;
+    private Event currentEvent;
 
     public PlayerDispatcher(Socket clientSocket, Server server, int playerNumber) {
 
@@ -74,6 +77,7 @@ public class PlayerDispatcher implements Runnable {
             // When all players have connected, start the game
             if (playerNumber == server.getNumberOfPlayers()) {
 
+                //TODO Micael: game needs a new Thread
                 server.setGame(Factory.createGame(server));
                 server.getGame().start();
 
@@ -83,12 +87,16 @@ public class PlayerDispatcher implements Runnable {
 
             // Get player input throughout the game
             String playerInput;
-            while ((playerInput = in.readLine()) != null) {
+            while (((playerInput = in.readLine()) != null) && active) {
 
                 if (playerInput.toLowerCase().equals("/quit")) {
                     sendMsgToAll(ServerHelper.userLeft(player.getUsername()));
                     break;
                 }
+
+                currentEvent.setAnswer(playerInput);
+
+                active = false;
 
                 // TODO Micael: Send this player's answer (String playerInput) to server's blocking queue
             }
@@ -134,5 +142,13 @@ public class PlayerDispatcher implements Runnable {
 
     public Player getPlayer() {
         return player;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public void setCurrentEvent(Event currentEvent) {
+        this.currentEvent = currentEvent;
     }
 }

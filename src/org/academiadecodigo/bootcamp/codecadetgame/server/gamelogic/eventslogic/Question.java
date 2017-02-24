@@ -1,5 +1,6 @@
 package org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.eventslogic;
 
+import org.academiadecodigo.bootcamp.codecadetgame.server.connection.PlayerDispatcher;
 import org.academiadecodigo.bootcamp.codecadetgame.server.connection.Server;
 import org.academiadecodigo.bootcamp.codecadetgame.server.utils.GameHelper;
 
@@ -10,41 +11,43 @@ import java.util.Scanner;
  */
 public class Question implements Event  {
 
-//    private final Server server;
+    private final Server server;
+    private String currentAnswer;
     private final int numberOfQuestions = 5;
     String[] questions = new String[numberOfQuestions];
     String[] correctAnswer = new String[numberOfQuestions];
     int[] numberOfSteps = new int[numberOfQuestions];
 
-    public Question() {
+
+    public Question(Server server) {
+        this.server = server;
         init();
     }
-
-//    public Question(Server server) {
-//        this.server = server;
-//    }
 
 
 
     //TODO MICAEL: Verifies event type and asks respective Class to resolve (send message to players, check players answers/results and update players positions))
     @Override
-    public void process() {
+    public void process(String username) {
 
-
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println(questions[0]);
-
-        System.out.print("Your answer: ");
-        String optionChosen = scanner.nextLine();
-
-        if (optionChosen.equals(correctAnswer[0])){
-            System.out.println("Your answer is correct! you advance these steps: " + numberOfSteps[0]);
-        } else {
-            System.out.println("You loose!");
+        if (!username.equals("All")){
+            System.out.println("QuestionEvent not processing accordingly");
+            return;
         }
 
+        String eventToDisplay = getStatement();
+        server.sendMsgToAll(eventToDisplay);
 
+        for (PlayerDispatcher pd: server.getPlayerDispatcherList()) {
+            pd.setActive(true);
+            pd.setCurrentEvent(this);
+        }
+
+        processAnswer();
+
+    }
+
+    private void processAnswer() {
     }
 
 
@@ -76,4 +79,12 @@ public class Question implements Event  {
 
     }
 
+    @Override
+    public void setAnswer(String answer) {
+        currentAnswer = answer;
+    }
+
+    public String getStatement() {
+        return "";
+    }
 }

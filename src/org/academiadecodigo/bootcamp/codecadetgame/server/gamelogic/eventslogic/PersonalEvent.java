@@ -1,5 +1,6 @@
 package org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.eventslogic;
 
+import org.academiadecodigo.bootcamp.codecadetgame.server.connection.PlayerDispatcher;
 import org.academiadecodigo.bootcamp.codecadetgame.server.connection.Server;
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.LifeArea;
 import org.academiadecodigo.bootcamp.codecadetgame.server.utils.GameHelper;
@@ -10,6 +11,7 @@ import org.academiadecodigo.bootcamp.codecadetgame.server.utils.GameHelper;
 public class PersonalEvent implements Event  {
     public static final int LENGTH_PERSONAL_EVENTS = 18;
     private final Server server;
+    private String currentAnswer;
 
     private int[] shuffledIndexPersonal;
     private int counterShuffledIndexesPersonal = 0;
@@ -19,8 +21,10 @@ public class PersonalEvent implements Event  {
     }
 
     @Override
-    public void process() {
+    public void process(String username) {
         //TODO ANTÓNIO: Verifies event type and asks respective Class to resolve (send message to players, check players answers/results and update players positions))
+
+        PlayerDispatcher p = server.getPlayerDispatcherTable().get(username);
 
         shuffledIndexPersonal = GameHelper.shuffleIndexArray(LENGTH_PERSONAL_EVENTS);
 
@@ -28,10 +32,28 @@ public class PersonalEvent implements Event  {
         if (counterShuffledIndexesPersonal == LENGTH_PERSONAL_EVENTS) {
             counterShuffledIndexesPersonal = 0;
         }
+
         index = shuffledIndexPersonal[counterShuffledIndexesPersonal];
-        String eventToDisplay = getPersonalEvents()[index];
+
+        String eventToDisplay = username + GameHelper.happenedToYou() + getPersonalEvents()[index];
+
+        server.sendMsgToAll(eventToDisplay);
+
+        p.setActive(true);
+        p.setCurrentEvent(this);
+        
+        processAnswer(currentAnswer);
+        
         counterShuffledIndexesPersonal++;
 
+    }
+
+    private void processAnswer(String currentAnswer) {
+    }
+
+    @Override
+    public void setAnswer(String answer) {
+        currentAnswer = answer;
     }
 
 

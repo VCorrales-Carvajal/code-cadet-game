@@ -110,4 +110,12 @@ public class GameHelper {
             return stringNegative;
         }
     }
+
+    public static String informCurrentPlayer(String currentPlayer) {
+        return MsgFormatter.serverMsg("It's " + currentPlayer + "'s turn!\n");
+    }
+
+    public static String happenedToYou() {
+        return ": this event just happened to you: \n";
+    }
 }
