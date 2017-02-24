@@ -1,6 +1,7 @@
 package org.academiadecodigo.bootcamp.codecadetgame.server.connection;
 
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.Game;
+import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.Player;
 import org.academiadecodigo.bootcamp.codecadetgame.server.utils.ServerHelper;
 
 import java.io.IOException;
@@ -16,6 +17,7 @@ import java.util.concurrent.Executors;
 public class Server {
 
     private Map<String, PlayerDispatcher> playerDispatcherTable = new Hashtable<>();
+    private List<PlayerDispatcher> playerDispatcherList = new Vector<>();
     private Game game;
 
     private int numberOfPlayers = 1; //Initialize as one to ask the first player for the actual number
@@ -98,4 +100,7 @@ public class Server {
         this.stepsToFinish = stepsToFinish;
     }
 
+    public List<PlayerDispatcher> getPlayerDispatcherList() {
+        return playerDispatcherList;
+    }
 }

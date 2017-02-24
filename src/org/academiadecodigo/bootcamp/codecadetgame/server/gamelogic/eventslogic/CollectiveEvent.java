@@ -1,5 +1,6 @@
 package org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.eventslogic;
 
+import org.academiadecodigo.bootcamp.codecadetgame.server.connection.PlayerDispatcher;
 import org.academiadecodigo.bootcamp.codecadetgame.server.connection.Server;
 import org.academiadecodigo.bootcamp.codecadetgame.server.utils.GameHelper;
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.LifeArea;
@@ -10,6 +11,7 @@ import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.LifeAr
 public class CollectiveEvent implements Event {
     public static final int LENGTH_COLLECTIVE_EVENTS = 7;
     private final Server server;
+    private String currentAnswer;
 
     private int[] shuffledIndexesCollective;
     private int counterShuffledIndexesCollective = 0;
@@ -20,7 +22,7 @@ public class CollectiveEvent implements Event {
 
 
     @Override
-    public void process() {
+    public void process(String username) {
         //TODO BONI: Verifies event type and asks respective Class to resolve (send message to players, check players answers/results and update players positions))
         shuffledIndexesCollective = GameHelper.shuffleIndexArray(LENGTH_COLLECTIVE_EVENTS);
 
@@ -32,8 +34,30 @@ public class CollectiveEvent implements Event {
         String eventToDisplay = getCollectiveEvents()[index];
         counterShuffledIndexesCollective++;
 
+        if (!username.equals("All")){
+            System.out.println("CollectiveEvent not processing accordingly");
+            return;
+        }
+
+        server.sendMsgToAll(eventToDisplay);
+
+        for (PlayerDispatcher pd: server.getPlayerDispatcherList()) {
+            pd.setActive(true);
+            pd.setCurrentEvent(this);
+        }
+
+        processAnswer();
 
 
+
+    }
+
+    private void processAnswer() {
+    }
+
+    @Override
+    public void setAnswer(String answer) {
+        currentAnswer = answer;
     }
 
     public static String[] getCollectiveEvents() {

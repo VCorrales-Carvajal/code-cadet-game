@@ -1,7 +1,11 @@
 package org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.eventslogic;
 
+import org.academiadecodigo.bootcamp.codecadetgame.server.connection.PlayerDispatcher;
 import org.academiadecodigo.bootcamp.codecadetgame.server.connection.Server;
+import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.LifeArea;
 import org.academiadecodigo.bootcamp.codecadetgame.server.utils.GameHelper;
+
+import static org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.eventslogic.PersonalEvent.getPersonalEvents;
 
 /**
  * Created by codecadet on 2/22/17.
@@ -13,9 +17,11 @@ public class LifeDecision implements Event {
     public final static int NUMBER_OF_OPTIONS_SHOWN = 3;
 
     private final Server server;
+    private String currentAnswer;
     private String[] statements;
     private String[] positiveConsequences;
     private String[] negativeConsequences;
+    private LifeArea[] lifeAreas;
     private int[] shuffledIndexes;
     private int lastIndexUsed = - 1;
 
@@ -26,14 +32,27 @@ public class LifeDecision implements Event {
         init();
     }
 
-    private void init() {
-    }
 
     //TODO VERO: Verifies event pe and asks respective Class to resolve
-        // (send message to players, check players answers/results and update players positions))
+    // (send message to players, check players answers/results and update players positions))
     @Override
-    public void process() {
-        String statement = getStatement();
+    public void process(String username) {
+
+        PlayerDispatcher p = server.getPlayerDispatcherTable().get(username);
+
+        int index = 0;
+        String eventToDisplay = username + GameHelper.happenedToYou() + getPersonalEvents()[index];
+
+        server.sendMsgToAll(eventToDisplay);
+
+        p.setActive(true);
+        p.setCurrentEvent(this);
+
+        processAnswer(currentAnswer);
+
+    }
+
+    private void processAnswer(String currentAnswer) {
     }
 
     private String getStatement() {
@@ -53,5 +72,16 @@ public class LifeDecision implements Event {
 
     public String[] getLifeDecisions() {
         return null;
+    }
+
+    @Override
+    public void setAnswer(String answer) {
+        currentAnswer = answer;
+    }
+    private void init() {
+        statements[0] = "Spend your evenings at a workshop learning more about programming";
+        positiveConsequences[0] = "You get promoted for showing good results as a consequence of the new stuff you learned";
+        negativeConsequences[0] = "You get promoted for showing good results as a consequence of the new stuff you learned";
+
     }
 }

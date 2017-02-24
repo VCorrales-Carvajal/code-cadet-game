@@ -15,21 +15,18 @@ import java.util.Set;
 public class Game {
 
     private Server server;
-    private Question question;
-    private TimeEvent timeEvent;
-    private LifeDecision lifeDecision;
-    private CollectiveEvent collectiveEvent;
-    private PersonalEvent personalEvent;
+    private Event[] events = new Event[EventType.values().length];
+    private int currentPlayerCounter = 0;
 
 
     public Game(Server server) {
 
         this.server = server;
-        question = new Question(server);
-        timeEvent = new TimeEvent(server);
-        lifeDecision = new LifeDecision(server);
-        collectiveEvent = new CollectiveEvent(server);
-        personalEvent = new PersonalEvent(server);
+        events[EventType.QUESTION.ordinal()] = new Question(server);
+        events[EventType.TIME_EVENT.ordinal()] = new TimeEvent(server);
+        events[EventType.LIFE_DECISION.ordinal()] = new LifeDecision(server);
+        events[EventType.COLLECTIVE_EVENT.ordinal()] = new CollectiveEvent(server);
+        events[EventType.PERSONAL_EVENT.ordinal()] = new PersonalEvent(server);
 
     }
 
@@ -37,7 +34,7 @@ public class Game {
     public void start() {
 
         server.sendMsgToAll(GameHelper.gettingOutOfAC());
-        question.process();
+        events[EventType.QUESTION.ordinal()].process("All");
         turnCycle();
 
     }
@@ -45,46 +42,36 @@ public class Game {
 
     private void turnCycle() {
 
+        String currentPlayerUsername = server.getPlayerDispatcherList().get(currentPlayerCounter).getPlayer().getUsername();
+
         while (noOneFinished()) {
 
+            // Send message to all players informing the player in the current turn
+            server.sendMsgToAll(GameHelper.informCurrentPlayer(currentPlayerUsername));
+
+            // Select an Event randomly
             EventType eventType = EventType.choose();
-            Event event = getEvent(eventType);
-            event.process();
+            Event event = events[eventType.ordinal()];
+
+            // The selected event sends a statement and processes consequences accordingly
+            if (eventType.isCollective()) {
+                event.process("All");
+            } else {
+                event.process(currentPlayerUsername);
+            }
 
             GameHelper.renderPlayersPosition(GameHelper.getPlayersPositions(server));
 
             if (Math.random() < Constants.PROB_COW_WISDOM_QUOTE) {
                 GameHelper.displayCowWisdomQuote();
             }
+
+
         }
     }
-
-
-    private Event getEvent(EventType eventType) {
-        Event event = null;
-
-        switch (eventType) {
-            case QUESTION:
-                event = question;
-                break;
-            case TIME_EVENT:
-                event = timeEvent;
-                break;
-            case LIFE_DECISION:
-                event = lifeDecision;
-                break;
-            case COLLECTIVE_EVENT:
-                event = collectiveEvent;
-                break;
-            case PERSONAL_EVENT:
-                event = personalEvent;
-                break;
-        }
-        return event;
-    }
-
 
     private boolean noOneFinished() {
+
 
         for (int i = 0; i < GameHelper.getPlayersPositions(server).length - 1; i++) {
             if (GameHelper.getPlayersPositions(server)[i] == server.getStepsToFinish()) {
@@ -94,5 +81,18 @@ public class Game {
         }
 
         return false;
+    }
+
+    private void updatePlayerCounter(int length){
+
+        currentPlayerCounter++;
+        if (currentPlayerCounter == length){
+            currentPlayerCounter = 0;
+        }
+
+    }
+
+    public Event[] getEvents() {
+        return events;
     }
 }
