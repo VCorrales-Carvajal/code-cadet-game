@@ -17,7 +17,7 @@ import java.util.concurrent.Executors;
 public class Server {
 
     private Map<String, PlayerDispatcher> playerDispatcherTable = new Hashtable<>();
-    private List<PlayerDispatcher> playerDispatcherList = new Vector<>();
+    private List<PlayerDispatcher> playerDispatcherList = Collections.synchronizedList(new ArrayList<>());
     private Game game;
 
     private int numberOfPlayers = 1; //Initialize as one to ask the first player for the actual number
