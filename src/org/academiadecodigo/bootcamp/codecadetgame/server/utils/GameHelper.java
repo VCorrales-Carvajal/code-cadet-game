@@ -101,4 +101,13 @@ public class GameHelper {
     public static String displayCowWisdomQuote() {
         throw new UnsupportedOperationException();
     }
+
+
+    public static String getStringGivenStep(int step, String stringPositive, String stringNegative) {
+        if (step > 0) {
+            return stringPositive;
+        } else {
+            return stringNegative;
+        }
+    }
 }

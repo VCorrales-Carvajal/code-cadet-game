@@ -86,25 +86,25 @@ public class CollectiveEvent implements Event {
 
 
         int step = getStepsChangedCollectiveEvents(index);
-        changeString = getStringGivenStepCollectiveEvents(step,
+        changeString = GameHelper.getStringGivenStep(step,
                 Math.abs(step) + " step forward.", Math.abs(step) + " step back.");
 
         switch (getAreaChangedCollectiveEvents(index)) {
 
             case CAREER:
-                direction = getStringGivenStepCollectiveEvents(step,
+                direction = GameHelper.getStringGivenStep(step,
                         " is moving forward ", " has a setback ");
                 lifeAreaConsequence = "Everyone" + direction + "in their career!";
                 break;
 
             case MONEY:
-                direction = getStringGivenStepCollectiveEvents(step,
+                direction = GameHelper.getStringGivenStep(step,
                         " earns ", " loses ");
                 lifeAreaConsequence = "Everyone" + direction + "money!";
                 break;
 
             case HAPPINESS:
-                direction = getStringGivenStepCollectiveEvents(step, " happy!", " sad.");
+                direction = GameHelper.getStringGivenStep(step, " happy!", " sad.");
                 lifeAreaConsequence = "Everyone is" + direction;
                 break;
 
@@ -116,11 +116,4 @@ public class CollectiveEvent implements Event {
         return lifeAreaConsequence + " " + changeString;
     }
 
-    private static String getStringGivenStepCollectiveEvents(int step, String stringPositive, String stringNegative) {
-        if (step > 0) {
-            return stringPositive;
-        } else {
-            return stringNegative;
-        }
-    }
 }
