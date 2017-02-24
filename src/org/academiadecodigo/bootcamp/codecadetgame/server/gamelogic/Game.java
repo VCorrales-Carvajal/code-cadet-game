@@ -30,7 +30,6 @@ public class Game {
 
     }
 
-
     public void start() {
 
         server.sendMsgToAll(GameHelper.gettingOutOfAC());
@@ -65,8 +64,6 @@ public class Game {
             if (Math.random() < Constants.PROB_COW_WISDOM_QUOTE) {
                 GameHelper.displayCowWisdomQuote();
             }
-
-
         }
     }
 
@@ -83,10 +80,10 @@ public class Game {
         return false;
     }
 
-    private void updatePlayerCounter(int length){
+    private void updatePlayerCounter(int length) {
 
         currentPlayerCounter++;
-        if (currentPlayerCounter == length){
+        if (currentPlayerCounter == length) {
             currentPlayerCounter = 0;
         }
 
