@@ -25,7 +25,7 @@ public class Game {
     public Game(Server server) {
 
         this.server = server;
-        question = new Question(server);
+//        question = new Question(server);
         timeEvent = new TimeEvent(server);
         lifeDecision = new LifeDecision(server);
         collectiveEvent = new CollectiveEvent(server);
