@@ -146,11 +146,8 @@ public class PersonalEvent implements Event {
 
         }
 
-        String globalPositionString = lifeAreaConsequence + " " + changeString + "\n";
-        String lifeAreaPositionString = "Dear " + username + ", your points in ";
-        for (int i = 0; i < LifeArea.values().length; i++) {
-            lifeAreaPositionString = lifeAreaPositionString + LifeArea.values()[i] + "are : " + server.getPlayerDispatcherTable().get(username).getPlayer().getLifeAreasPosition()[i] + "\n";
-        }
-        return globalPositionString + lifeAreaPositionString;
+        String globalPositionString = lifeAreaConsequence + " " + changeString;
+
+        return globalPositionString;
     }
 }

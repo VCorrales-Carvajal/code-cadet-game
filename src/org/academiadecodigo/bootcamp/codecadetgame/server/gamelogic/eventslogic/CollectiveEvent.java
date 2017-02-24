@@ -32,7 +32,7 @@ public class CollectiveEvent implements Event {
 
         server.sendMsgToAll(eventToDisplay);
 
-        GameHelper.updateOnePlayerPosition(steps[index], username, server);
+        GameHelper.updateOnePlayerPosition(steps[index], username, server, lifeArea[index]);
 
         server.sendMsgToAll(getConsequenceCollectiveEvents(index));
 
@@ -156,7 +156,10 @@ public class CollectiveEvent implements Event {
 
         }
 
-        return lifeAreaConsequence + " " + changeString;
+        String globalPositionString = lifeAreaConsequence + " " + changeString;
+
+        return globalPositionString;
+
     }
 
 }
