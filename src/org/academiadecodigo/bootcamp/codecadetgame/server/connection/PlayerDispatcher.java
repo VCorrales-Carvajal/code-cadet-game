@@ -3,6 +3,7 @@ package org.academiadecodigo.bootcamp.codecadetgame.server.connection;
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.Factory;
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.Player;
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.eventslogic.Event;
+import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.GameLength;
 import org.academiadecodigo.bootcamp.codecadetgame.server.utils.ServerHelper;
 
 import java.io.BufferedReader;
@@ -25,6 +26,7 @@ public class PlayerDispatcher implements Runnable {
     private int playerNumber;
     private boolean active;
     private Event currentEvent;
+    private GameLength gameLength;
 
     public PlayerDispatcher(Socket clientSocket, Server server, int playerNumber) {
 
@@ -71,7 +73,10 @@ public class PlayerDispatcher implements Runnable {
                 server.setNumberOfPlayers(numPlayersAnswer);
 
                 // 2) Game length?
-                //TODO Bonifácio: Ask for gamelength and set server.setStepsToFinish
+
+                int gameLength = askNumberOfSteps();
+                server.setStepsToFinish(gameLength);
+
             }
 
             // When all players have connected, start the game
@@ -111,11 +116,23 @@ public class PlayerDispatcher implements Runnable {
 
     }
 
+    private int askNumberOfSteps() throws IOException {
+
+        out.println(ServerHelper.insertNumberOfSteps());
+
+        int playerAnswer = Integer.parseInt(in.readLine());
+        while (playerAnswer < 1 || playerAnswer > (GameLength.values().length - 1)) {
+            out.println(ServerHelper.insertNumOfPlayers());
+        }
+
+        return GameLength.values()[playerAnswer - 1].getNumberOfSteps();
+    }
+
     private int askNumberOfPlayers() throws IOException {
 
         out.println(ServerHelper.insertNumOfPlayers());
 
-        int playerAnswer = Integer.parseInt(in.readLine()); //TODO Vero: Confirm que no és uma String
+        int playerAnswer = Integer.parseInt(in.readLine());
         while (playerAnswer < 1 || playerAnswer > ServerHelper.MAX_CONNECTIONS) {
             out.println(ServerHelper.insertNumOfPlayers());
         }

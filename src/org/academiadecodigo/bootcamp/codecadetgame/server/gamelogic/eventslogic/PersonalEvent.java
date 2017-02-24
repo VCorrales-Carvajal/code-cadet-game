@@ -9,16 +9,22 @@ import org.academiadecodigo.bootcamp.codecadetgame.server.utils.GameHelper;
  * Created by codecadet on 2/22/17.
  */
 public class PersonalEvent implements Event  {
-    public static final int LENGTH_PERSONAL_EVENTS = 18;
+    public static final int LENGTH_PERSONAL_EVENTS = 14;
     private final Server server;
     private String currentAnswer;
+
+    private String[] personalEvents;
+    private int[] stepsPersonalEvents;
+    private LifeArea[] lifeAreaPersonalEvents;
 
     private int[] shuffledIndexPersonal;
     private int counterShuffledIndexesPersonal = 0;
 
     public PersonalEvent(Server server) {
         this.server = server;
+        init();
     }
+
 
     @Override
     public void process(String username) {
@@ -56,68 +62,130 @@ public class PersonalEvent implements Event  {
         currentAnswer = answer;
     }
 
+    private void init() {
+        personalEvents = new String[LENGTH_PERSONAL_EVENTS];
+        stepsPersonalEvents = new int[LENGTH_PERSONAL_EVENTS];
+        lifeAreaPersonalEvents = new LifeArea[LENGTH_PERSONAL_EVENTS];
+
+        personalEvents[0] = "You have been promoted";
+        stepsPersonalEvents[0] = +1;
+        lifeAreaPersonalEvents[0] = LifeArea.CAREER;
+
+        personalEvents[1] = "You were caught with the secretary and you got fired";
+        stepsPersonalEvents[1] = -2;
+        lifeAreaPersonalEvents[1] = LifeArea.CAREER;
+
+        personalEvents[2] = "You are fired because you missed work a couple of times";
+        stepsPersonalEvents[2] = -1;
+        lifeAreaPersonalEvents[2] = LifeArea.CAREER;
+
+        personalEvents[3] = "This is so great: your aunt has just died and left you lots of money!";
+        stepsPersonalEvents[3] = +1;
+        lifeAreaPersonalEvents[3] = LifeArea.MONEY;
+
+        personalEvents[4] = "You lost all your money with you drug habit";
+        stepsPersonalEvents[4] = -1;
+        lifeAreaPersonalEvents[4] = LifeArea.MONEY;
+
+        personalEvents[5] = "You spent a great evening with someone you met on Tinder";
+        stepsPersonalEvents[5] = +1;
+        lifeAreaPersonalEvents[5] = LifeArea.HAPPINESS;
+
+        personalEvents[6] = "You went to spend a week in Florence";
+        stepsPersonalEvents[6] = +1;
+        lifeAreaPersonalEvents[6] = LifeArea.HAPPINESS;
+
+        personalEvents[7] = "You have just fallen in love with a crocodile";
+        stepsPersonalEvents[7] = +1;
+        lifeAreaPersonalEvents[7] = LifeArea.HAPPINESS;
+
+        personalEvents[8] = "You just had the best awesome great delicious marvelous fantabulous meal in the world";
+        stepsPersonalEvents[8] = +1;
+        lifeAreaPersonalEvents[8] = LifeArea.HAPPINESS;
+
+        personalEvents[9] = "You delivered your project in time and then slept for 20h straight";
+        stepsPersonalEvents[9] = +1;
+        lifeAreaPersonalEvents[9] = LifeArea.HAPPINESS;
+
+        personalEvents[10] = "Someone broke your heart";
+        stepsPersonalEvents[10] = -1;
+        lifeAreaPersonalEvents[10] = LifeArea.HAPPINESS;
+
+        personalEvents[11] = "You are growing bald";
+        stepsPersonalEvents[11] = -1;
+        lifeAreaPersonalEvents[11] = LifeArea.HAPPINESS;
+
+        personalEvents[12] = "You just got an urinary infection";
+        stepsPersonalEvents[12] = -1;
+        lifeAreaPersonalEvents[12] = LifeArea.HAPPINESS;
+
+        personalEvents[13] = "You found your partner is cheating on you";
+        stepsPersonalEvents[13] = -1;
+        lifeAreaPersonalEvents[13] = LifeArea.HAPPINESS;
+
+    }
 
     public static String[] getPersonalEvents() {
-        String[] pe = new String[LENGTH_PERSONAL_EVENTS];
+        String[] personalEvents = new String[LENGTH_PERSONAL_EVENTS];
 
-        pe[0] = "You have been promoted";
-        pe[1] = "You were caught with the secretary and you got fired";
-        pe[2] = "You are fired because you missed work a couple of times";
-        pe[3] = "This is so great: your aunt has just died and left you lots of money!";
-        pe[4] = "You lost all your money with you drug habit";
-        pe[5] = "You spent a great evening with someone you met on Tinder";
-        pe[6] = "You went to spend a week in Florence";
-        pe[7] = "You have just fallen in love with a crocodile";
-        pe[8] = "You just had the best awesome great delicious marvelous fantabulous meal in the world";
-        pe[9] = "You delivered your project in time and then slept for 20h straight";
-        pe[10] = "Someone broke your heart";
-        pe[11] = "You are growing bald";
-        pe[12] = "You just got an urinary infection";
-        pe[13] = "You found your partner is cheating on you";
+        personalEvents[0] = "You have been promoted";
+        personalEvents[1] = "You were caught with the secretary and you got fired";
+        personalEvents[2] = "You are fired because you missed work a couple of times";
+        personalEvents[3] = "This is so great: your aunt has just died and left you lots of money!";
+        personalEvents[4] = "You lost all your money with you drug habit";
+        personalEvents[5] = "You spent a great evening with someone you met on Tinder";
+        personalEvents[6] = "You went to spend a week in Florence";
+        personalEvents[7] = "You have just fallen in love with a crocodile";
+        personalEvents[8] = "You just had the best awesome great delicious marvelous fantabulous meal in the world";
+        personalEvents[9] = "You delivered your project in time and then slept for 20h straight";
+        personalEvents[10] = "Someone broke your heart";
+        personalEvents[11] = "You are growing bald";
+        personalEvents[12] = "You just got an urinary infection";
+        personalEvents[13] = "You found your partner is cheating on you";
 
-        return pe;
+        return personalEvents;
     }
 
     public static int getStepsChangedPersonalEvents(int index) {
-        int[] stepsPE = new int[LENGTH_PERSONAL_EVENTS];
+        int[] stepsPersonalEvents = new int[LENGTH_PERSONAL_EVENTS];
 
-        stepsPE[0] = +1;
-        stepsPE[1] = -2;
-        stepsPE[2] = -1;
-        stepsPE[3] = +1;
-        stepsPE[4] = -1;
-        stepsPE[5] = +1;
-        stepsPE[6] = +1;
-        stepsPE[7] = +1;
-        stepsPE[8] = +1;
-        stepsPE[9] = +1;
-        stepsPE[10] = -1;
-        stepsPE[11] = -1;
-        stepsPE[12] = -1;
-        stepsPE[13] = -1;
+        stepsPersonalEvents[0] = +1;
+        stepsPersonalEvents[1] = -2;
+        stepsPersonalEvents[2] = -1;
+        stepsPersonalEvents[3] = +1;
+        stepsPersonalEvents[4] = -1;
+        stepsPersonalEvents[5] = +1;
+        stepsPersonalEvents[6] = +1;
+        stepsPersonalEvents[7] = +1;
+        stepsPersonalEvents[8] = +1;
+        stepsPersonalEvents[9] = +1;
+        stepsPersonalEvents[10] = -1;
+        stepsPersonalEvents[11] = -1;
+        stepsPersonalEvents[12] = -1;
+        stepsPersonalEvents[13] = -1;
 
-        return stepsPE[index];
+        return stepsPersonalEvents[index];
     }
 
     public static LifeArea getAreaChangedPersonalEvents(int index) {
-        LifeArea[] lifeAreaPE = new LifeArea[LENGTH_PERSONAL_EVENTS];
+        LifeArea[] lifeAreaPersonalEvents = new LifeArea[LENGTH_PERSONAL_EVENTS];
 
-        lifeAreaPE[0] = LifeArea.CAREER;
-        lifeAreaPE[1] = LifeArea.CAREER;
-        lifeAreaPE[2] = LifeArea.CAREER;
-        lifeAreaPE[3] = LifeArea.MONEY;
-        lifeAreaPE[4] = LifeArea.MONEY;
-        lifeAreaPE[5] = LifeArea.HAPPINESS;
-        lifeAreaPE[6] = LifeArea.HAPPINESS;
-        lifeAreaPE[7] = LifeArea.HAPPINESS;
-        lifeAreaPE[8] = LifeArea.HAPPINESS;
-        lifeAreaPE[9] = LifeArea.HAPPINESS;
-        lifeAreaPE[10] = LifeArea.HAPPINESS;
-        lifeAreaPE[11] = LifeArea.HAPPINESS;
-        lifeAreaPE[12] = LifeArea.HAPPINESS;
-        lifeAreaPE[13] = LifeArea.HAPPINESS;
+        lifeAreaPersonalEvents[0] = LifeArea.CAREER;
+        lifeAreaPersonalEvents[1] = LifeArea.CAREER;
+        lifeAreaPersonalEvents[2] = LifeArea.CAREER;
+        lifeAreaPersonalEvents[3] = LifeArea.MONEY;
+        lifeAreaPersonalEvents[4] = LifeArea.MONEY;
+        lifeAreaPersonalEvents[5] = LifeArea.HAPPINESS;
+        lifeAreaPersonalEvents[6] = LifeArea.HAPPINESS;
+        lifeAreaPersonalEvents[7] = LifeArea.HAPPINESS;
+        lifeAreaPersonalEvents[8] = LifeArea.HAPPINESS;
+        lifeAreaPersonalEvents[9] = LifeArea.HAPPINESS;
+        lifeAreaPersonalEvents[10] = LifeArea.HAPPINESS;
+        lifeAreaPersonalEvents[11] = LifeArea.HAPPINESS;
+        lifeAreaPersonalEvents[12] = LifeArea.HAPPINESS;
+        lifeAreaPersonalEvents[13] = LifeArea.HAPPINESS;
 
-        return lifeAreaPE[index];
+        return lifeAreaPersonalEvents[index];
     }
 
     public static String getConsequencePersonalEvents(int index) {
@@ -127,25 +195,25 @@ public class PersonalEvent implements Event  {
         String direction;
 
         int step = getStepsChangedPersonalEvents(index);
-        changeString = getStringGivenStepPersonalEvents(step,
+        changeString = GameHelper.getStringGivenStep(step,
                 Math.abs(step) + " step forward.", Math.abs(step) + " step back.");
 
         switch (getAreaChangedPersonalEvents(index)) {
 
             case CAREER:
-                direction = getStringGivenStepPersonalEvents(step,
+                direction = GameHelper.getStringGivenStep(step,
                         " moved forward ", " had a setback ");
                 lifeAreaConsequence = "You" + direction + "in your career!";
                 break;
 
             case MONEY:
-                direction = getStringGivenStepPersonalEvents(step,
+                direction = GameHelper.getStringGivenStep(step,
                         " earned ", " just lost ");
                 lifeAreaConsequence = "You" + direction + "money!";
                 break;
 
             case HAPPINESS:
-                direction = getStringGivenStepPersonalEvents(step,
+                direction = GameHelper.getStringGivenStep(step,
                         " happy!", " sad.");
                 lifeAreaConsequence = "You are" + direction;
                 break;
@@ -156,13 +224,5 @@ public class PersonalEvent implements Event  {
         }
 
         return lifeAreaConsequence + " " + changeString;
-    }
-
-    private static String getStringGivenStepPersonalEvents(int step, String stringPositive, String stringNegative) {
-        if (step > 0) {
-            return stringPositive;
-        } else {
-            return stringNegative;
-        }
     }
 }

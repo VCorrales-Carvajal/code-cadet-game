@@ -2,6 +2,7 @@ package org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.eventslogic
 
 import org.academiadecodigo.bootcamp.codecadetgame.server.connection.PlayerDispatcher;
 import org.academiadecodigo.bootcamp.codecadetgame.server.connection.Server;
+import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.LifeArea;
 import org.academiadecodigo.bootcamp.codecadetgame.server.utils.GameHelper;
 
 import static org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.eventslogic.PersonalEvent.getPersonalEvents;
@@ -20,6 +21,7 @@ public class LifeDecision implements Event {
     private String[] statements;
     private String[] positiveConsequences;
     private String[] negativeConsequences;
+    private LifeArea[] lifeAreas;
     private int[] shuffledIndexes;
     private int lastIndexUsed = - 1;
 
@@ -30,8 +32,6 @@ public class LifeDecision implements Event {
         init();
     }
 
-    private void init() {
-    }
 
     //TODO VERO: Verifies event pe and asks respective Class to resolve
     // (send message to players, check players answers/results and update players positions))
@@ -77,5 +77,11 @@ public class LifeDecision implements Event {
     @Override
     public void setAnswer(String answer) {
         currentAnswer = answer;
+    }
+    private void init() {
+        statements[0] = "Spend your evenings at a workshop learning more about programming";
+        positiveConsequences[0] = "You get promoted for showing good results as a consequence of the new stuff you learned";
+        negativeConsequences[0] = "You get promoted for showing good results as a consequence of the new stuff you learned";
+
     }
 }
