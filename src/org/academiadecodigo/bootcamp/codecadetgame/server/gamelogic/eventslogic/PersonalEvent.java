@@ -7,7 +7,7 @@ import org.academiadecodigo.bootcamp.codecadetgame.server.utils.GameHelper;
 /**
  * Created by codecadet on 2/22/17.
  */
-public class PersonalEvent implements Event  {
+public class PersonalEvent implements Event {
 
     public static final int LENGTH_PERSONAL_EVENTS = 14;
     private final Server server;
@@ -34,17 +34,16 @@ public class PersonalEvent implements Event  {
 
         server.sendMsgToAll(eventToDisplay);
 
-        GameHelper.updateOnePlayerPosition(steps[index], username, server);
+        GameHelper.updateOnePlayerPosition(steps[index], username, server, lifeArea[index]);
 
-        server.sendMsgToAll(getConsequencePersonalEvents(index));
-        
+        server.sendMsgToAll(getConsequenceString(username, index));
+
         counterIndexes++;
         if (counterIndexes == LENGTH_PERSONAL_EVENTS) {
             counterIndexes = 0;
         }
 
     }
-
 
 
     private void init() {
@@ -112,7 +111,7 @@ public class PersonalEvent implements Event  {
     }
 
 
-    public String getConsequencePersonalEvents(int index) {
+    public String getConsequenceString(String username, int index) {
 
         String lifeAreaConsequence;
         String changeString;
@@ -147,6 +146,11 @@ public class PersonalEvent implements Event  {
 
         }
 
-        return lifeAreaConsequence + " " + changeString;
+        String globalPositionString = lifeAreaConsequence + " " + changeString + "\n";
+        String lifeAreaPositionString = "Dear " + username + ", your points in ";
+        for (int i = 0; i < LifeArea.values().length; i++) {
+            lifeAreaPositionString = lifeAreaPositionString + LifeArea.values()[i] + "are : " + server.getPlayerDispatcherTable().get(username).getPlayer().getLifeAreasPosition()[i] + "\n";
+        }
+        return globalPositionString + lifeAreaPositionString;
     }
 }

@@ -2,6 +2,7 @@ package org.academiadecodigo.bootcamp.codecadetgame.server.utils;
 
 import org.academiadecodigo.bootcamp.codecadetgame.server.connection.PlayerDispatcher;
 import org.academiadecodigo.bootcamp.codecadetgame.server.connection.Server;
+import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.LifeArea;
 
 import java.util.Random;
 import java.util.Set;
@@ -18,6 +19,7 @@ public class GameHelper {
 
     /**
      * Auxiliary method to shuffle the indexes of an array
+     *
      * @param length of the array
      * @return int[] with randomly ordered numbers that ranging from 0 until (length - 1)
      */
@@ -25,7 +27,7 @@ public class GameHelper {
         // Implementing Fisher-Yates shuffle
         int[] ar = new int[length];
         for (int i = 0; i < length; i++) {
-           ar[i] = i;
+            ar[i] = i;
         }
 
         Random rnd = ThreadLocalRandom.current();
@@ -55,7 +57,7 @@ public class GameHelper {
         String emptyPosition = "|     |";
         String field = "";
 
-        for (int player = 0; player < playerCurrentPositions.length; player++ ) {
+        for (int player = 0; player < playerCurrentPositions.length; player++) {
             for (int i = 0; i < 3; i++) {
                 for (int j = 1; j <= 10; j++) {
                     if (j == playerCurrentPositions[player]) {
@@ -78,7 +80,7 @@ public class GameHelper {
 
         int i = 0;
         for (String username : usernames) {
-            playersPositions[i] = server.getPlayerDispatcherTable().get(username).getPlayer().getPosition();
+            playersPositions[i] = server.getPlayerDispatcherTable().get(username).getPlayer().getGlobalPosition();
             i++;
         }
 
@@ -91,15 +93,21 @@ public class GameHelper {
         Set<String> usernames = server.getPlayerDispatcherTable().keySet();
         for (String username : usernames) {
             PlayerDispatcher pd = server.getPlayerDispatcherTable().get(username);
-            pd.getPlayer().setPosition(pd.getPlayer().getPosition() + change);
+            pd.getPlayer().setGlobalPosition(pd.getPlayer().getGlobalPosition() + change);
         }
 
     }
 
-    public static void updateOnePlayerPosition(int change, String username, Server server) {
-        int prevPos = server.getPlayerDispatcherTable().get(username).getPlayer().getPosition();
+    public static void updateOnePlayerPosition(int change, String username, Server server, LifeArea lifeArea) {
+
+        int prevGlobalPos = server.getPlayerDispatcherTable().get(username).getPlayer().getGlobalPosition();
+        int prevLifePosition = server.getPlayerDispatcherTable().get(username).getPlayer().getLifeAreasPosition()[lifeArea.ordinal()];
+
         //Set new position
-        server.getPlayerDispatcherTable().get(username).getPlayer().setPosition(prevPos + change);
+        server.getPlayerDispatcherTable().get(username).getPlayer().setGlobalPosition(prevGlobalPos + change);
+
+        server.getPlayerDispatcherTable().get(username).getPlayer().setLifeAreasPosition(prevLifePosition + change, lifeArea);
+
     }
 
     public static String displayCowWisdomQuote() {

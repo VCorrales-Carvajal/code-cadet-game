@@ -1,26 +1,41 @@
 package org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic;
 
+import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.LifeArea;
+
 /**
  * Created by ToAlmeida, joaobonifacio, MicaelCruz and VCorrales-Carvajal on 2/18/17.
  */
 public class Player {
 
     private String username;
-    private int position;
+    private int globalPosition;
+    private int[] lifeAreasPosition;
 
     public Player(String username) {
         this.username = username;
+
+        lifeAreasPosition = new int[LifeArea.values().length];
+
     }
 
     public String getUsername() {
         return username;
     }
 
-    public void setPosition(int position) {
-        this.position = position;
+    public void setGlobalPosition(int globalPosition) {
+        this.globalPosition = globalPosition;
     }
 
-    public int getPosition() {
-        return position;
+    public int getGlobalPosition() {
+        return globalPosition;
+    }
+
+    public int[] getLifeAreasPosition() {
+        return lifeAreasPosition;
+    }
+
+    public void setLifeAreasPosition(int lifeAreasPosition, LifeArea lifeArea) {
+
+        this.lifeAreasPosition[lifeArea.ordinal()] = lifeAreasPosition;
     }
 }

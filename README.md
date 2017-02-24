@@ -32,6 +32,6 @@ The game will present quizzes that will advance the career of the player that an
           3. Happiness: Same as 2.
         2. _Non-choosable_: The event affects all players in the same manner.
 - After each turn, the consequence of the choice or event is shown in the screen.
-- After this, the position of all players is shown in the screen (how close or far they are from the finish line).
+- After this, the globalPosition of all players is shown in the screen (how close or far they are from the finish line).
 - From time to time a ascii cow shows up with a wisdom quote about java.
 - The winner is whoever makes it to the finish line in first place.
