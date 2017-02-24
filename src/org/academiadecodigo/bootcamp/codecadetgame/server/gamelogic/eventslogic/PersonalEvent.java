@@ -8,7 +8,7 @@ import org.academiadecodigo.bootcamp.codecadetgame.server.utils.GameHelper;
  * Created by codecadet on 2/22/17.
  */
 public class PersonalEvent implements Event  {
-    public static final int LENGTH_PERSONAL_EVENTS = 18;
+    public static final int LENGTH_PERSONAL_EVENTS = 14;
     private final Server server;
 
     private int[] shuffledIndexPersonal;
