@@ -9,14 +9,13 @@ import java.util.Scanner;
 /**
  * Created by codecadet on 2/22/17.
  */
-public class Question implements Event  {
+public class Question implements ChoosableEvent {
 
+    public static final int LENGTH_QUESTIONS = 5;
     private final Server server;
-    private String currentAnswer;
-    private final int numberOfQuestions = 5;
-    String[] questions = new String[numberOfQuestions];
-    String[] correctAnswer = new String[numberOfQuestions];
-    int[] numberOfSteps = new int[numberOfQuestions];
+    String[] questions = new String[LENGTH_QUESTIONS];
+    String[] correctAnswer = new String[LENGTH_QUESTIONS];
+    int[] numberOfSteps = new int[LENGTH_QUESTIONS];
 
 
     public Question(Server server) {
@@ -25,12 +24,11 @@ public class Question implements Event  {
     }
 
 
-
     //TODO MICAEL: Verifies event type and asks respective Class to resolve (send message to players, check players answers/results and update players positions))
     @Override
     public void process(String username) {
 
-        if (!username.equals("All")){
+        if (!username.equals("All")) {
             System.out.println("QuestionEvent not processing accordingly");
             return;
         }
@@ -38,16 +36,24 @@ public class Question implements Event  {
         String eventToDisplay = getStatement();
         server.sendMsgToAll(eventToDisplay);
 
-        for (PlayerDispatcher pd: server.getPlayerDispatcherList()) {
+        for (PlayerDispatcher pd : server.getPlayerDispatcherList()) {
             pd.setActive(true);
             pd.setCurrentEvent(this);
         }
 
         processAnswer();
 
+
     }
 
     private void processAnswer() {
+
+        //TODO Micael:
+        // check if there's a winner and update consequence String.
+        //If there's a winner call getConsequenceString, else send msg to all saying no one answered correctly
+
+        server.sendMsgToAll(getConsequenceString(0,""));
+
     }
 
 
@@ -55,12 +61,10 @@ public class Question implements Event  {
     //TODO: Include the first question and narrative about leaving the AC
 
 
+    private void init() {
 
-    private void init(){
 
-
-        questions[0] = GameHelper.gettingOutOfAC() + "\n" +
-                "What is the difference between a class with only abstract methods and an interface?\n" +
+        questions[0] = "What is the difference between a class with only abstract methods and an interface?\n" +
                 "\t1. An interface can have multiple inheritance, while an abstract class cannot\n" +
                 "\t2. Methods have to be overridden\n" +
                 "\t3. An abstract class can have properties and an interface cannot\n" +
@@ -79,12 +83,22 @@ public class Question implements Event  {
 
     }
 
-    @Override
-    public void setAnswer(String answer) {
-        currentAnswer = answer;
-    }
-
     public String getStatement() {
         return "";
+    }
+
+    @Override
+    public void chooseAnswer(String answer) {
+
+    }
+
+    public String getConsequenceString(int index, String winner) {
+
+        int step = numberOfSteps[index];
+        if (winner.equals("")){
+            return "No one got it right! No one moves forward this turn!";
+        }
+        return winner + ": you moved forward in your career! Advance " + step + "steps!";
+
     }
 }

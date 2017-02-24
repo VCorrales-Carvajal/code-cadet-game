@@ -9,5 +9,4 @@ public interface Event {
 
     void process(String username);
 
-    void setAnswer(String answer);
 }

@@ -1,6 +1,5 @@
 package org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.eventslogic;
 
-import org.academiadecodigo.bootcamp.codecadetgame.server.connection.PlayerDispatcher;
 import org.academiadecodigo.bootcamp.codecadetgame.server.connection.Server;
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.LifeArea;
 import org.academiadecodigo.bootcamp.codecadetgame.server.utils.GameHelper;
@@ -9,9 +8,9 @@ import org.academiadecodigo.bootcamp.codecadetgame.server.utils.GameHelper;
  * Created by codecadet on 2/22/17.
  */
 public class PersonalEvent implements Event  {
+
     public static final int LENGTH_PERSONAL_EVENTS = 14;
     private final Server server;
-    private String currentAnswer;
 
     private String[] statements;
     private int[] steps;
@@ -35,7 +34,7 @@ public class PersonalEvent implements Event  {
 
         server.sendMsgToAll(eventToDisplay);
 
-        GameHelper.updateOnPlayerPosition(steps[index], username, server);
+        GameHelper.updateOnePlayerPosition(steps[index], username, server);
 
         server.sendMsgToAll(getConsequencePersonalEvents(index));
         
@@ -46,10 +45,6 @@ public class PersonalEvent implements Event  {
 
     }
 
-    @Override
-    public void setAnswer(String answer) {
-        currentAnswer = answer;
-    }
 
 
     private void init() {

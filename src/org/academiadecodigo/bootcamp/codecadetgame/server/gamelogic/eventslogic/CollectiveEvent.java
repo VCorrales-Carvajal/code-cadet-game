@@ -10,7 +10,6 @@ import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.LifeAr
 public class CollectiveEvent implements Event {
     public static final int LENGTH_COLLECTIVE_EVENTS = 7;
     private final Server server;
-    private String currentAnswer;
 
     private String[] statements = new String[LENGTH_COLLECTIVE_EVENTS];
     private int[] steps = new int[LENGTH_COLLECTIVE_EVENTS];
@@ -33,7 +32,7 @@ public class CollectiveEvent implements Event {
 
         server.sendMsgToAll(eventToDisplay);
 
-        GameHelper.updateOnPlayerPosition(steps[index], username, server);
+        GameHelper.updateOnePlayerPosition(steps[index], username, server);
 
         server.sendMsgToAll(getConsequenceCollectiveEvents(index));
 
@@ -46,10 +45,6 @@ public class CollectiveEvent implements Event {
     private void processAnswer() {
     }
 
-    @Override
-    public void setAnswer(String answer) {
-        currentAnswer = answer;
-    }
 
     private void init() {
 
