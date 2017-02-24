@@ -1,6 +1,10 @@
 package org.academiadecodigo.bootcamp.codecadetgame.server.utils;
 
+import org.academiadecodigo.bootcamp.codecadetgame.server.connection.PlayerDispatcher;
+import org.academiadecodigo.bootcamp.codecadetgame.server.connection.Server;
+
 import java.util.Random;
+import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -61,6 +65,37 @@ public class GameHelper {
             field += "\n";
         }
         return field;
+    }
+
+    public static int[] getPlayersPositions(Server server) {
+
+        int[] playersPositions = new int[server.getPlayerDispatcherTable().size()];
+        Set<String> usernames = server.getPlayerDispatcherTable().keySet();
+
+        int i = 0;
+        for (String username : usernames) {
+            playersPositions[i] = server.getPlayerDispatcherTable().get(username).getPlayer().getPosition();
+            i++;
+        }
+
+        return playersPositions;
+    }
+
+
+    public static void updatePlayersPositions(int change, Server server) {
+
+        Set<String> usernames = server.getPlayerDispatcherTable().keySet();
+        for (String username : usernames) {
+            PlayerDispatcher pd = server.getPlayerDispatcherTable().get(username);
+            pd.getPlayer().setPosition(pd.getPlayer().getPosition() + change);
+        }
+
+    }
+
+    public static void updateOnPlayerPosition(int change, String username, Server server) {
+        int prevPos = server.getPlayerDispatcherTable().get(username).getPlayer().getPosition();
+        //Set new position
+        server.getPlayerDispatcherTable().get(username).getPlayer().setPosition(prevPos + change);
     }
 
     public static String displayCowWisdomQuote() {

@@ -6,6 +6,7 @@ import org.academiadecodigo.bootcamp.codecadetgame.server.connection.Server;
  * Created by codecadet on 2/22/17.
  */
 public class Question implements Event  {
+
     private final Server server;
 
     public Question(Server server) {
