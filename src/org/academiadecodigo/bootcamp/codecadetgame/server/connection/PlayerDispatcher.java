@@ -83,9 +83,10 @@ public class PlayerDispatcher implements Runnable {
             // When all players have connected, start the game
             if (playerNumber == server.getNumberOfPlayers()) {
 
-                //TODO Micael: game needs a new Thread
                 server.setGame(Factory.createGame(server));
-                server.getGame().start();
+                Thread thread = new Thread(server.getGame());
+                thread.setName("game");
+                thread.start();
 
                 out.println(ServerHelper.startGame());
 

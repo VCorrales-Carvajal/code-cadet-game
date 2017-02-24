@@ -12,7 +12,7 @@ import java.util.Set;
  * Rolls dice and controls turns
  */
 
-public class Game {
+public class Game implements Runnable {
 
     private Server server;
     private Event[] events = new Event[EventType.values().length];
@@ -91,5 +91,11 @@ public class Game {
 
     public Event[] getEvents() {
         return events;
+    }
+
+    @Override
+    public void run() {
+
+        start();
     }
 }
