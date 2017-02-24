@@ -12,7 +12,6 @@ import java.util.Scanner;
 public class Question implements Event  {
 
     private final Server server;
-    private String currentAnswer;
     private final int numberOfQuestions = 5;
     String[] questions = new String[numberOfQuestions];
     String[] correctAnswer = new String[numberOfQuestions];
@@ -48,6 +47,12 @@ public class Question implements Event  {
     }
 
     private void processAnswer() {
+
+
+
+
+
+
     }
 
 
@@ -59,8 +64,7 @@ public class Question implements Event  {
     private void init(){
 
 
-        questions[0] = GameHelper.gettingOutOfAC() + "\n" +
-                "What is the difference between a class with only abstract methods and an interface?\n" +
+        questions[0] = "What is the difference between a class with only abstract methods and an interface?\n" +
                 "\t1. An interface can have multiple inheritance, while an abstract class cannot\n" +
                 "\t2. Methods have to be overridden\n" +
                 "\t3. An abstract class can have properties and an interface cannot\n" +
@@ -81,7 +85,7 @@ public class Question implements Event  {
 
     @Override
     public void setAnswer(String answer) {
-        currentAnswer = answer;
+
     }
 
     public String getStatement() {
