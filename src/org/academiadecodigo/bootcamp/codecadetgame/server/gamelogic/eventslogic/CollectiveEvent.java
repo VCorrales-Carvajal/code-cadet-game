@@ -22,7 +22,7 @@ public class CollectiveEvent implements Event {
     @Override
     public void process() {
         //TODO BONI: Verifies event type and asks respective Class to resolve (send message to players, check players answers/results and update players positions))
-        shuffledIndexesCollective = GameHelper.shuffleIndex(LENGTH_COLLECTIVE_EVENTS);
+        shuffledIndexesCollective = GameHelper.shuffleIndexArray(LENGTH_COLLECTIVE_EVENTS);
 
         int index;
         if (counterShuffledIndexesCollective == LENGTH_COLLECTIVE_EVENTS) {
