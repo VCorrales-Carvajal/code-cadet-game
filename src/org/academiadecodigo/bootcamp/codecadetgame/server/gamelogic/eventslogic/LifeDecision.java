@@ -21,6 +21,7 @@ public class LifeDecision implements Event {
     private String[] statements;
     private String[] positiveConsequences;
     private String[] negativeConsequences;
+    private int[] steps;
     private LifeArea[] lifeAreas;
     private int[] shuffledIndexes;
     private int lastIndexUsed = - 1;
@@ -78,10 +79,13 @@ public class LifeDecision implements Event {
     public void setAnswer(String answer) {
         currentAnswer = answer;
     }
+
     private void init() {
         statements[0] = "Spend your evenings at a workshop learning more about programming";
         positiveConsequences[0] = "You get promoted for showing good results as a consequence of the new stuff you learned";
-        negativeConsequences[0] = "You get promoted for showing good results as a consequence of the new stuff you learned";
+        steps[0] = 1;
+        negativeConsequences[0] = "With less hours of sleep, your productivity went down and you got demoted";
+        lifeAreas[0] = LifeArea.CAREER;
 
     }
 }
