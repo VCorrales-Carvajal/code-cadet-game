@@ -12,12 +12,12 @@ public class CollectiveEvent implements Event {
     private final Server server;
     private String currentAnswer;
 
-    private String[] collectiveEvents = new String[LENGTH_COLLECTIVE_EVENTS];
-    private int[] stepsCollectiveEvents = new int[LENGTH_COLLECTIVE_EVENTS];
-    private LifeArea[] lifeAreaCollectiveEvents = new LifeArea[LENGTH_COLLECTIVE_EVENTS];
+    private String[] statements = new String[LENGTH_COLLECTIVE_EVENTS];
+    private int[] steps = new int[LENGTH_COLLECTIVE_EVENTS];
+    private LifeArea[] lifeArea = new LifeArea[LENGTH_COLLECTIVE_EVENTS];
 
-    private int[] shuffledIndexesCollective;
-    private int counterShuffledIndexesCollective = 0;
+    private int[] shuffledIndexes;
+    private int counterIndexes = 0;
 
     public CollectiveEvent(Server server) {
         this.server = server;
@@ -26,24 +26,21 @@ public class CollectiveEvent implements Event {
 
     @Override
     public void process(String username) {
-        //TODO BONI: Verifies event type and asks respective Class to resolve (send message to players, check players answers/results and update players positions))
-        shuffledIndexesCollective = GameHelper.shuffleIndexArray(LENGTH_COLLECTIVE_EVENTS);
 
-        int index;
-        if (counterShuffledIndexesCollective == LENGTH_COLLECTIVE_EVENTS) {
-            counterShuffledIndexesCollective = 0;
-        }
-        index = shuffledIndexesCollective[counterShuffledIndexesCollective];
-        String eventToDisplay = getCollectiveEvents()[index];
-        counterShuffledIndexesCollective++;
+        int index = shuffledIndexes[counterIndexes];
 
-        if (!username.equals("All")) {
-            System.out.println("CollectiveEvent not processing accordingly");
-            return;
-        }
+        String eventToDisplay = username + GameHelper.happenedToYou() + statements[index];
 
         server.sendMsgToAll(eventToDisplay);
-        processAnswer();
+
+        GameHelper.updateOnPlayerPosition(steps[index], username, server);
+
+        server.sendMsgToAll(getConsequenceCollectiveEvents(index));
+
+        counterIndexes++;
+        if (counterIndexes == LENGTH_COLLECTIVE_EVENTS) {
+            counterIndexes = 0;
+        }
     }
 
     private void processAnswer() {
@@ -56,33 +53,33 @@ public class CollectiveEvent implements Event {
 
     private void init() {
 
-        collectiveEvents[0] = "Brexit causes all British tech companies to move to Portugal and everyone gets a better job";
-        stepsCollectiveEvents[0] = +1;
-        lifeAreaCollectiveEvents[0] = LifeArea.CAREER;
+        statements[0] = "Brexit causes all British tech companies to move to Portugal and everyone gets a better job";
+        steps[0] = +1;
+        lifeArea[0] = LifeArea.CAREER;
 
-        collectiveEvents[1] = "Artificial intelligence takes away everyone’s job";
-        stepsCollectiveEvents[1] = -1;
-        lifeAreaCollectiveEvents[1] = LifeArea.CAREER;
+        statements[1] = "Artificial intelligence takes away everyone’s job";
+        steps[1] = -1;
+        lifeArea[1] = LifeArea.CAREER;
 
-        collectiveEvents[2] = "All tech companies moved to Romania and everyone loses the job";
-        stepsCollectiveEvents[2] = -1;
-        lifeAreaCollectiveEvents[2] = LifeArea.CAREER;
+        statements[2] = "All tech companies moved to Romania and everyone loses the job";
+        steps[2] = -1;
+        lifeArea[2] = LifeArea.CAREER;
 
-        collectiveEvents[3] = "Lower taxes for all";
-        stepsCollectiveEvents[3] = +1;
-        lifeAreaCollectiveEvents[3] = LifeArea.MONEY;
+        statements[3] = "Lower taxes for all";
+        steps[3] = +1;
+        lifeArea[3] = LifeArea.MONEY;
 
-        collectiveEvents[4] = "More taxes due to the new war with North Korea";
-        stepsCollectiveEvents[4] = -1;
-        lifeAreaCollectiveEvents[4] = LifeArea.MONEY;
+        statements[4] = "More taxes due to the new war with North Korea";
+        steps[4] = -1;
+        lifeArea[4] = LifeArea.MONEY;
 
-        collectiveEvents[5] = "Portugal wins the World Cup";
-        stepsCollectiveEvents[5] = +1;
-        lifeAreaCollectiveEvents[5] = LifeArea.HAPPINESS;
+        statements[5] = "Portugal wins the World Cup";
+        steps[5] = +1;
+        lifeArea[5] = LifeArea.HAPPINESS;
 
-        collectiveEvents[6] = "Donald Trump has died";
-        stepsCollectiveEvents[6] = +1;
-        lifeAreaCollectiveEvents[6] = LifeArea.HAPPINESS;
+        statements[6] = "Donald Trump has died";
+        steps[6] = +1;
+        lifeArea[6] = LifeArea.HAPPINESS;
 
 
     }
