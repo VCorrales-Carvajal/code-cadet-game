@@ -43,6 +43,10 @@ public class GameHelper {
         return MsgFormatter.serverMsg("You are on your last day of your bootcamp and to graduate you have to answer a question: ");
     }
 
+    public static String welcome() {
+        return MsgFormatter.serverMsg(FileHelper.readFile("game-welcome.txt"));
+    }
+
     public static String renderPlayersPosition(int[] playerCurrentPositions) {
         String[] boneco = new String[3];
         boneco[0] = "|\\(º_º)|";
