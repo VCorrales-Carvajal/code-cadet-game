@@ -45,8 +45,8 @@ public class PersonalEvent implements Event  {
 
         server.sendMsgToAll(eventToDisplay);
 
-        p.setActive(true);
-        p.setCurrentEvent(this);
+//        p.setActive(true);
+//        p.setCurrentEvent(this);
         
         processAnswer(currentAnswer);
         
@@ -188,17 +188,17 @@ public class PersonalEvent implements Event  {
         return lifeAreaPersonalEvents[index];
     }
 
-    public static String getConsequencePersonalEvents(int index) {
+    public String getConsequencePersonalEvents(int index) {
 
         String lifeAreaConsequence;
         String changeString;
         String direction;
 
-        int step = getStepsChangedPersonalEvents(index);
+        int step = stepsPersonalEvents[index];
         changeString = GameHelper.getStringGivenStep(step,
                 Math.abs(step) + " step forward.", Math.abs(step) + " step back.");
 
-        switch (getAreaChangedPersonalEvents(index)) {
+        switch (lifeAreaPersonalEvents[index]) {
 
             case CAREER:
                 direction = GameHelper.getStringGivenStep(step,

@@ -44,7 +44,7 @@ public class GameHelper {
     }
 
     public static String welcome() {
-        return MsgFormatter.serverMsg(FileHelper.readFile("game-welcome.txt"));
+        return MsgFormatter.serverMsg(FileHelper.readFile("resources/game-welcome.txt"));
     }
 
     public static String renderPlayersPosition(int[] playerCurrentPositions) {
