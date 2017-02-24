@@ -66,16 +66,16 @@ public class CollectiveEvent implements Event {
 
     public static LifeArea getAreaChangedCollectiveEvents(int index) {
 
-        LifeArea[] stepsCE = new LifeArea[LENGTH_COLLECTIVE_EVENTS];
-        stepsCE[0] = LifeArea.CAREER;
-        stepsCE[1] = LifeArea.CAREER;
-        stepsCE[2] = LifeArea.CAREER;
-        stepsCE[3] = LifeArea.MONEY;
-        stepsCE[4] = LifeArea.MONEY;
-        stepsCE[5] = LifeArea.HAPPINESS;
-        stepsCE[6] = LifeArea.HAPPINESS;
+        LifeArea[] lifeAreaCE = new LifeArea[LENGTH_COLLECTIVE_EVENTS];
+        lifeAreaCE[0] = LifeArea.CAREER;
+        lifeAreaCE[1] = LifeArea.CAREER;
+        lifeAreaCE[2] = LifeArea.CAREER;
+        lifeAreaCE[3] = LifeArea.MONEY;
+        lifeAreaCE[4] = LifeArea.MONEY;
+        lifeAreaCE[5] = LifeArea.HAPPINESS;
+        lifeAreaCE[6] = LifeArea.HAPPINESS;
 
-        return stepsCE[index];
+        return lifeAreaCE[index];
     }
 
     public static String getConsequenceCollectiveEvents(int index) {
@@ -106,6 +106,7 @@ public class CollectiveEvent implements Event {
             case HAPPINESS:
                 direction = getStringGivenStepCollectiveEvents(step, " happy!", " sad.");
                 lifeAreaConsequence = "Everyone is" + direction;
+                break;
 
             default:
                 lifeAreaConsequence = "Something is WRONG!!";

@@ -38,24 +38,20 @@ public class PersonalEvent implements Event  {
     public static String[] getPersonalEvents() {
         String[] pe = new String[LENGTH_PERSONAL_EVENTS];
 
-        pe[0] = "You moved forward in your career!";
-        pe[1] = "You had a setback in their career!";
-        pe[2] = "You have been promoted";
-        pe[3] = "You were caught with the secretary and you got fired";
-        pe[4] = "You are fired because you missed work a couple of times";
-        pe[5] = "This is so great: your aunt has just died and left you lots of money!";
-        pe[6] = "You lost all your money with you drug habit";
-        pe[7] = "You are happy!";
-        pe[8] = "You are sad!";
-        pe[9] = "You spent a great evening with someone you met on Tinder";
-        pe[10] = "You went to spend a week in Florence";
-        pe[11] = "You have just fallen in love with a crocodile";
-        pe[12] = "You just had the best awesome great delicious marvelous fantabulous meal in the world";
-        pe[13] = "You delivered your project in time and then slept for 20h straight";
-        pe[14] = "Someone broke your heart";
-        pe[15] = "You are growing bald";
-        pe[16] = "You just got an urinary infection";
-        pe[17] = "You found your partner is cheating on you";
+        pe[0] = "You have been promoted";
+        pe[1] = "You were caught with the secretary and you got fired";
+        pe[2] = "You are fired because you missed work a couple of times";
+        pe[3] = "This is so great: your aunt has just died and left you lots of money!";
+        pe[4] = "You lost all your money with you drug habit";
+        pe[5] = "You spent a great evening with someone you met on Tinder";
+        pe[6] = "You went to spend a week in Florence";
+        pe[7] = "You have just fallen in love with a crocodile";
+        pe[8] = "You just had the best awesome great delicious marvelous fantabulous meal in the world";
+        pe[9] = "You delivered your project in time and then slept for 20h straight";
+        pe[10] = "Someone broke your heart";
+        pe[11] = "You are growing bald";
+        pe[12] = "You just got an urinary infection";
+        pe[13] = "You found your partner is cheating on you";
 
         return pe;
     }
@@ -64,23 +60,19 @@ public class PersonalEvent implements Event  {
         int[] stepsPE = new int[LENGTH_PERSONAL_EVENTS];
 
         stepsPE[0] = +1;
-        stepsPE[1] = -1;
-        stepsPE[2] = +1;
-        stepsPE[3] = -2;
+        stepsPE[1] = -2;
+        stepsPE[2] = -1;
+        stepsPE[3] = +1;
         stepsPE[4] = -1;
         stepsPE[5] = +1;
-        stepsPE[6] = -1;
+        stepsPE[6] = +1;
         stepsPE[7] = +1;
-        stepsPE[8] = -1;
+        stepsPE[8] = +1;
         stepsPE[9] = +1;
-        stepsPE[10] = +1;
-        stepsPE[11] = +1;
-        stepsPE[12] = +1;
-        stepsPE[13] = +1;
-        stepsPE[14] = -1;
-        stepsPE[15] = -1;
-        stepsPE[16] = -1;
-        stepsPE[17] = -1;
+        stepsPE[10] = -1;
+        stepsPE[11] = -1;
+        stepsPE[12] = -1;
+        stepsPE[13] = -1;
 
         return stepsPE[index];
     }
@@ -91,10 +83,10 @@ public class PersonalEvent implements Event  {
         lifeAreaPE[0] = LifeArea.CAREER;
         lifeAreaPE[1] = LifeArea.CAREER;
         lifeAreaPE[2] = LifeArea.CAREER;
-        lifeAreaPE[3] = LifeArea.CAREER;
-        lifeAreaPE[4] = LifeArea.CAREER;
-        lifeAreaPE[5] = LifeArea.MONEY;
-        lifeAreaPE[6] = LifeArea.MONEY;
+        lifeAreaPE[3] = LifeArea.MONEY;
+        lifeAreaPE[4] = LifeArea.MONEY;
+        lifeAreaPE[5] = LifeArea.HAPPINESS;
+        lifeAreaPE[6] = LifeArea.HAPPINESS;
         lifeAreaPE[7] = LifeArea.HAPPINESS;
         lifeAreaPE[8] = LifeArea.HAPPINESS;
         lifeAreaPE[9] = LifeArea.HAPPINESS;
@@ -102,10 +94,6 @@ public class PersonalEvent implements Event  {
         lifeAreaPE[11] = LifeArea.HAPPINESS;
         lifeAreaPE[12] = LifeArea.HAPPINESS;
         lifeAreaPE[13] = LifeArea.HAPPINESS;
-        lifeAreaPE[14] = LifeArea.HAPPINESS;
-        lifeAreaPE[15] = LifeArea.HAPPINESS;
-        lifeAreaPE[16] = LifeArea.HAPPINESS;
-        lifeAreaPE[17] = LifeArea.HAPPINESS;
 
         return lifeAreaPE[index];
     }
