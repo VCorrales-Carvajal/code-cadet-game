@@ -32,7 +32,7 @@ public class CollectiveEvent implements Event {
 
         server.sendMsgToAll(eventToDisplay);
 
-        GameHelper.updateOnPlayerPosition(steps[index], username, server);
+        GameHelper.updateOnePlayerPosition(steps[index], username, server);
 
         server.sendMsgToAll(getConsequenceCollectiveEvents(index));
 
