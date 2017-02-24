@@ -173,25 +173,25 @@ public class PersonalEvent implements Event  {
         String direction;
 
         int step = getStepsChangedPersonalEvents(index);
-        changeString = getStringGivenStepPersonalEvents(step,
+        changeString = GameHelper.getStringGivenStep(step,
                 Math.abs(step) + " step forward.", Math.abs(step) + " step back.");
 
         switch (getAreaChangedPersonalEvents(index)) {
 
             case CAREER:
-                direction = getStringGivenStepPersonalEvents(step,
+                direction = GameHelper.getStringGivenStep(step,
                         " moved forward ", " had a setback ");
                 lifeAreaConsequence = "You" + direction + "in your career!";
                 break;
 
             case MONEY:
-                direction = getStringGivenStepPersonalEvents(step,
+                direction = GameHelper.getStringGivenStep(step,
                         " earned ", " just lost ");
                 lifeAreaConsequence = "You" + direction + "money!";
                 break;
 
             case HAPPINESS:
-                direction = getStringGivenStepPersonalEvents(step,
+                direction = GameHelper.getStringGivenStep(step,
                         " happy!", " sad.");
                 lifeAreaConsequence = "You are" + direction;
                 break;
@@ -202,13 +202,5 @@ public class PersonalEvent implements Event  {
         }
 
         return lifeAreaConsequence + " " + changeString;
-    }
-
-    private static String getStringGivenStepPersonalEvents(int step, String stringPositive, String stringNegative) {
-        if (step > 0) {
-            return stringPositive;
-        } else {
-            return stringNegative;
-        }
     }
 }
