@@ -1,6 +1,5 @@
 package org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.eventslogic;
 
-import org.academiadecodigo.bootcamp.codecadetgame.server.connection.PlayerDispatcher;
 import org.academiadecodigo.bootcamp.codecadetgame.server.connection.Server;
 import org.academiadecodigo.bootcamp.codecadetgame.server.utils.GameHelper;
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.LifeArea;
@@ -34,22 +33,13 @@ public class CollectiveEvent implements Event {
         String eventToDisplay = getCollectiveEvents()[index];
         counterShuffledIndexesCollective++;
 
-        if (!username.equals("All")){
+        if (!username.equals("All")) {
             System.out.println("CollectiveEvent not processing accordingly");
             return;
         }
 
         server.sendMsgToAll(eventToDisplay);
-
-        for (PlayerDispatcher pd: server.getPlayerDispatcherList()) {
-            pd.setActive(true);
-            pd.setCurrentEvent(this);
-        }
-
         processAnswer();
-
-
-
     }
 
     private void processAnswer() {
