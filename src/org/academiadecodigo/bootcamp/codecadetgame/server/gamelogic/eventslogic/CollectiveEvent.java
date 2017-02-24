@@ -12,6 +12,10 @@ public class CollectiveEvent implements Event {
     private final Server server;
     private String currentAnswer;
 
+    private String[] collectiveEvents = new String[LENGTH_COLLECTIVE_EVENTS];
+    private int[] stepsCollectiveEvents = new int[LENGTH_COLLECTIVE_EVENTS];
+    private LifeArea[] lifeAreaCollectiveEvents = new LifeArea[LENGTH_COLLECTIVE_EVENTS];
+
     private int[] shuffledIndexesCollective;
     private int counterShuffledIndexesCollective = 0;
 
@@ -48,6 +52,39 @@ public class CollectiveEvent implements Event {
     @Override
     public void setAnswer(String answer) {
         currentAnswer = answer;
+    }
+
+    private void init() {
+
+        collectiveEvents[0] = "Brexit causes all British tech companies to move to Portugal and everyone gets a better job";
+        stepsCollectiveEvents[0] = +1;
+        lifeAreaCollectiveEvents[0] = LifeArea.CAREER;
+
+        collectiveEvents[1] = "Artificial intelligence takes away everyone’s job";
+        stepsCollectiveEvents[1] = -1;
+        lifeAreaCollectiveEvents[1] = LifeArea.CAREER;
+
+        collectiveEvents[2] = "All tech companies moved to Romania and everyone loses the job";
+        stepsCollectiveEvents[2] = -1;
+        lifeAreaCollectiveEvents[2] = LifeArea.CAREER;
+
+        collectiveEvents[3] = "Lower taxes for all";
+        stepsCollectiveEvents[3] = +1;
+        lifeAreaCollectiveEvents[3] = LifeArea.MONEY;
+
+        collectiveEvents[4] = "More taxes due to the new war with North Korea";
+        stepsCollectiveEvents[4] = -1;
+        lifeAreaCollectiveEvents[4] = LifeArea.MONEY;
+
+        collectiveEvents[5] = "Portugal wins the World Cup";
+        stepsCollectiveEvents[5] = +1;
+        lifeAreaCollectiveEvents[5] = LifeArea.HAPPINESS;
+
+        collectiveEvents[6] = "Donald Trump has died";
+        stepsCollectiveEvents[6] = +1;
+        lifeAreaCollectiveEvents[6] = LifeArea.HAPPINESS;
+
+
     }
 
     public static String[] getCollectiveEvents() {
