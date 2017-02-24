@@ -5,7 +5,6 @@ import org.academiadecodigo.bootcamp.codecadetgame.server.connection.Server;
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.LifeArea;
 import org.academiadecodigo.bootcamp.codecadetgame.server.utils.GameHelper;
 
-import static org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.eventslogic.PersonalEvent.getPersonalEvents;
 
 /**
  * Created by codecadet on 2/22/17.
@@ -41,7 +40,7 @@ public class LifeDecision implements Event {
         PlayerDispatcher p = server.getPlayerDispatcherTable().get(username);
 
         int index = 0;
-        String eventToDisplay = username + GameHelper.happenedToYou() + getPersonalEvents()[index];
+        String eventToDisplay = null;
 
         server.sendMsgToAll(eventToDisplay);
 

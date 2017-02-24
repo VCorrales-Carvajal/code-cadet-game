@@ -54,6 +54,7 @@ public class PlayerDispatcher implements Runnable {
 
             // Add Player Dispatcher to the server table (container of player dispatchers)
             server.getPlayerDispatcherTable().put(username, this);
+            server.getPlayerDispatcherList().add(this);
 
             // Create player
             player = Factory.createPlayer(username);
