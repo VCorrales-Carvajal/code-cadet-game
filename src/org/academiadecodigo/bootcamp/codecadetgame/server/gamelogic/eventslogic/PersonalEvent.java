@@ -46,6 +46,7 @@ public class PersonalEvent implements Event  {
     }
 
 
+
     private void init() {
         shuffledIndexes = GameHelper.shuffleIndexArray(LENGTH_PERSONAL_EVENTS);
         statements = new String[LENGTH_PERSONAL_EVENTS];

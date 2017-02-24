@@ -3,7 +3,6 @@ package org.academiadecodigo.bootcamp.codecadetgame.server.connection;
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.Factory;
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.Player;
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.eventslogic.ChoosableEvent;
-import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.eventslogic.Event;
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.GameLength;
 import org.academiadecodigo.bootcamp.codecadetgame.server.utils.ServerHelper;
 
