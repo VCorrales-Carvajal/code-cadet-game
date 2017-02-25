@@ -1,6 +1,7 @@
 package org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.eventslogic;
 
 import org.academiadecodigo.bootcamp.codecadetgame.server.connection.Server;
+import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.EventType;
 import org.academiadecodigo.bootcamp.codecadetgame.server.utils.GameHelper;
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.LifeArea;
 import org.academiadecodigo.bootcamp.codecadetgame.server.utils.MsgFormatter;
@@ -11,6 +12,7 @@ import org.academiadecodigo.bootcamp.codecadetgame.server.utils.MsgFormatter;
 public class CollectiveEvent implements Event {
 
     public static final int LENGTH_COLLECTIVE_EVENTS = 11;
+    private final EventType eventType = EventType.COLLECTIVE_EVENT;
     private final Server server;
 
     private String[] statements;

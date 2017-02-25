@@ -189,6 +189,9 @@ public class GameHelper {
         String target = (!isCollective) ? username + ": " : "";
 
         return MsgFormatter.gameMsg(target + lifeAreaConsequence + " " + changeString);
+    }
 
+    public static String invalidAnswer() {
+        return MsgFormatter.gameMsg("Invalid Answer. No one moves this turn.");
     }
 }
