@@ -22,8 +22,8 @@ public class TimeEvent implements ChoosableEvent {
     private BlockingQueue<String[]> queue;
 
     private String[] questions;
-    private String[] positiveConsequence;
-    private String[] negativeConsequence;
+    private String[] positiveConsequences;
+    private String[] negativeConsequences;
     private int[] steps;
     private LifeArea[] lifeAreas;
 
@@ -109,29 +109,29 @@ public class TimeEvent implements ChoosableEvent {
         shuffledIndexes = GameHelper.shuffleIndexArray(LENGTH_TIME_EVENTS);
 
         questions = new String[LENGTH_TIME_EVENTS];
-        positiveConsequence = new String[LENGTH_TIME_EVENTS];
-        negativeConsequence = new String[LENGTH_TIME_EVENTS];
+        positiveConsequences = new String[LENGTH_TIME_EVENTS];
+        negativeConsequences = new String[LENGTH_TIME_EVENTS];
         steps = new int[LENGTH_TIME_EVENTS];
         lifeAreas = new LifeArea[LENGTH_TIME_EVENTS];
 
         questions[0] = "You invest in a promising tech startup\n" +
                 "\t1. I want it!\n";
-        positiveConsequence[0] = "The startup becomes the next instagram, you earn a lot of money\n";
-        negativeConsequence[0] = "The startup never takes off and you lose your investment\n";
+        positiveConsequences[0] = "The startup becomes the next instagram, you earn a lot of money\n";
+        negativeConsequences[0] = "The startup never takes off and you lose your investment\n";
         steps[0] = 1;
         lifeAreas[0] = LifeArea.MONEY;
 
         questions[1] = "You go on vacations to a beautiful Caribbean island\n" +
                 "\t1. I want it!\n";
-        positiveConsequence[1] = "You came back wonderfully tanned. Ronaldo envies you\n";
-        negativeConsequence[1] = "You got bitten by a piranha and you lose a toe\n";
+        positiveConsequences[1] = "You came back wonderfully tanned. Ronaldo envies you\n";
+        negativeConsequences[1] = "You got bitten by a piranha and you lose a toe\n";
         steps[1] = 1;
         lifeAreas[1] = LifeArea.HAPPINESS;
 
         questions[2] = "You develop a new app for the android market\n" +
                 "\t1. I want it!\n";
-        positiveConsequence[2] = "Your app becomes the next Flappy Bird! Success!\n";
-        negativeConsequence[2] = "Never trust the android market!\n";
+        positiveConsequences[2] = "Your app becomes the next Flappy Bird! Success!\n";
+        negativeConsequences[2] = "Never trust the android market!\n";
         steps[2] = 1;
         lifeAreas[2] = LifeArea.MONEY;
 
@@ -147,6 +147,6 @@ public class TimeEvent implements ChoosableEvent {
     }
 
     private String getConsequence(int index, String positiveOrNegative) {
-        return (positiveOrNegative.equals("+")) ? positiveConsequence[index] : negativeConsequence[index];
+        return (positiveOrNegative.equals("+")) ? positiveConsequences[index] : negativeConsequences[index];
     }
 }
