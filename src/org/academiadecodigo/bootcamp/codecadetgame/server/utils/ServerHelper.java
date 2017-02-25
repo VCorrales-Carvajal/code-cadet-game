@@ -24,8 +24,8 @@ public class ServerHelper {
         System.out.println("Waiting for player connection...");
     }
 
-    public static String welcome() {
-        return MsgFormatter.serverMsg("Welcome to our fantastic game server!");
+    public static String welcome(int playerNumber, int totalPlayers) {
+        return MsgFormatter.serverMsg("Welcome to our fantastic game server! You are player Nº" + playerNumber + " in a game of " + totalPlayers + " players");
     }
 
     public static String askUsername() {
@@ -71,5 +71,9 @@ public class ServerHelper {
             s = s + (GameLength.values()[i].ordinal() + 1) + ". " + GameLength.values()[i].toString() + "\n ";
         }
         return s;
+    }
+
+    public static String waitingForOtherPlayersToConnect() {
+        return MsgFormatter.serverMsg("Waiting for the other players to connect...");
     }
 }

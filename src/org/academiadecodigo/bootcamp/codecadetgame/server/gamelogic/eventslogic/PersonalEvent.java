@@ -12,6 +12,7 @@ import org.academiadecodigo.bootcamp.codecadetgame.server.utils.MsgFormatter;
 public class PersonalEvent implements Event {
 
     public static final int LENGTH_PERSONAL_EVENTS = 14;
+    private EventType eventType = EventType.PERSONAL_EVENT;
 
     private final Server server;
 
@@ -22,7 +23,6 @@ public class PersonalEvent implements Event {
     private int[] shuffledIndexes;
     private int counterIndex = 0;
 
-    private EventType eventType = EventType.PERSONAL_EVENT;
 
     public PersonalEvent(Server server) {
         this.server = server;
@@ -36,7 +36,6 @@ public class PersonalEvent implements Event {
         // Display selected statement
         int index = shuffledIndexes[counterIndex];
         String eventToDisplay = username + GameHelper.happenedToYou() + statements[index];
-
         server.sendMsgToAll(MsgFormatter.gameMsg(eventToDisplay));
 
         // Update player's position
@@ -44,7 +43,7 @@ public class PersonalEvent implements Event {
 
         // Send message to all showing what happened
         String consequenceString = GameHelper.informLifeAreaAffected(username, steps[index], lifeAreas[index], eventType);
-        server.sendMsgToAll(MsgFormatter.gameMsg(consequenceString));
+        server.sendMsgToAll(consequenceString);
 
         // Increase counter
         counterIndex++;

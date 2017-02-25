@@ -19,14 +19,13 @@ public class Game implements Runnable {
 
 
     public Game(Server server) {
-
         this.server = server;
+
         events[EventType.QUESTION.ordinal()] = new Question(server);
         events[EventType.TIME_EVENT.ordinal()] = new TimeEvent(server);
         events[EventType.LIFE_DECISION.ordinal()] = new LifeDecision(server);
-        events[EventType.COLLECTIVE_EVENT.ordinal()] = new CollectiveEvent(server);
         events[EventType.PERSONAL_EVENT.ordinal()] = new PersonalEvent(server);
-
+        events[EventType.COLLECTIVE_EVENT.ordinal()] = new CollectiveEvent(server);
     }
 
     public void start() {
@@ -104,5 +103,10 @@ public class Game implements Runnable {
     public void run() {
 
         start();
+    }
+
+    @Override
+    public String toString() {
+        return "Game";
     }
 }

@@ -25,19 +25,12 @@ public class MsgFormatter {
     public static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
     public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
 
-
-    public static String pm(String username, String msgToTarget) {
-        return ANSI_YELLOW_BACKGROUND + ANSI_BLACK +
-                "PM< " + username + " > " + msgToTarget +
-                ANSI_RESET;
-    }
-
     public static String serverMsg(String msg) {
-        return ANSI_BLACK_BACKGROUND + ANSI_YELLOW + msg + ANSI_RESET;
+        return ANSI_YELLOW + msg + ANSI_RESET;
     }
 
     public static String gameMsg(String msg) {
-        return ANSI_BLUE_BACKGROUND + ANSI_GREEN + msg + ANSI_RESET;
+        return ANSI_GREEN + msg + ANSI_RESET;
     }
 
 

@@ -34,19 +34,25 @@ public class Server {
 
             while (true) {
 
-                // Connect to client (blocking operation)
-                ServerHelper.waitingForConnection();
-                Socket clientSocket = serverSocket.accept();
-                ServerHelper.printIPAddress(clientSocket);
 
                 // Restrict number of connections to the number of players to play this game
-                playerNumber++;
                 if (playerNumber <= numberOfPlayers) {
 
+                    playerNumber++;
+
+                    // Connect to client (blocking operation)
+                    ServerHelper.waitingForConnection();
+                    Socket clientSocket = serverSocket.accept();
+                    ServerHelper.printIPAddress(clientSocket);
+
+                    System.out.println("Player Nº " + playerNumber + ": About to create new thread");
                     PlayerDispatcher playerDispatcher =
                             new PlayerDispatcher(clientSocket, this, playerNumber);
+
                     // Create new thread up to capacity of pool
                     pool.submit(playerDispatcher);
+                    System.out.println("Player Nº " + playerNumber + ": Thread created");
+
 
                 }
 
@@ -78,7 +84,7 @@ public class Server {
         return numberOfPlayers;
     }
 
-    protected void setNumberOfPlayers(int number) {
+    public void setNumberOfPlayers(int number) {
         numberOfPlayers = number;
     }
 
@@ -87,7 +93,7 @@ public class Server {
         return game;
     }
 
-    protected void setGame(Game game) {
+    public void setGame(Game game) {
         this.game = game;
     }
 
