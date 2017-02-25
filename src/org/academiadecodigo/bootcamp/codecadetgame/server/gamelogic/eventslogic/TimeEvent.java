@@ -131,10 +131,24 @@ public class TimeEvent implements ChoosableEvent {
         questions[2] = "You develop a new app for the android market\n" +
                 "\t1. I want it!\n";
         positiveConsequences[2] = "Your app becomes the next Flappy Bird! Success!\n";
-        negativeConsequences[2] = "Never trust the android market!\n";
+        negativeConsequences[2] = "Never trust the android market\n";
+
         steps[2] = 1;
         lifeAreas[2] = LifeArea.MONEY;
 
+        questions[3] = "You go to a karaoke bar with some friends\n" +
+                "\t1. I want it!\n";
+        positiveConsequences[3] = "You sing your butt off and you shine like a diamond!\n";
+        negativeConsequences[3] = "You sound like a screeching cat, get off stage!\n";
+        steps[3] = 1;
+        lifeAreas[3] = LifeArea.HAPPINESS;
+
+        questions[4] = "You finally start hitting the gym\n" +
+                "\t1. I want it!\n";
+        positiveConsequences[4] = "Working out starts to pay off\n";
+        negativeConsequences[4] = "You get an injury to your knee\n";
+        steps[4] = 1;
+        lifeAreas[4] = LifeArea.HAPPINESS;
 
     }
 
