@@ -40,9 +40,11 @@ public class Game implements Runnable {
 
     private void turnCycle() {
 
-        String currentPlayerUsername = server.getPlayerDispatcherList().get(currentPlayerCounter).getPlayer().getUsername();
+        String currentPlayerUsername;
 
         while (noOneFinished()) {
+
+            currentPlayerUsername = server.getPlayerDispatcherList().get(currentPlayerCounter).getPlayer().getUsername();
 
             // Send message to all players informing the player in the current turn
             server.sendMsgToAll(GameHelper.informCurrentPlayer(currentPlayerUsername));
@@ -68,11 +70,12 @@ public class Game implements Runnable {
             if (Math.random() < Constants.PROB_COW_WISDOM_QUOTE) {
                 GameHelper.displayCowWisdomQuote();
             }
+
+            updatePlayerCounter(server.getPlayerDispatcherList().size());
         }
     }
 
     private boolean noOneFinished() {
-
 
         for (int i = 0; i < GameHelper.getPlayersPositions(server).length - 1; i++) {
             if (GameHelper.getPlayersPositions(server)[i] == server.getStepsToFinish()) {
