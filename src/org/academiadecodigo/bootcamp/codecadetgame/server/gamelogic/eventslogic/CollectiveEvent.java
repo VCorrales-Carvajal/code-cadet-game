@@ -10,7 +10,7 @@ import org.academiadecodigo.bootcamp.codecadetgame.server.utils.MsgFormatter;
  */
 public class CollectiveEvent implements Event {
 
-    public static final int LENGTH_COLLECTIVE_EVENTS = 7;
+    public static final int LENGTH_COLLECTIVE_EVENTS = 11;
     private final Server server;
 
     private String[] statements;
@@ -86,6 +86,21 @@ public class CollectiveEvent implements Event {
         steps[6] = +1;
         lifeArea[6] = LifeAreas.HAPPINESS;
 
+        statements[7] = "A Sharknado destroys town";
+        steps[7] = -1;
+        lifeArea[7] = LifeAreas.MONEY;
+
+        statements[8] = "Meteorite crashes with earth and causes new ice age";
+        steps[8] = -1;
+        lifeArea[8] = LifeAreas.HAPPINESS;
+
+        statements[9] = "Zombie apocalypse";
+        steps[9] = -1;
+        lifeArea[9] = LifeAreas.HAPPINESS;
+
+        statements[10] = "The internet breaks down";
+        steps[10] = -1;
+        lifeArea[10] = LifeAreas.HAPPINESS;
     }
 
 
