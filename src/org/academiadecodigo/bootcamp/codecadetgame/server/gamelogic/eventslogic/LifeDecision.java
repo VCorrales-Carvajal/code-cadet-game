@@ -15,9 +15,9 @@ import org.academiadecodigo.bootcamp.codecadetgame.server.utils.MsgFormatter;
 public class LifeDecision implements ChoosableEvent {
 
     public final static int LENGTH_LIFE_DECISIONS = 7;
-    private final EventType eventType = EventType.LIFE_DECISION;
     public final static int NUMBER_OF_OPTIONS_SHOWN = 3;
     private final double probabilityPositive = 0.8;
+    private final EventType eventType = EventType.LIFE_DECISION;
 
     private final Server server;
 
@@ -51,35 +51,52 @@ public class LifeDecision implements ChoosableEvent {
         p.setCurrentEvent(this);
 
         // Process player's answer
-        processAnswer(currentAnswer, username);
+        processAnswer(username);
 
     }
 
-    private void processAnswer(String currentAnswer, String username) {
-        // select
-        int index = 0;
-        // Update player's position
-        GameHelper.updateOnePlayerPosition(steps[index], username, server, lifeAreas[index]);
+    private void processAnswer(String username) {
 
-        // Send message to all showing what happened
-//        server.sendMsgToAll(informLifeAreaAffected(username, index));
+        int index = -1;
+        for (int i = 0; i < (NUMBER_OF_OPTIONS_SHOWN); i++) {
+            if (currentAnswer.equals(Integer.toString(i+1))) {
+                index = currentIndexes[i];
+                break;
+            }
+        }
+
+        if (index != -1) {
+
+            // Send message to all showing what happened
+            String sign = (Math.random() > probabilityPositive) ? "+" : "-";
+            server.sendMsgToAll(MsgFormatter.gameMsg(getConsequence(index, sign)));
+            server.sendMsgToAll(GameHelper.informLifeAreaAffected(username, steps[index], lifeAreas[index], eventType));
+
+            // Update player's position
+            int step = (sign.equals("+")) ? steps[index] : -steps[index];
+            GameHelper.updateOnePlayerPosition(step, username, server, lifeAreas[index]);
+        } else {
+
+            server.sendMsgToAll(MsgFormatter.gameMsg(GameHelper.invalidAnswer()));
+
+        }
 
     }
 
 
     private String getStatement() {
-        // Positive consequences p = 0.8
         int start = shuffledIndexes[lastIndexUsed + 1];
-        int end = shuffledIndexes[start + NUMBER_OF_OPTIONS_SHOWN - 1];
+        int end = shuffledIndexes[start + NUMBER_OF_OPTIONS_SHOWN];
 
-        int[] statementIndices = new int[NUMBER_OF_OPTIONS_SHOWN];
+        int[] statementIndexes = new int[NUMBER_OF_OPTIONS_SHOWN];
         String statement = "";
         int j = 0;
-        for (int i = start; i <= end; i++) {
-            statementIndices[j++] = i;
-            statement = statements[i];
+        for (int i = start; i < end; i++) {
+            statement = statement + "\t" + (j+1) + ". " + statements[i] + "\n";
+            statementIndexes[j++] = i;
         }
 
+        lastIndexUsed = end - 1;
         return statement;
 
     }
