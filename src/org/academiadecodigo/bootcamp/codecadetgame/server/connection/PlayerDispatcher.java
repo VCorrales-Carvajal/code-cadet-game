@@ -105,7 +105,6 @@ public class PlayerDispatcher implements Runnable {
 
                 active = false;
 
-                // TODO Micael: Send this player's answer (String playerInput) to server's blocking queue
             }
 
             in.close();

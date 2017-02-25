@@ -67,7 +67,6 @@ public class TimeEvent implements ChoosableEvent {
     }
 
     private void processAnswer(int index) {
-        //TODO Micael: Get the winner and save it in the String winner.
 
         String winner = null; // winner username
 
@@ -85,14 +84,20 @@ public class TimeEvent implements ChoosableEvent {
 
 
         if (winner != null) {
-            // Update winner's position
-            GameHelper.updateOnePlayerPosition(steps[index], winner, server, lifeAreas[index]);
+
             // Send message to all showing what happened
-            server.sendMsgToAll(getConsequence(index));
+            String sign = (Math.random() > probabilityPositive) ? "+" : "-";
+            server.sendMsgToAll(MsgFormatter.gameMsg(getConsequence(index, sign)));
             server.sendMsgToAll(GameHelper.informLifeAreaAffected(winner, steps[index], lifeAreas[index], eventType));
 
+            // Update winner's position
+            int step = (sign.equals("+")) ? steps[index] : -steps[index];
+            GameHelper.updateOnePlayerPosition(step, winner, server, lifeAreas[index]);
+
         } else {
-            server.sendMsgToAll(GameHelper.invalidAnswer());
+
+            server.sendMsgToAll(MsgFormatter.gameMsg(GameHelper.invalidAnswer()));
+
         }
 
     }
@@ -123,6 +128,13 @@ public class TimeEvent implements ChoosableEvent {
         steps[1] = 1;
         lifeAreas[1] = LifeArea.HAPPINESS;
 
+        questions[2] = "You develop a new app for the android market\n" +
+                "\t1. I want it!\n";
+        positiveConsequence[2] = "Your app becomes the next Flappy Bird! Success!\n";
+        negativeConsequence[2] = "Never trust the android market!\n";
+        steps[2] = 1;
+        lifeAreas[2] = LifeArea.MONEY;
+
 
     }
 
@@ -134,7 +146,7 @@ public class TimeEvent implements ChoosableEvent {
         }
     }
 
-    private String getConsequence(int index) {
-        return (Math.random() > probabilityPositive) ? positiveConsequence[index] : negativeConsequence[index];
+    private String getConsequence(int index, String positiveOrNegative) {
+        return (positiveOrNegative.equals("+")) ? positiveConsequence[index] : negativeConsequence[index];
     }
 }
