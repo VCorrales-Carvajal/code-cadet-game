@@ -131,11 +131,11 @@ public class GameHelper {
         return MsgFormatter.serverMsg("It's " + currentPlayer + "'s turn!\n");
     }
 
-    public static String happenedToYou() {
+    public static String personalEvent() {
         return ": this event just happened to you:\n";
     }
 
-    public static String happenedToEveryOne() {
+    public static String collectiveEvent() {
         return "This event just happened to everyone:\n";
     }
 
