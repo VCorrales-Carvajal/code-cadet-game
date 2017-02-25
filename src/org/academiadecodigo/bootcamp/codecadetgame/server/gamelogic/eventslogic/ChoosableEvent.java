@@ -5,5 +5,5 @@ package org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.eventslogic
  */
 public interface ChoosableEvent extends Event{
 
-    void chooseAnswer(String answer);
+    void chooseAnswer(String answer, String username);
 }

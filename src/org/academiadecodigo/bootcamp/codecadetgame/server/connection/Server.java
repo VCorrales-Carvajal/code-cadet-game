@@ -74,7 +74,7 @@ public class Server {
         return playerDispatcherTable;
     }
 
-    protected int getNumberOfPlayers() {
+    public int getNumberOfPlayers() {
         return numberOfPlayers;
     }
 

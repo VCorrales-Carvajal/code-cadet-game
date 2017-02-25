@@ -2,20 +2,27 @@ package org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.eventslogic
 
 import org.academiadecodigo.bootcamp.codecadetgame.server.connection.PlayerDispatcher;
 import org.academiadecodigo.bootcamp.codecadetgame.server.connection.Server;
+import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.EventType;
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.LifeAreas;
 import org.academiadecodigo.bootcamp.codecadetgame.server.utils.GameHelper;
 import org.academiadecodigo.bootcamp.codecadetgame.server.utils.MsgFormatter;
+
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.PriorityBlockingQueue;
 
 /**
  * Created by codecadet on 2/22/17.
  */
 public class Question implements ChoosableEvent {
 
+    private final EventType eventType = EventType.QUESTION;
     public static final int LENGTH_QUESTIONS = 5;
     private final Server server;
     String[] questions;
     String[] correctAnswer;
     int[] steps;
+    private BlockingQueue<String[]> queue;
 
     private int[] shuffledIndexes;
     private int counterIndex = 0;
@@ -61,23 +68,36 @@ public class Question implements ChoosableEvent {
 
     private void processAnswer(int index) {
 
-        //TODO Micael:
-        // check if there's a winner and update consequence String.
-        //If there's a winner call getConsequenceString, else send msg to all saying no one answered correctly
-        //When player chooses an option that is not available, assume it's wrong
-
         String winner = null; // winner username
 
-        // Update winner's position
-        GameHelper.updateOnePlayerPosition(steps[index], winner, server, LifeAreas.CAREER);
+        synchronized (queue) {
 
-        // Send message to all showing what happened
-        server.sendMsgToAll(getConsequenceString(index, winner));
+            while (!queue.isEmpty()) {
+                String firstAnswer = queue.poll()[0];
+
+                if (firstAnswer.equals(correctAnswer[index])) {
+                    winner = queue.poll()[1];
+                    break;
+                }
+            }
+        }
+
+        // Update winner's position
+        if (winner != null) {
+            GameHelper.updateOnePlayerPosition(steps[index], winner, server, LifeAreas.CAREER);
+            // Send message to all showing what happened
+            server.sendMsgToAll(getConsequenceString(index, winner));
+        } else {
+            server.sendMsgToAll(GameHelper.invalidAnswer());
+        }
+
 
     }
 
 
     private void init() {
+
+        queue = new ArrayBlockingQueue<String[]>(server.getNumberOfPlayers());
 
         shuffledIndexes = GameHelper.shuffleIndexArray(LENGTH_QUESTIONS);
 
@@ -104,22 +124,20 @@ public class Question implements ChoosableEvent {
 
     }
 
-    public String getStatement() {
-        return "";
-    }
 
     @Override
-    public void chooseAnswer(String answer) {
+    public void chooseAnswer(String answer, String username) {
+
+        synchronized (queue) {
+            String[] answerAndUsername = {answer, username};
+            queue.offer(answerAndUsername);
+        }
 
     }
 
     public String getConsequenceString(int index, String winner) {
 
         int step = steps[index];
-        if (winner.equals("")){
-            return "No one got it right! No one moves forward this turn!";
-        }
-
         String stepString = (step != 0) ? " steps" : " step";
         return winner + ": you moved forward in your career! Advance " + step + stepString + "!";
 

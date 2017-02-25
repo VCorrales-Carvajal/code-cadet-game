@@ -150,4 +150,8 @@ public class GameHelper {
     public static String TimeEvent() {
         return "First to choose takes it! Think fast!";
     }
+
+    public static String invalidAnswer() {
+        return "Invalid Answer. No one moves this turn.";
+    }
 }
