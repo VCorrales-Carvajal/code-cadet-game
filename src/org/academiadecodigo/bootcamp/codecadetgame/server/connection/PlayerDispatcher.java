@@ -1,6 +1,7 @@
 package org.academiadecodigo.bootcamp.codecadetgame.server.connection;
 
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.Factory;
+import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.Game;
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.Player;
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.eventslogic.ChoosableEvent;
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.GameLength;
@@ -48,7 +49,7 @@ public class PlayerDispatcher implements Runnable {
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
             // Ask player for username
-            out.println(ServerHelper.welcome());
+            out.println(ServerHelper.welcome(playerNumber, server.getNumberOfPlayers()));
             out.println(ServerHelper.askUsername());
             String username = getUsernameFromPlayer();
 
@@ -74,21 +75,28 @@ public class PlayerDispatcher implements Runnable {
                 server.setNumberOfPlayers(numPlayersAnswer);
 
                 // 2) Game length?
-
                 int gameLength = askNumberOfSteps();
                 server.setStepsToFinish(gameLength);
+
+                out.println(ServerHelper.waitingForOtherPlayersToConnect());
 
             }
 
             // When all players have connected, start the game
+            out.println("You are player Nº" + playerNumber + " in a game of " + server.getNumberOfPlayers() + " players");
+            out.println(playerNumber == server.getNumberOfPlayers());
             if (playerNumber == server.getNumberOfPlayers()) {
-
-                server.setGame(Factory.createGame(server));
+                out.println("You are the last player (Nº " + playerNumber + "). You are about to start the Game");
+//                server.setGame(Factory.createGame(server));
+                Game game = new Game(server);
+                server.setGame(game);
+                out.println("You have created a new " + game.toString());
+                out.println("After injecting game to server. You have created a new " + server.getGame().toString());
                 Thread thread = new Thread(server.getGame());
                 thread.setName("game");
                 thread.start();
 
-                out.println(ServerHelper.startGame());
+                server.sendMsgToAll((ServerHelper.startGame()));
 
             }
 

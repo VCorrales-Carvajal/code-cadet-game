@@ -21,15 +21,17 @@ public class LifeDecision implements ChoosableEvent {
 
     private final Server server;
 
-    private String currentAnswer;
     private String[] statements;
     private String[] positiveConsequences;
     private String[] negativeConsequences;
     private int[] steps;
     private LifeArea[] lifeAreas;
+
     private int[] shuffledIndexes;
     private int lastIndexUsed = -1;
     private int[] currentIndexes;
+
+    private String currentAnswer;
 
     public LifeDecision(Server server) {
         this.server = server;
@@ -40,13 +42,13 @@ public class LifeDecision implements ChoosableEvent {
     @Override
     public void process(String username) {
 
-        PlayerDispatcher p = server.getPlayerDispatcherTable().get(username);
-
         // Display selected statement
         String eventToDisplay = GameHelper.lifeDecision(username) + getStatement();
         server.sendMsgToAll(MsgFormatter.gameMsg(eventToDisplay));
 
         // Listen to the answer of this player
+        PlayerDispatcher p = server.getPlayerDispatcherTable().get(username);
+        //TODO: Send thread to sleep and let it get notified  by the players
         p.setActive(true);
         p.setCurrentEvent(this);
 
@@ -75,6 +77,7 @@ public class LifeDecision implements ChoosableEvent {
             // Update player's position
             int step = (sign.equals("+")) ? steps[index] : -steps[index];
             GameHelper.updateOnePlayerPosition(step, username, server, lifeAreas[index]);
+
         } else {
 
             server.sendMsgToAll(MsgFormatter.gameMsg(GameHelper.invalidAnswer()));
@@ -105,6 +108,7 @@ public class LifeDecision implements ChoosableEvent {
     private void init() {
         shuffledIndexes = GameHelper.shuffleIndexArray(LENGTH_LIFE_DECISIONS);
 
+        currentIndexes = new int[NUMBER_OF_OPTIONS_SHOWN];
         statements = new String[LENGTH_LIFE_DECISIONS];
         positiveConsequences = new String[LENGTH_LIFE_DECISIONS];
         negativeConsequences = new String[LENGTH_LIFE_DECISIONS];
