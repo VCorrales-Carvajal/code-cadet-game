@@ -132,6 +132,7 @@ public class TimeEvent implements ChoosableEvent {
                 "\t1. I want it!\n";
         positiveConsequences[2] = "Your app becomes the next Flappy Bird! Success!\n";
         negativeConsequences[2] = "Never trust the android market\n";
+
         steps[2] = 1;
         lifeAreas[2] = LifeArea.MONEY;
 

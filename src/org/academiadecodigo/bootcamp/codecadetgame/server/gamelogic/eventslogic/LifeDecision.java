@@ -143,7 +143,7 @@ public class LifeDecision implements ChoosableEvent {
         currentAnswer = answer;
     }
 
-    private String getConsequence(int index) {
-        return (Math.random() > probabilityPositive) ? positiveConsequences[index] : negativeConsequences[index];
+    private String getConsequence(int index, String positiveOrNegative) {
+        return (positiveOrNegative.equals("+")) ? positiveConsequences[index] : negativeConsequences[index];
     }
 }
