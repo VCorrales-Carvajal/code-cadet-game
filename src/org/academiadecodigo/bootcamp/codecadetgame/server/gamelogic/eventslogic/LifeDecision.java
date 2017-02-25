@@ -2,12 +2,8 @@ package org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.eventslogic
 
 import org.academiadecodigo.bootcamp.codecadetgame.server.connection.PlayerDispatcher;
 import org.academiadecodigo.bootcamp.codecadetgame.server.connection.Server;
-<<<<<<< HEAD
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.LifeArea;
-=======
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.EventType;
-import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.LifeAreas;
->>>>>>> a06a9f0507d842440046bdc6ee3274a782dfb042
 import org.academiadecodigo.bootcamp.codecadetgame.server.utils.GameHelper;
 import org.academiadecodigo.bootcamp.codecadetgame.server.utils.MsgFormatter;
 
@@ -18,12 +14,8 @@ import org.academiadecodigo.bootcamp.codecadetgame.server.utils.MsgFormatter;
 //Personal choosable
 public class LifeDecision implements ChoosableEvent {
 
-<<<<<<< HEAD
     public final static int LENGTH_LIFE_DECISIONS = 7;
-=======
     private final EventType eventType = EventType.LIFE_DECISION;
-    public final static int LENGTH_LIFE_DECISIONS = 2;
->>>>>>> a06a9f0507d842440046bdc6ee3274a782dfb042
     public final static int NUMBER_OF_OPTIONS_SHOWN = 3;
     private final double probabilityPositive = 0.8;
 
@@ -63,7 +55,6 @@ public class LifeDecision implements ChoosableEvent {
 
     }
 
-<<<<<<< HEAD
     private void processAnswer(String currentAnswer, String username) {
         // select
         int index = 0;
@@ -72,18 +63,9 @@ public class LifeDecision implements ChoosableEvent {
 
         // Send message to all showing what happened
 //        server.sendMsgToAll(informLifeAreaAffected(username, index));
-=======
-    private void processAnswer(String currentAnswer) {
 
-        server.sendMsgToAll(getConsequence(0));
-
->>>>>>> a06a9f0507d842440046bdc6ee3274a782dfb042
     }
 
-    @Override
-    public void chooseAnswer(String answer) {
-        currentAnswer = answer;
-    }
 
     private String getStatement() {
         // Positive consequences p = 0.8
@@ -156,10 +138,6 @@ public class LifeDecision implements ChoosableEvent {
         lifeAreas[6] = LifeArea.HAPPINESS;
     }
 
-<<<<<<< HEAD
-
-
-=======
     @Override
     public void chooseAnswer(String answer, String username) {
         currentAnswer = answer;
@@ -168,5 +146,4 @@ public class LifeDecision implements ChoosableEvent {
     private String getConsequence(int index) {
         return (Math.random() > probabilityPositive) ? positiveConsequences[index] : negativeConsequences[index];
     }
->>>>>>> a06a9f0507d842440046bdc6ee3274a782dfb042
 }
