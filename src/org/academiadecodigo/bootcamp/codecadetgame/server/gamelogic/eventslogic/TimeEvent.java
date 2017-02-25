@@ -2,7 +2,7 @@ package org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.eventslogic
 
 import org.academiadecodigo.bootcamp.codecadetgame.server.connection.PlayerDispatcher;
 import org.academiadecodigo.bootcamp.codecadetgame.server.connection.Server;
-import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.LifeAreas;
+import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.LifeArea;
 import org.academiadecodigo.bootcamp.codecadetgame.server.utils.GameHelper;
 import org.academiadecodigo.bootcamp.codecadetgame.server.utils.MsgFormatter;
 
@@ -22,7 +22,7 @@ public class TimeEvent implements ChoosableEvent  {
     String[] positiveConsequence;
     String[] negativeConsequence;
     int[] steps;
-    LifeAreas[] lifeAreas;
+    LifeArea[] lifeAreas;
 
     private int[] shuffledIndexes;
     private int counterIndex = 0;
@@ -66,7 +66,7 @@ public class TimeEvent implements ChoosableEvent  {
         GameHelper.updateOnePlayerPosition(steps[index], winner, server, lifeAreas[index]);
 
         // Send message to all showing what happened
-        server.sendMsgToAll(getConsequenceString(winner, index));
+        server.sendMsgToAll(GameHelper.informLifeAreaAffected(winner, steps[index], lifeAreas[index], eventType));
     }
 
     private void init(){
@@ -77,7 +77,7 @@ public class TimeEvent implements ChoosableEvent  {
         positiveConsequence = new String[LENGTH_TIME_EVENTS];
         negativeConsequence = new String[LENGTH_TIME_EVENTS];
         steps = new int[LENGTH_TIME_EVENTS];
-        lifeAreas = new LifeAreas[LENGTH_TIME_EVENTS];
+        lifeAreas = new LifeArea[LENGTH_TIME_EVENTS];
 
         questions[0] = "You invest in a promising tech startup\n" +
                 "\t1. Yes\n" +
@@ -85,7 +85,7 @@ public class TimeEvent implements ChoosableEvent  {
         positiveConsequence[0] = "The startup becomes the next instagram, you earn a lot of money";
         negativeConsequence[0] = "The startup never takes off and you lose your investment";
         steps[0] = 1;
-        lifeAreas[0] = LifeAreas.MONEY;
+        lifeAreas[0] = LifeArea.MONEY;
 
         questions[1] = "You go on vacations to a beautiful Caribbean island\n" +
                 "\t1. Yes\n" +
@@ -93,45 +93,11 @@ public class TimeEvent implements ChoosableEvent  {
         positiveConsequence[1] = "You came back wonderfully tanned. Ronaldo envies you";
         negativeConsequence[1] = "You got bitten by a piranha and you lose a toe";
         steps[1] = 1;
-        lifeAreas[1] = LifeAreas.HAPPINESS;
+        lifeAreas[1] = LifeArea.HAPPINESS;
 
 
     }
 
-
-    public String getConsequenceString(String username, int index) {
-
-        String lifeAreaConsequence;
-        String changeString;
-        String direction;
-
-        int step = steps[index];
-        String stepString = (step != 0) ? " steps" : " step";
-        changeString = GameHelper.getStringGivenStep(step,
-                Math.abs(step) + " step forward.", Math.abs(step) + stepString + " back.");
-
-        switch (lifeAreas[index]) {
-
-            case MONEY:
-                direction = GameHelper.getStringGivenStep(step,
-                        " earned ", " just lost ");
-                lifeAreaConsequence = "You" + direction + "money!";
-                break;
-
-            case HAPPINESS:
-                direction = GameHelper.getStringGivenStep(step,
-                        " happier!", " sad.");
-                lifeAreaConsequence = "You are" + direction;
-                break;
-
-            default:
-                lifeAreaConsequence = "Something is WRONG!!";
-
-        }
-
-        return username + ": " + lifeAreaConsequence + " " + changeString;
-
-    }
 
     @Override
     public void chooseAnswer(String answer) {

@@ -2,7 +2,7 @@ package org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.eventslogic
 
 import org.academiadecodigo.bootcamp.codecadetgame.server.connection.PlayerDispatcher;
 import org.academiadecodigo.bootcamp.codecadetgame.server.connection.Server;
-import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.LifeAreas;
+import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.LifeArea;
 import org.academiadecodigo.bootcamp.codecadetgame.server.utils.GameHelper;
 import org.academiadecodigo.bootcamp.codecadetgame.server.utils.MsgFormatter;
 
@@ -23,7 +23,7 @@ public class LifeDecision implements ChoosableEvent {
     private String[] positiveConsequences;
     private String[] negativeConsequences;
     private int[] steps;
-    private LifeAreas[] lifeAreas;
+    private LifeArea[] lifeAreas;
     private int[] shuffledIndexes;
     private int lastIndexUsed = -1;
     private int[] currentIndexes;
@@ -59,7 +59,7 @@ public class LifeDecision implements ChoosableEvent {
         GameHelper.updateOnePlayerPosition(steps[index], username, server, lifeAreas[index]);
 
         // Send message to all showing what happened
-//        server.sendMsgToAll(getConsequenceString(username, index));
+//        server.sendMsgToAll(informLifeAreaAffected(username, index));
     }
 
     @Override
@@ -92,50 +92,50 @@ public class LifeDecision implements ChoosableEvent {
         positiveConsequences = new String[LENGTH_LIFE_DECISIONS];
         negativeConsequences = new String[LENGTH_LIFE_DECISIONS];
         steps = new int[LENGTH_LIFE_DECISIONS];
-        lifeAreas = new LifeAreas[LENGTH_LIFE_DECISIONS];
+        lifeAreas = new LifeArea[LENGTH_LIFE_DECISIONS];
 
         statements[0] = "Spend your evenings at a workshop learning more about programming";
         positiveConsequences[0] = "You get promoted for showing good results as a consequence of the new stuff you learned";
         negativeConsequences[0] = "With less hours of sleep your productivity went down and you got demoted";
         steps[0] = 1;
-        lifeAreas[0] = LifeAreas.CAREER;
+        lifeAreas[0] = LifeArea.CAREER;
 
         statements[1] = "Party all night long and drink like Keith Richards";
         positiveConsequences[1] = "You make some new clients";
         negativeConsequences[1] = "You don’t manage to wake up and fail to deliver an important project and you get fired";
         steps[1] = 1;
-        lifeAreas[1] = LifeAreas.CAREER;
+        lifeAreas[1] = LifeArea.CAREER;
 
 
         statements[2] = "Offer a meal to a homeless person";
         positiveConsequences[2] = "It turns out the homeless man is a millionaire and gives you lots of money";
         negativeConsequences[2] = "You lose money";
         steps[2] = 1;
-        lifeAreas[2] = LifeAreas.MONEY;
+        lifeAreas[2] = LifeArea.MONEY;
 
         statements[3] = "Buy facebook stocks";
         positiveConsequences[3] = "As expected, facebook continues growing rapidly";
         negativeConsequences[3] = "Facebook collapses and you lose all the money";
         steps[3] = 1;
-        lifeAreas[3] = LifeAreas.MONEY;
+        lifeAreas[3] = LifeArea.MONEY;
 
         statements[4] = "Go on a blind date";
         positiveConsequences[4] = "You found the love of your life";
         negativeConsequences[4] = "You lose a kidney";
         steps[4] = 1;
-        lifeAreas[4] = LifeAreas.HAPPINESS;
+        lifeAreas[4] = LifeArea.HAPPINESS;
 
         statements[5] = "Donate blood";
         positiveConsequences[5] = "You save a person’s life";
         negativeConsequences[5] = "The national health system is shitty and you caught an infection from the needle";
         steps[5] = 1;
-        lifeAreas[5] = LifeAreas.HAPPINESS;
+        lifeAreas[5] = LifeArea.HAPPINESS;
 
         statements[6] = "Give a present to your significant other";
         positiveConsequences[6] = "You spend a romantic evening";
         negativeConsequences[6] = "You bought a cake and your partner, who’s allergic, accuses you of attempted murder";
         steps[6] = 1;
-        lifeAreas[6] = LifeAreas.HAPPINESS;
+        lifeAreas[6] = LifeArea.HAPPINESS;
     }
 
 

@@ -1,6 +1,6 @@
 package org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic;
 
-import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.LifeAreas;
+import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.LifeArea;
 
 /**
  * Created by ToAlmeida, joaobonifacio, MicaelCruz and VCorrales-Carvajal on 2/18/17.
@@ -14,7 +14,7 @@ public class Player {
     public Player(String username) {
         this.username = username;
 
-        lifeAreasPosition = new int[LifeAreas.values().length];
+        lifeAreasPosition = new int[LifeArea.values().length];
 
     }
 
@@ -34,7 +34,7 @@ public class Player {
         return lifeAreasPosition;
     }
 
-    public void setLifeAreasPosition(int lifeAreasPosition, LifeAreas lifeArea) {
+    public void setLifeAreasPosition(int lifeAreasPosition, LifeArea lifeArea) {
 
         this.lifeAreasPosition[lifeArea.ordinal()] = lifeAreasPosition;
     }

@@ -2,7 +2,8 @@ package org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.eventslogic
 
 import org.academiadecodigo.bootcamp.codecadetgame.server.connection.PlayerDispatcher;
 import org.academiadecodigo.bootcamp.codecadetgame.server.connection.Server;
-import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.LifeAreas;
+import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.Game;
+import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.LifeArea;
 import org.academiadecodigo.bootcamp.codecadetgame.server.utils.GameHelper;
 import org.academiadecodigo.bootcamp.codecadetgame.server.utils.MsgFormatter;
 
@@ -63,16 +64,17 @@ public class Question implements ChoosableEvent {
 
         //TODO Micael:
         // check if there's a winner and update consequence String.
-        //If there's a winner call getConsequenceString, else send msg to all saying no one answered correctly
+        //If there's a winner call informLifeAreaAffected, else send msg to all saying no one answered correctly
         //When player chooses an option that is not available, assume it's wrong
 
         String winner = null; // winner username
 
         // Update winner's position
-        GameHelper.updateOnePlayerPosition(steps[index], winner, server, LifeAreas.CAREER);
+        GameHelper.updateOnePlayerPosition(steps[index], winner, server, LifeArea.CAREER);
 
         // Send message to all showing what happened
-        server.sendMsgToAll(getConsequenceString(index, winner));
+//        server.sendMsgToAll(getConsequenceString(index, winner));
+        server.sendMsgToAll(GameHelper.informLifeAreaAffected(winner, steps[index], LifeArea.CAREER, eventType));
 
     }
 

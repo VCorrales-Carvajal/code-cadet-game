@@ -3,7 +3,8 @@ package org.academiadecodigo.bootcamp.codecadetgame.server.utils;
 import org.academiadecodigo.bootcamp.codecadetgame.server.connection.PlayerDispatcher;
 import org.academiadecodigo.bootcamp.codecadetgame.server.connection.Server;
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.Player;
-import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.LifeAreas;
+import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.EventType;
+import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.LifeArea;
 
 import java.util.Random;
 import java.util.Set;
@@ -89,7 +90,7 @@ public class GameHelper {
     }
 
 
-    public static void updatePlayersPositions(int change, Server server, LifeAreas lifeArea) {
+    public static void updatePlayersPositions(int change, Server server, LifeArea lifeArea) {
 
         for (PlayerDispatcher pd : server.getPlayerDispatcherList()) {
             Player player = pd.getPlayer();
@@ -99,7 +100,7 @@ public class GameHelper {
 
     }
 
-    public static void updateOnePlayerPosition(int change, String username, Server server, LifeAreas lifeArea) {
+    public static void updateOnePlayerPosition(int change, String username, Server server, LifeArea lifeArea) {
 
         Player player = server.getPlayerDispatcherTable().get(username).getPlayer();
 
@@ -149,5 +150,45 @@ public class GameHelper {
 
     public static String TimeEvent() {
         return "First to choose takes it! Think fast!";
+    }
+
+    public static String informLifeAreaAffected(String username, int step, LifeArea lifeArea, EventType eventType) {
+
+        boolean isCollective = username.equals("All");
+
+        String lifeAreaConsequence;
+        switch (lifeArea) {
+            case CAREER:
+                lifeAreaConsequence = (isCollective)
+                        ? ((step > 0) ? "Everyone is moving forward in their career" : "Everyone has a setback in their career")
+                        : ((step < 0) ? "You moved forward in your career" : "You had a setback in your career");
+                break;
+
+            case MONEY:
+                lifeAreaConsequence = (isCollective)
+                        ? ((step > 0) ? "Everyone earns money!" : "Everyone lost money!")
+                        : ((step > 0) ? "You earned money!" : "You lost money!");
+                break;
+
+            case HAPPINESS:
+                lifeAreaConsequence = (isCollective)
+                        ? ((step > 0) ? "Everyone is happier!" : "Everyone is sad.")
+                        : ((step > 0) ? "You are happier!" : "You are sad.");
+                break;
+
+            default:
+                lifeAreaConsequence = "Something is WRONG!!";
+
+        }
+
+        String stepString = (step != 0) ? " steps" : " step";
+
+        String changeString = (step > 0) ? " " + Math.abs(step) + stepString + " forward." :
+                " " + Math.abs(step) + stepString + " back.";// n step/steps forward/back.
+
+        String target = (!isCollective) ? username + ": " : "";
+
+        return MsgFormatter.gameMsg(target + lifeAreaConsequence + " " + changeString);
+
     }
 }
