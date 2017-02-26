@@ -70,7 +70,7 @@ public class TimeEvent implements ChoosableEvent {
 
         String winner = null; // winner username
 
-        while (queue.size() != server.getNumberOfPlayers()){
+        while (queue.size() != server.getNumberOfPlayers()) {
 //            try {
 //                wait(GameHelper.TIME_OUT);
 //            } catch (InterruptedException e) {
@@ -78,15 +78,15 @@ public class TimeEvent implements ChoosableEvent {
 //            }
         }
 
-        synchronized (queue) {
 
-            while (!queue.isEmpty()) {
-                String firstAnswer = queue.poll()[0];
+        while (!queue.isEmpty()) {
 
-                if (firstAnswer.equals("1")) {
-                    winner = queue.poll()[1];
-                    break;
-                }
+            String[] s = queue.poll();
+            String firstAnswer = s[0];
+
+            if (firstAnswer.equals("1")) {
+                winner = s[1];
+                break;
             }
         }
 
