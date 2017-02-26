@@ -24,16 +24,9 @@ public class ServerHelper {
         System.out.println("Waiting for player connection...");
     }
 
-    public static String welcome(int playerNumber, int totalPlayers) {
-        String informPlayer;
+    public static String welcome() {
 
-        if (playerNumber == totalPlayers) {
-            informPlayer = "";
-        } else {
-           informPlayer = "You are player Nº" + playerNumber + " in a game of " + totalPlayers + " players";
-        }
-
-        return MsgFormatter.serverMsg("Welcome to our fantastic game server!\n" + informPlayer);
+        return MsgFormatter.serverMsg(FileHelper.readFile("resources/game-welcome.txt"));
 
     }
 

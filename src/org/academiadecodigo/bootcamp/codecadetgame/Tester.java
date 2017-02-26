@@ -33,7 +33,7 @@ public class Tester {
 
 //        System.out.println(ServerHelper.insertNumberOfSteps());
 
-
+        System.out.println(GameHelper.welcome());
     }
 
     private void shuffleIndicesTester() {
