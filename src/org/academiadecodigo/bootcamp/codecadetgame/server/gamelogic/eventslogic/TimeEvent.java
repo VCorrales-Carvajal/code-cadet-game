@@ -94,12 +94,13 @@ public class TimeEvent implements ChoosableEvent {
         if (winner != null) {
 
             // Send message to all showing what happened
-            String sign = (Math.random() > probabilityPositive) ? "+" : "-";
+            String sign = (Math.random() < probabilityPositive) ? "+" : "-";
+            int step = (sign.equals("+")) ? steps[index] : -steps[index];
+
             server.sendMsgToAll(MsgFormatter.gameMsg(getConsequence(index, sign)));
-            server.sendMsgToAll(GameHelper.informLifeAreaAffected(winner, steps[index], lifeAreas[index], eventType));
+            server.sendMsgToAll(GameHelper.informLifeAreaAffected(winner, step, lifeAreas[index], eventType));
 
             // Update winner's position
-            int step = (sign.equals("+")) ? steps[index] : -steps[index];
             GameHelper.updateOnePlayerPosition(step, winner, server, lifeAreas[index]);
 
         } else {
@@ -170,7 +171,7 @@ public class TimeEvent implements ChoosableEvent {
 //        notifyAll();
     }
 
-    private String getConsequence(int index, String positiveOrNegative) {
-        return (positiveOrNegative.equals("+")) ? positiveConsequences[index] : negativeConsequences[index];
+    private String getConsequence(int index, String sign) {
+        return (sign.equals("+")) ? positiveConsequences[index] : negativeConsequences[index];
     }
 }

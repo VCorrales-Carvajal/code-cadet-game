@@ -95,11 +95,15 @@ public class PlayerDispatcher implements Runnable {
 
             // Get player input throughout the game
             String playerInput;
-            while (((playerInput = in.readLine()) != null) && active) {
+            while ((playerInput = in.readLine()) != null) {
 
                 if (playerInput.toLowerCase().equals("/quit")) {
                     sendMsgToAll(ServerHelper.userLeft(player.getUsername()));
                     break;
+                }
+
+                if (!active) {
+                    continue;
                 }
 
 
