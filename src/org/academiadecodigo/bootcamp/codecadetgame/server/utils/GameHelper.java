@@ -150,7 +150,8 @@ public class GameHelper {
     }
 
     public static String informCurrentPlayer(String currentPlayer) {
-        return MsgFormatter.gameMsg("It's <" + currentPlayer + ">'s turn! Please press <Enter> to roll the dice\n");
+        String result = MsgFormatter.gameMsg("<") + MsgFormatter.highlightUsername(currentPlayer);
+        return result + MsgFormatter.gameMsg(">, Please press <Enter> to roll the dice\n");
     }
 
     public static String displayEventType(String username, EventType eventType){
@@ -160,20 +161,20 @@ public class GameHelper {
         switch (eventType){
 
             case QUESTION:
-                typeOfEvent = MsgFormatter.collectiveMessage("\n******** ALL - Let's test your knowledge of Java:") + "\n\n";
+                typeOfEvent = MsgFormatter.collectiveMessage("\n ALL - Let's test your knowledge of Java:") + "\n\n";
                 break;
             case TIME_EVENT:
-                typeOfEvent = MsgFormatter.collectiveMessage("\n******** ALL - First to choose takes it! Think fast!") + "\n\n";
+                typeOfEvent = MsgFormatter.collectiveMessage("\n ALL - First to choose takes it! Think fast!") + "\n\n";
                 break;
             case LIFE_DECISION:
-                typeOfEvent = MsgFormatter.personalMessage("######## <" + username + "> - " +
+                typeOfEvent = MsgFormatter.personalMessage("\n <" + username + "> - " +
                         "You now have to take a life decision:") + "\n\n";
                 break;
             case COLLECTIVE_EVENT:
-                typeOfEvent = MsgFormatter.collectiveMessage("\n******** ALL - This just happened:") + "\n\n";
+                typeOfEvent = MsgFormatter.collectiveMessage("\n ALL - This just happened:") + "\n\n";
                 break;
             case PERSONAL_EVENT:
-                typeOfEvent = MsgFormatter.personalMessage("######## <" + username + "> - this just happened to you:") + "\n\n";
+                typeOfEvent = MsgFormatter.personalMessage("\n <" + username + "> - this just happened to you:") + "\n\n";
                 break;
         }
 
@@ -229,18 +230,19 @@ public class GameHelper {
     public static String informLifeAreaPosition(Server server, String[] usernames) {
         String result = "Let's see how life looks: \n";
         for (int j = 0; j < usernames.length; j++) {
+            Player p = server.getPlayerDispatcherTable().get(usernames[j]).getPlayer();
             result = result + "<" + usernames[j] + "> ";
             for (int i = 0; i < LifeArea.values().length; i++) {
-                result = result + " " + LifeArea.values()[i] + ": " + server.getPlayerDispatcherTable().get(usernames[j]).getPlayer().getLifeAreasPosition()[i] + ". ";
+                result = result + " " + LifeArea.values()[i] + ": " + p.getLifeAreasPosition()[i] + ". ";
             }
-            result = result + "\n";
+            result = result + MsgFormatter.globalPosition("TOTAL: " + p.getGlobalPosition()) + "\n";
         }
         return MsgFormatter.gameMsg(result + "\n");
     }
 
 
     public static String informWinner(String winner) {
-        String winnerFormatted = MsgFormatter.gameMsg("<" + winner + "> won this turn!\n");
+        String winnerFormatted = MsgFormatter.gameMsg("<" + winner + "> won this turn!");
         String result = MsgFormatter.turnWinner("•·.·´¯`·.·• ") +  winnerFormatted + MsgFormatter.turnWinner(" •·.·´¯`·.·•");
 
         return result;
