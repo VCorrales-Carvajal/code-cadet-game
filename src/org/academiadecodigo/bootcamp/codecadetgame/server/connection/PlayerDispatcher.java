@@ -49,7 +49,7 @@ public class PlayerDispatcher implements Runnable {
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
             // Ask player for username
-            out.println(ServerHelper.welcome(playerNumber, server.getNumberOfPlayers()));
+            out.println(ServerHelper.welcome());
             out.println(ServerHelper.askUsername());
             String username = getUsernameFromPlayer();
 

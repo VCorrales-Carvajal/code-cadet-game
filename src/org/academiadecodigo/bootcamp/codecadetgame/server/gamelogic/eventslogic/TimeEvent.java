@@ -16,7 +16,7 @@ import java.util.concurrent.BlockingQueue;
 public class TimeEvent implements ChoosableEvent {
 
     private final EventType eventType = EventType.TIME_EVENT;
-    public static final int LENGTH_TIME_EVENTS = 5;
+    public static final int LENGTH_TIME_EVENTS = 8;
     private final double probabilityPositive = 0.8;
     private final Server server;
     private BlockingQueue<String[]> queue;
@@ -132,7 +132,7 @@ public class TimeEvent implements ChoosableEvent {
         steps[0] = 1;
         lifeAreas[0] = LifeArea.MONEY;
 
-        questions[1] = "You go on vacations to a beautiful Caribbean island\n" +
+        questions[1] = "You go on vacation to a beautiful Caribbean island\n" +
                 "\t1. I want it!\n";
         positiveConsequences[1] = "You came back wonderfully tanned. Ronaldo envies you\n";
         negativeConsequences[1] = "You got bitten by a piranha and you lose a toe\n";
@@ -161,6 +161,28 @@ public class TimeEvent implements ChoosableEvent {
         steps[4] = 1;
         lifeAreas[4] = LifeArea.HAPPINESS;
 
+        questions[5] = "You decide to learn Python in a night school\n" +
+                "\t1. I want it!\n";
+        positiveConsequences[5] = "Your amazing Phyton coding skills earn you a new highly paid job\n";
+        negativeConsequences[5] = "You get robbed on your way to classes\n";
+        steps[5] = 1;
+        lifeAreas[5] = LifeArea.MONEY;
+
+        questions[6] = "You buy a new mac\n" +
+                "\t1. I want it!\n";
+        positiveConsequences[6] = "You're coding so fast now you get a raise\n";
+        negativeConsequences[6] = "Your mac explodes in your hands and the hospital bill is huge\n";
+        steps[6] = 1;
+        lifeAreas[6] = LifeArea.MONEY;
+
+        questions[7] = "You make a fun game for your nephew in the weekend\n" +
+                "\t1. I want it!\n";
+        positiveConsequences[7] = "The game turns viral and everyone loves you\n";
+        negativeConsequences[7] = "Your sister is mad because she thinks the kid spends to much time playing and not enough studying\n";
+        steps[7] = 1;
+        lifeAreas[7] = LifeArea.HAPPINESS;
+
+
     }
 
     @Override
@@ -171,7 +193,7 @@ public class TimeEvent implements ChoosableEvent {
         }
 
         synchronized (this) {
-            if (queue.size() == server.getNumberOfPlayers()){
+            if (queue.size() == server.getNumberOfPlayers()) {
                 notifyAll();
             }
         }
