@@ -46,7 +46,7 @@ public class Game implements Runnable {
             usernames[i] = server.getPlayerDispatcherList().get(i).getPlayer().getUsername();
         }
 
-        String currentPlayerUsername = "";
+        String currentPlayerUsername;
 
         while (turnCounter <= server.getTurnsToFinish()) {
 
@@ -100,7 +100,21 @@ public class Game implements Runnable {
             turnCounter++;
         }
 
-        server.sendMsgToAll(GameHelper.endGame(currentPlayerUsername));
+        endGame();
+    }
+
+    private void endGame() {
+        String absoluteWinner = null;
+        int maxPosition = 0;
+        int[] positions = GameHelper.getPlayerPositions(server);
+        for (int i = 0; i < positions.length; i++) {
+            if (positions[i] > maxPosition) {
+                absoluteWinner = server.getPlayerDispatcherList().get(i).getPlayer().getUsername();
+                maxPosition = positions[i];
+            }
+        }
+
+        server.sendMsgToAll(GameHelper.endGame(absoluteWinner));
     }
 
     private void threadSleep() {
