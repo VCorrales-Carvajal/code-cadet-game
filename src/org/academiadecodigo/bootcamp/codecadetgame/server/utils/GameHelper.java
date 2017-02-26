@@ -59,17 +59,15 @@ public class GameHelper {
         return MsgFormatter.gameMsg("You are on your last day of your bootcamp and to graduate you have to answer a question: ");
     }
 
-    public static String welcome() {
-        return MsgFormatter.serverMsg(FileHelper.readFile("resources/game-welcome.txt"));
-    }
-
     public static String renderPlayersPosition(int[] playerPositions, String[] usernames, int maxTurns) {
 
         int[] renderedPositions = new int[usernames.length];
 
         for (int i = 0; i < usernames.length; i++) {
             renderedPositions[i] = (int) Math.ceil((playerPositions[i]/(1.1*maxTurns)) * STEPS_RENDERED);
-            System.out.println(renderedPositions[i]);
+            if (renderedPositions[i] == 0) {
+                renderedPositions[i] = 1;
+            }
         }
 
         int bonecoLines = 3;
@@ -162,20 +160,20 @@ public class GameHelper {
         switch (eventType){
 
             case QUESTION:
-                typeOfEvent = "******** ALL - Let's test your knowledge of Java:\n";
+                typeOfEvent = MsgFormatter.collectiveMessage("\n******** ALL - Let's test your knowledge of Java:") + "\n\n";
                 break;
             case TIME_EVENT:
-                typeOfEvent = "******** ALL - First to choose takes it! Think fast!\n";
+                typeOfEvent = MsgFormatter.collectiveMessage("\n******** ALL - First to choose takes it! Think fast!") + "\n\n";
                 break;
             case LIFE_DECISION:
-                typeOfEvent = "######## <" + username + "> - " +
-                        "You now have to take a life decision:\n";
+                typeOfEvent = MsgFormatter.personalMessage("######## <" + username + "> - " +
+                        "You now have to take a life decision:") + "\n\n";
                 break;
             case COLLECTIVE_EVENT:
-                typeOfEvent = "******** ALL - This just happened: \n";
+                typeOfEvent = MsgFormatter.collectiveMessage("\n******** ALL - This just happened:") + "\n\n";
                 break;
             case PERSONAL_EVENT:
-                typeOfEvent = "######## <" + username + "> - this just happened to you:\n";
+                typeOfEvent = MsgFormatter.personalMessage("######## <" + username + "> - this just happened to you:") + "\n\n";
                 break;
         }
 
@@ -240,11 +238,28 @@ public class GameHelper {
         return MsgFormatter.gameMsg(result + "\n");
     }
 
-    public static String endGame() {
-        return MsgFormatter.gameMsg("### GAME OVER ###");
-    }
 
     public static String informWinner(String winner) {
-        return MsgFormatter.gameMsg("----- " + winner + " is the winner -----");
+//        return MsgFormatter.gameMsg("----- " + winner + " is the winner -----");
+
+        String result = "´*•.¸(*•.¸♥¸.•*´)¸.•*´\n" +
+            "♥«´¨`•°.."+winner+"..°•´¨`»♥\n" +
+            ".¸.•*(¸.•*´♥`*•.¸)`*•." ;
+
+        return result;
+
+    }
+
+    public static String endGame() {
+//        return MsgFormatter.gameMsg("### GAME OVER ###");
+        return MsgFormatter.gameMsg(
+                "┈┈┏━╮╭━┓┈ ╭━━━━╮\n" +
+                "┈┈┃┏┗┛┓┃╭┫GAME OVER┃\n" +
+                "┈┈╰┓▋▋┏╯╯ ╰━━━━╯\n" +
+                "┈╭━┻╮╲┗━━━━╮╭╮┈\n" +
+                "┈┃▎▎┃╲╲╲╲╲╲┣━╯┈\n" +
+                "┈╰━┳┻▅╯╲╲╲╲┃┈┈┈\n" +
+                "┈┈┈╰━┳┓┏┳┓┏╯┈┈┈\n" +
+                "┈┈┈┈┈┗┻┛┗┻┛┈┈┈┈");
     }
 }
