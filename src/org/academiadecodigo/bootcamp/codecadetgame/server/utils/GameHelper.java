@@ -228,6 +228,6 @@ public class GameHelper {
     }
 
     public static String informWinner(String winner) {
-        return MsgFormatter.gameMsg("%%%%" + winner + " is the winner %%%%");
+        return MsgFormatter.gameMsg("----- " + winner + " is the winner -----");
     }
 }
