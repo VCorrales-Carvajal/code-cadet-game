@@ -34,7 +34,7 @@ public class MsgFormatter {
     }
 
     public static String collectiveMessage(String msg){
-        return ANSI_BLUE_BACKGROUND + ANSI_BLACK + msg + ANSI_RESET;
+        return ANSI_BLUE_BACKGROUND + ANSI_WHITE + msg + ANSI_RESET;
     }
 
     public static String personalMessage(String msg){

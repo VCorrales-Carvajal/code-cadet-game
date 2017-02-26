@@ -197,19 +197,19 @@ public class GameHelper {
             case CAREER:
                 lifeAreaConsequence = (isCollective)
                         ? ((isStepForward) ? "Everyone is advancing in their career!" : "Everyone has a setback in their career!")
-                        : ((isStepForward) ? "You advanced in your career!" : "You had a setback in your career!");
+                        : ((isStepForward) ? "you advanced in your career!" : "you had a setback in your career!");
                 break;
 
             case MONEY:
                 lifeAreaConsequence = (isCollective)
                         ? ((isStepForward) ? "Everyone earns money!" : "Everyone lost money!")
-                        : ((isStepForward) ? "You earned money!" : "You lost money!");
+                        : ((isStepForward) ? "you earned money!" : "you lost money!");
                 break;
 
             case HAPPINESS:
                 lifeAreaConsequence = (isCollective)
                         ? ((isStepForward) ? "Everyone is happier!" : "Everyone is sad.")
-                        : ((isStepForward) ? "You are happier!" : "You are sad.");
+                        : ((isStepForward) ? "you are happier!" : "you are sad.");
                 break;
 
             default:
@@ -222,9 +222,9 @@ public class GameHelper {
         String changeString = (isStepForward) ? " " + Math.abs(step) + stepString + " forward." :
                 " " + Math.abs(step) + stepString + " back.";// n step/steps forward/back.
 
-        String target = (!isCollective) ? username + ": " : "";
+        String target = (!isCollective) ? "<" + MsgFormatter.highlightUsername(username) + MsgFormatter.gameMsg(">, ") : "";
 
-        return MsgFormatter.gameMsg(target + lifeAreaConsequence + changeString + "\n");
+        return MsgFormatter.gameMsg(target + MsgFormatter.gameMsg(lifeAreaConsequence + changeString) + "\n");
     }
 
     public static String invalidAnswer() {
@@ -237,7 +237,7 @@ public class GameHelper {
 
         for (int j = 0; j < usernames.length; j++) {
             Player p = server.getPlayerDispatcherTable().get(usernames[j]).getPlayer();
-            result = result + "<" + usernames[j] + "> ";
+            result = result + MsgFormatter.gameMsg("<" + usernames[j] + "> ");
             for (int i = 0; i < LifeArea.values().length; i++) {
                 result = result + MsgFormatter.gameMsg(" " + LifeArea.values()[i] + ": " + p.getLifeAreasPosition()[i] + ". ");
             }

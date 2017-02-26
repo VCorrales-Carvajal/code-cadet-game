@@ -25,9 +25,7 @@ public class ServerHelper {
     }
 
     public static String welcome() {
-
         return MsgFormatter.serverMsg(FileHelper.readFile("resources/game-welcome.txt"));
-
     }
 
     public static String askUsername() {
