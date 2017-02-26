@@ -42,7 +42,9 @@ public class Question implements ChoosableEvent {
 
         // Display selected statement
         int index = shuffledIndexes[counterIndex];
-        String eventToDisplay = GameHelper.displayEventType(username, eventType) + questions[index];
+        int numberOfOptions = questions[index].split("\\t").length - 1;
+        String eventToDisplay = GameHelper.displayEventType(username, eventType) + questions[index] +
+                "Insert your answer (1 - " + numberOfOptions +"):";
         server.sendMsgToAll(MsgFormatter.gameMsg(eventToDisplay));
 
         // Listen to the answer of all players

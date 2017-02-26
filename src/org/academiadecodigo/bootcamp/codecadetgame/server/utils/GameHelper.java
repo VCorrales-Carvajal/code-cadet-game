@@ -242,8 +242,7 @@ public class GameHelper {
 
 
     public static String informWinner(String winner) {
-        String winnerFormatted = MsgFormatter.gameMsg("<" + winner + "> won this turn!");
-        String result = MsgFormatter.turnWinner("•·.·´¯`·.·• ") +  winnerFormatted + MsgFormatter.turnWinner(" •·.·´¯`·.·•");
+        String result = MsgFormatter.turnWinner("•·.·´¯`·.·• " + "<" + winner + "> won this turn! •·.·´¯`·.·•");
 
         return result;
 
