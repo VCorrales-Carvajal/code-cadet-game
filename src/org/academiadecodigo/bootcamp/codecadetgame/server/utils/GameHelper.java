@@ -7,7 +7,6 @@ import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.EventT
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.LifeArea;
 
 import java.util.Random;
-import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -18,6 +17,7 @@ public class GameHelper {
     public static final String COLLECTIVE_USERNAME = "All";
     public static final int MAX_TURNS = 10;
     public static final double PROB_COW_WISDOM_QUOTE = 0.5;
+    public static final long TIME_OUT = 10000;
 
     public static String gameCommands() {
         return "\t /quit \t closes your connection to this chat \n";
@@ -140,7 +140,7 @@ public class GameHelper {
     }
 
     public static String informCurrentPlayer(String currentPlayer) {
-        return MsgFormatter.gameMsg("It's <" + currentPlayer + ">'s turn!\n");
+        return MsgFormatter.gameMsg("It's <" + currentPlayer + ">'s turn! Please press any key to roll the dice\n");
     }
 
     public static String personalEvent(String username) {
