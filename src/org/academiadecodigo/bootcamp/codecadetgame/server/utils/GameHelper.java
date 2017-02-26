@@ -249,16 +249,25 @@ public class GameHelper {
 
     }
 
-    public static String endGame() {
+    public static String endGame(String absoluteWinner) {
 //        return MsgFormatter.gameMsg("### GAME OVER ###");
-        return MsgFormatter.gameMsg(
-                "┈┈┏━╮╭━┓┈ ╭━━━━╮\n" +
-                "┈┈┃┏┗┛┓┃╭┫GAME OVER┃\n" +
-                "┈┈╰┓▋▋┏╯╯ ╰━━━━╯\n" +
-                "┈╭━┻╮╲┗━━━━╮╭╮┈\n" +
-                "┈┃▎▎┃╲╲╲╲╲╲┣━╯┈\n" +
-                "┈╰━┳┻▅╯╲╲╲╲┃┈┈┈\n" +
-                "┈┈┈╰━┳┓┏┳┓┏╯┈┈┈\n" +
-                "┈┈┈┈┈┗┻┛┗┻┛┈┈┈┈");
+        int maxSize = 8;
+        String winnerUsername = absoluteWinner;
+
+        for (int i = absoluteWinner.length(); i < maxSize; i++) {
+            winnerUsername += " ";
+        }
+
+        return MsgFormatter.endGameMsg(
+                "┈┈┏━╮╭━┓┈╭━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╮\n" +
+                "┈┈┃┏┗┛┓┃╭┫" + MsgFormatter.serverMsg("THE ABSOLUTE WINNER IS " + winnerUsername.toUpperCase()) + MsgFormatter.endGameMsg("┃\n" +
+                "┈┈╰┓▋▋┏╯╯╰━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╯\n" +
+                "┈╭━┻╮╲┗━━━━╮╭╮┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈\n" +
+                "┈┃▎▎┃╲╲╲╲╲╲┣━╯┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈\n" +
+                "┈╰━┳┻▅╯╲╲╲╲┃┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈\n" +
+                "┈┈┈╰━┳┓┏┳┓┏╯┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈\n" +
+                "┈┈┈┈┈┗┻┛┗┻┛┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈\n"));
     }
+
+
 }

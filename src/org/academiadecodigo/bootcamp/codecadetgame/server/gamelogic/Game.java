@@ -46,7 +46,7 @@ public class Game implements Runnable {
             usernames[i] = server.getPlayerDispatcherList().get(i).getPlayer().getUsername();
         }
 
-        String currentPlayerUsername;
+        String currentPlayerUsername = "";
 
         while (turnCounter <= server.getTurnsToFinish()) {
 
@@ -100,7 +100,7 @@ public class Game implements Runnable {
             turnCounter++;
         }
 
-        server.sendMsgToAll(GameHelper.endGame());
+        server.sendMsgToAll(GameHelper.endGame(currentPlayerUsername));
     }
 
     private void threadSleep() {
