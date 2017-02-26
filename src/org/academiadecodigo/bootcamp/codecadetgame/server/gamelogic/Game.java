@@ -75,8 +75,6 @@ public class Game implements Runnable {
             EventType eventType = EventType.choose();
             Event event = events[eventType.ordinal()];
 
-            threadSleep();
-
             // The selected event sends a statement and processes consequences accordingly
             if (eventType.isCollective()) {
                 event.process(GameHelper.COLLECTIVE_USERNAME);
