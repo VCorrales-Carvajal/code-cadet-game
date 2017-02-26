@@ -26,7 +26,6 @@ public class Question implements ChoosableEvent {
     private int[] shuffledIndexes;
     private int counterIndex = 0;
 
-
     public Question(Server server) {
         this.server = server;
         init();
@@ -68,9 +67,9 @@ public class Question implements ChoosableEvent {
         String winner = null; // winner username
 
         synchronized (this) {
-            while (queue.size() != server.getNumberOfPlayers()) {
+            while (queue.size() < server.getNumberOfPlayers()) {
                 try {
-                    wait(GameHelper.TIME_OUT);
+                    wait();
                 } catch (InterruptedException e) {
                     //Thread.interrupt called, no handling needed
                 }
@@ -213,8 +212,12 @@ public class Question implements ChoosableEvent {
             String[] answerAndUsername = {answer, username};
             queue.offer(answerAndUsername);
         }
-        notifyAll();
 
+        synchronized (this) {
+            if (queue.size() == server.getNumberOfPlayers()){
+                notifyAll();
+            }
+        }
 
     }
 
