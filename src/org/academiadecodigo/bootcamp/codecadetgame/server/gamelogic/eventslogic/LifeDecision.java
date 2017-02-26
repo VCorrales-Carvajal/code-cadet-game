@@ -74,8 +74,8 @@ public class LifeDecision implements ChoosableEvent {
             for (int i = 0; i < NUMBER_OF_OPTIONS_SHOWN; i++) {
                 if (currentAnswer.equals(Integer.toString(i + 1))) {
                     index = currentIndexes[i];
-                    System.out.println("Debugging: LIFEDECISION. Selected answer is " + (i+1) + ". Current answer: " + currentAnswer +
-                    ". Corresponds to index " + index + " corresponds to " + statements[index]);
+                    System.out.println("Debugging: LIFEDECISION. Selected answer is " + (i + 1) + ". Current answer: " + currentAnswer +
+                            ". Corresponds to index " + index + " corresponds to " + statements[index]);
                     break;
                 }
             }
@@ -175,6 +175,42 @@ public class LifeDecision implements ChoosableEvent {
         negativeConsequences[6] = "You bought a cake and your partner, who’s allergic, accuses you of attempted murder";
         steps[6] = 1;
         lifeAreas[6] = LifeArea.HAPPINESS;
+
+        statements[7] = "You get yourself a nice little puppy";
+        positiveConsequences[7] = "A girl starts talking to you in the park because of your wonderfull puppy; she becomes your girlfriend";
+        negativeConsequences[7] = "Turns out, the puppy is a demon, bytes your foot and you end up in the hospital";
+        steps[7] = 1;
+        lifeAreas[7] = LifeArea.HAPPINESS;
+
+        statements[8] = "You buy a bike, because you wanna be healthy";
+        positiveConsequences[8] = "You're so healthy you work more and you earn lots of money";
+        negativeConsequences[8] = "You're bycicle is stolen and you buy another one - and spend a lot in a new insurance";
+        steps[8] = 1;
+        lifeAreas[8] = LifeArea.MONEY;
+
+        statements[9] = "You donate money for your local zoo";
+        positiveConsequences[9] = "Your boss admires your empathy. He makes you new product leader out of admiration";
+        negativeConsequences[9] = "Your boss is an animal lover that hates zoos. He fires you";
+        steps[9] = 1;
+        lifeAreas[9] = LifeArea.CAREER;
+
+        statements[10] = "You fall in love with footabll and spend each second of free time watching it";
+        positiveConsequences[10] = "You make an app to understand player's movements - and you get rich";
+        negativeConsequences[10] = "Boss catches you watching illegal streams at work and substitutes you for a machine (a prettier one too)";
+        steps[10] = 1;
+        lifeAreas[10] = LifeArea.CAREER;
+
+        statements[11] = "You give some bread to a nice little duck in a park";
+        positiveConsequences[11] = "The duck starts choking. You give him mouth-to-mouth resuscitation. The duck spits something that was chocking. It's a lot of 500 euro bills that he had swallowed. No one's looking, so you keep the money.";
+        negativeConsequences[11] = "The duck chokes on the bread and dies. Your wife asks for divorce on the basis of animal cruelty. You spend a lot of money in that divorce.";
+        steps[11] = 1;
+        lifeAreas[11] = LifeArea.MONEY;
+
+        statements[12] = "You help an old lady cross the street";
+        positiveConsequences[12] = "She smiles at you and you feel a warmth inside";
+        negativeConsequences[12] = "The moment she crosses the street a piano falls on her head and she dies. You feel awfull.";
+        steps[12] = 1;
+        lifeAreas[12] = LifeArea.HAPPINESS;
     }
 
     @Override
