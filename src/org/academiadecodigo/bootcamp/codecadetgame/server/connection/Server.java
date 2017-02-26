@@ -34,7 +34,6 @@ public class Server {
 
             while (true) {
 
-
                 // Restrict number of connections to the number of players to play this game
                 if (playerNumber <= numberOfPlayers) {
 
@@ -52,7 +51,6 @@ public class Server {
                     pool.submit(playerDispatcher);
 
                 }
-
             }
 
         } catch (IOException e) {
@@ -72,7 +70,6 @@ public class Server {
         }
     }
 
-
     public Map<String, PlayerDispatcher> getPlayerDispatcherTable() {
         return playerDispatcherTable;
     }
@@ -85,7 +82,6 @@ public class Server {
         numberOfPlayers = number;
     }
 
-
     public Game getGame() {
         return game;
     }
@@ -93,7 +89,6 @@ public class Server {
     public void setGame(Game game) {
         this.game = game;
     }
-
 
     public int getTurnsToFinish() {
         return turnsToFinish;
