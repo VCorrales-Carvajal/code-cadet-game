@@ -79,7 +79,7 @@ public class Game implements Runnable {
             server.sendMsgToAll(GameHelper.renderPlayersPosition(GameHelper.getPlayerPositions(server), usernames));
 
             if (Math.random() < GameHelper.PROB_COW_WISDOM_QUOTE) {
-                GameHelper.displayCowWisdomQuote();
+                server.sendMsgToAll(GameHelper.displayCowWisdomQuote());
             }
 
             updatePlayerCounter(server.getPlayerDispatcherList().size());
