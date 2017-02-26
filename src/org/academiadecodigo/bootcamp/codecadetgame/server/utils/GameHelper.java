@@ -61,31 +61,32 @@ public class GameHelper {
     }
 
     public static String renderPlayersPosition(int[] playerPositions, String[] usernames) {
-//        int bonecoLines = 3;
-//        String[] boneco = new String[bonecoLines];
-//        boneco[0] = "|\\(º_º)|";
-//        boneco[1] = "|  ) )Z|";
-//        boneco[2] = "|  / \\ |";
-//        String emptyPosition = "|     |";
-//        String field = "";
-//
-//        for (int player = 0; player < playerPositions.length; player++) {
-//            for (int i = 0; i < bonecoLines; i++) {
-//                for (int j = 1; j <= 10; j++) {
-//                    if (j == playerPositions[player]) {
-//                        field += boneco[i];
-//                    } else {
-//                        field += emptyPosition;
-//                    }
-//                }
-//                field += "|SUCCESS \n";
-//            }
-//            field += "\n";
-//        }
-        String field = "PLAYERS' GLOBAL POSITIONS";
-        for (int playerIdx = 0; playerIdx < playerPositions.length; playerIdx++) {
-            field = field + "\n" + "<" + usernames[playerIdx] + ">: " + playerPositions[playerIdx];
+        int bonecoLines = 3;
+        String[] boneco = new String[bonecoLines];
+        boneco[0] = "|\\(º_º)|";
+        boneco[1] = "|  ) )Z|";
+        boneco[2] = "|  / \\ |";
+        String emptyPosition = "|     |";
+        String field = "";
+
+        for (int player = 0; player < playerPositions.length; player++) {
+            for (int i = 0; i < bonecoLines; i++) {
+                for (int j = 1; j <= 10; j++) {
+                    if (j == playerPositions[player]) {
+                        field += boneco[i];
+                    } else {
+                        field += emptyPosition;
+                    }
+                }
+                field += usernames[player] + "\n";
+            }
+            field += "\n";
         }
+
+//        String field = "PLAYERS' GLOBAL POSITIONS";
+//        for (int playerIdx = 0; playerIdx < playerPositions.length; playerIdx++) {
+//            field = field + "\n" + "<" + usernames[playerIdx] + ">: " + playerPositions[playerIdx];
+//        }
         return MsgFormatter.gameMsg(field + "\n");
     }
 
