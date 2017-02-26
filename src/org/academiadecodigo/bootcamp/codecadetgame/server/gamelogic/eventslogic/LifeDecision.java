@@ -68,14 +68,11 @@ public class LifeDecision implements ChoosableEvent {
             }
         }
 
-        System.out.println("Debugging: LIFEDECISION. Current answer: " + currentAnswer);
         int index = -1;
         if (currentAnswer != null) {
             for (int i = 0; i < NUMBER_OF_OPTIONS_SHOWN; i++) {
                 if (currentAnswer.equals(Integer.toString(i + 1))) {
                     index = currentIndexes[i];
-                    System.out.println("Debugging: LIFEDECISION. Selected answer is " + (i+1) + ". Current answer: " + currentAnswer +
-                    ". Corresponds to index " + index + " corresponds to " + statements[index]);
                     break;
                 }
             }
@@ -182,7 +179,6 @@ public class LifeDecision implements ChoosableEvent {
         synchronized (this) {
             currentAnswer = answer;
             notifyAll();
-            System.out.println("Debugging LIFEDECISION. NotifyAll");
         }
     }
 
