@@ -220,4 +220,8 @@ public class GameHelper {
     public static String endGame() {
         return MsgFormatter.gameMsg("### GAME OVER ###");
     }
+
+    public static String informWinner(String winner) {
+        return MsgFormatter.gameMsg("%%%%" + winner + " is the winner %%%%");
+    }
 }

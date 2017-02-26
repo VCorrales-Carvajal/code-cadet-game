@@ -92,6 +92,7 @@ public class Question implements ChoosableEvent {
             // Update winner's position
             GameHelper.updateOnePlayerPosition(steps[index], winner, server, LifeArea.CAREER);
             // Send message to all showing what happened
+            server.sendMsgToAll(GameHelper.informWinner(winner));
             server.sendMsgToAll(GameHelper.informLifeAreaAffected(winner, steps[index], LifeArea.CAREER, eventType));
 
         } else {
