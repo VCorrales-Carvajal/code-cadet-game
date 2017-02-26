@@ -2,7 +2,6 @@ package org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic;
 
 import org.academiadecodigo.bootcamp.codecadetgame.server.connection.Server;
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.EventType;
-import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.LifeArea;
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.eventslogic.*;
 import org.academiadecodigo.bootcamp.codecadetgame.server.utils.GameHelper;
 
@@ -62,11 +61,8 @@ public class Game implements Runnable {
                 event.process(currentPlayerUsername);
             }
 
-            String lifeAreaPositionString = "Dear " + currentPlayerUsername + ", your points in ";
-            for (int i = 0; i < LifeArea.values().length; i++) {
-                lifeAreaPositionString = lifeAreaPositionString + LifeArea.values()[i] + " are: " + server.getPlayerDispatcherTable().get(currentPlayerUsername).getPlayer().getLifeAreasPosition()[i] + "\n";
-            }
-            server.sendMsgToAll(lifeAreaPositionString);
+            server.sendMsgToAll(GameHelper.updateLifeAreaPosition(server, currentPlayerUsername));
+
             GameHelper.renderPlayersPosition(GameHelper.getPlayersPositions(server));
 
             if (Math.random() < Constants.PROB_COW_WISDOM_QUOTE) {

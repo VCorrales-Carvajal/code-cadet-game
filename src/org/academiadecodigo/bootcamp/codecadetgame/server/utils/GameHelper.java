@@ -196,4 +196,12 @@ public class GameHelper {
     public static String invalidAnswer() {
         return MsgFormatter.gameMsg("Invalid Answer. No one moves this turn.");
     }
+
+    public static String updateLifeAreaPosition(Server server, String currentPlayerUsername) {
+        String lifeAreaPositionString = "Dear " + currentPlayerUsername + ", your points in ";
+        for (int i = 0; i < LifeArea.values().length; i++) {
+            lifeAreaPositionString = lifeAreaPositionString + LifeArea.values()[i] + " are: " + server.getPlayerDispatcherTable().get(currentPlayerUsername).getPlayer().getLifeAreasPosition()[i] + "\n";
+        }
+        return MsgFormatter.gameMsg(lifeAreaPositionString);
+    }
 }
