@@ -53,51 +53,55 @@ public class GameHelper {
         return MsgFormatter.serverMsg(FileHelper.readFile("resources/game-welcome.txt"));
     }
 
-    public static String renderPlayersPosition(int[] playerCurrentPositions) {
-        String[] boneco = new String[3];
-        boneco[0] = "|\\(º_º)|";
-        boneco[1] = "|  ) )Z|";
-        boneco[2] = "|  / \\ |";
-        String emptyPosition = "|     |";
-        String field = "";
-
-        for (int player = 0; player < playerCurrentPositions.length; player++) {
-            for (int i = 0; i < 3; i++) {
-                for (int j = 1; j <= 10; j++) {
-                    if (j == playerCurrentPositions[player]) {
-                        field += boneco[i];
-                    } else {
-                        field += emptyPosition;
-                    }
-                }
-                field += "|SUCCESS \n";
-            }
-            field += "\n";
+    public static String renderPlayersPosition(int[] playerPositions, String[] usernames) {
+//        int bonecoLines = 3;
+//        String[] boneco = new String[bonecoLines];
+//        boneco[0] = "|\\(º_º)|";
+//        boneco[1] = "|  ) )Z|";
+//        boneco[2] = "|  / \\ |";
+//        String emptyPosition = "|     |";
+//        String field = "";
+//
+//        for (int player = 0; player < playerPositions.length; player++) {
+//            for (int i = 0; i < bonecoLines; i++) {
+//                for (int j = 1; j <= 10; j++) {
+//                    if (j == playerPositions[player]) {
+//                        field += boneco[i];
+//                    } else {
+//                        field += emptyPosition;
+//                    }
+//                }
+//                field += "|SUCCESS \n";
+//            }
+//            field += "\n";
+//        }
+        String field = "PLAYERS' POSITIONS";
+        for (int playerIdx = 0; playerIdx < playerPositions.length; playerIdx++) {
+            field = field + "\n" + usernames[playerIdx] + ": " + playerPositions[playerIdx];
         }
-        return field;
+        return MsgFormatter.gameMsg(field);
     }
 
-    public static int[] getPlayersPositions(Server server) {
-
-        int[] playersPositions = new int[server.getPlayerDispatcherTable().size()];
-        Set<String> usernames = server.getPlayerDispatcherTable().keySet();
-
-        int i = 0;
-        for (String username : usernames) {
-            playersPositions[i] = server.getPlayerDispatcherTable().get(username).getPlayer().getGlobalPosition();
-            i++;
+    public static int[] getPlayerPositions(Server server) {
+        int[] pos = new int[server.getPlayerDispatcherList().size()];
+        for (int i = 0; i < pos.length; i++) {
+            pos[i] = server.getPlayerDispatcherList().get(i).getPlayer().getGlobalPosition();
         }
-
-        return playersPositions;
+        return pos;
     }
-
 
     public static void updatePlayersPositions(int change, Server server, LifeArea lifeArea) {
 
         for (PlayerDispatcher pd : server.getPlayerDispatcherList()) {
             Player player = pd.getPlayer();
-            player.setGlobalPosition(pd.getPlayer().getGlobalPosition() + change);
-            player.setLifeAreasPosition(pd.getPlayer().getLifeAreasPosition()[lifeArea.ordinal()] + change, lifeArea);
+            // Player's position cannot be negative
+            if ((player.getGlobalPosition() + change) >= 0) {
+                player.setGlobalPosition(player.getGlobalPosition() + change);
+            } else {
+                player.setGlobalPosition(0);
+            }
+            // Update lifeArea position
+            player.setLifeAreasPosition(player.getLifeAreasPosition()[lifeArea.ordinal()] + change, lifeArea);
         }
 
     }
@@ -117,16 +121,16 @@ public class GameHelper {
     }
 
     public static String displayCowWisdomQuote() {
-        throw new UnsupportedOperationException();
-    }
+        String cow =
+                "                 __________________________\n" +
+                        "         }__{   / This is a JAVA wisdom     \\\n" +
+                        "         (00)  (     quote                   )\n" +
+                        "  :****** \\/ ===\\___________________________/\n" +
+                        " : #     ##\n" +
+                        "   ##****##\n" +
+                        "   \"\"    \"\"";
 
-
-    public static String getStringGivenStep(int step, String stringPositive, String stringNegative) {
-        if (step > 0) {
-            return stringPositive;
-        } else {
-            return stringNegative;
-        }
+        return MsgFormatter.gameMsg(cow);
     }
 
     public static String informCurrentPlayer(String currentPlayer) {
@@ -197,10 +201,10 @@ public class GameHelper {
         return MsgFormatter.gameMsg("Invalid Answer. No one moves this turn.");
     }
 
-    public static String updateLifeAreaPosition(Server server, String currentPlayerUsername) {
-        String lifeAreaPositionString = "Dear " + currentPlayerUsername + ", your points in ";
+    public static String informLifeAreaPosition(Server server, String currentPlayerUsername) {
+        String lifeAreaPositionString = "Dear " + currentPlayerUsername + ", your current state is: ";
         for (int i = 0; i < LifeArea.values().length; i++) {
-            lifeAreaPositionString = lifeAreaPositionString + LifeArea.values()[i] + " are: " + server.getPlayerDispatcherTable().get(currentPlayerUsername).getPlayer().getLifeAreasPosition()[i] + "\n";
+            lifeAreaPositionString = lifeAreaPositionString + " " + LifeArea.values()[i] + ":" + server.getPlayerDispatcherTable().get(currentPlayerUsername).getPlayer().getLifeAreasPosition()[i] + ". ";
         }
         return MsgFormatter.gameMsg(lifeAreaPositionString);
     }

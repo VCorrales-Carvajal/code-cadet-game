@@ -38,13 +38,17 @@ public class Game implements Runnable {
 
 
     private void turnCycle() {
+        String[] usernames = new String[server.getPlayerDispatcherList().size()];
+        for (int i = 0; i < usernames.length; i++) {
+            usernames[i] = server.getPlayerDispatcherList().get(i).getPlayer().getUsername();
+        }
 
         String currentPlayerUsername;
-        System.out.println(noOneFinished());
+        System.out.println("Debugging: NoOneFinished --> " + noOneFinished());
 
         while (noOneFinished()) {
 
-            currentPlayerUsername = server.getPlayerDispatcherList().get(currentPlayerCounter).getPlayer().getUsername();
+            currentPlayerUsername = usernames[currentPlayerCounter];
             System.out.println("Debugging: Current Player is " + currentPlayerUsername);
 
             // Send message to all players informing the player in the current turn
@@ -61,9 +65,9 @@ public class Game implements Runnable {
                 event.process(currentPlayerUsername);
             }
 
-            server.sendMsgToAll(GameHelper.updateLifeAreaPosition(server, currentPlayerUsername));
+            server.sendMsgToAll(GameHelper.informLifeAreaPosition(server, currentPlayerUsername));
 
-            GameHelper.renderPlayersPosition(GameHelper.getPlayersPositions(server));
+            server.sendMsgToAll(GameHelper.renderPlayersPosition(GameHelper.getPlayerPositions(server), usernames));
 
             if (Math.random() < Constants.PROB_COW_WISDOM_QUOTE) {
                 GameHelper.displayCowWisdomQuote();
@@ -74,9 +78,9 @@ public class Game implements Runnable {
     }
 
     private boolean noOneFinished() {
-        int[] playerPositions = GameHelper.getPlayersPositions(server);
-        for (int i = 0; i < playerPositions.length; i++) {
-            if (playerPositions[i] == server.getStepsToFinish()) {
+        int[] playerPos = GameHelper.getPlayerPositions(server);
+        for (int i = 0; i < playerPos.length; i++) {
+            if (playerPos[i] == server.getStepsToFinish()) {
                 return false;
             }
         }
@@ -91,10 +95,6 @@ public class Game implements Runnable {
             currentPlayerCounter = 0;
         }
 
-    }
-
-    public Event[] getEvents() {
-        return events;
     }
 
     @Override

@@ -20,20 +20,18 @@ public class Tester {
 //        tester.probabilityTester();
 
         // Testing rendering of player positions
-//        tester.renderPlayersPositionsTester();
+        tester.renderPlayersPositionsTester();
 
         // Testing if iteration of map works
 //        tester.mapIterationTester();
 
         // Testing if shuffling indexes works
-       // tester.shuffleIndicesTester();
+        // tester.shuffleIndicesTester();
 
 //        String s = EventType.QUESTION.toString();
 //        System.out.println(s);
-//
-//        tester.probabilityTester();
 
-        System.out.println(ServerHelper.insertNumberOfSteps());
+//        System.out.println(ServerHelper.insertNumberOfSteps());
 
 
     }
@@ -53,10 +51,10 @@ public class Tester {
     }
 
 
-
     private void renderPlayersPositionsTester() {
-        int[] playersPositions = {4,2,8};
-        System.out.println(GameHelper.renderPlayersPosition(playersPositions));
+        int[] playersPositions = {4, 2, 8};
+        String[] usernames = {"vero", "micael", "to"};
+        System.out.println(GameHelper.renderPlayersPosition(playersPositions, usernames));
     }
 
     private void mapIterationTester() {

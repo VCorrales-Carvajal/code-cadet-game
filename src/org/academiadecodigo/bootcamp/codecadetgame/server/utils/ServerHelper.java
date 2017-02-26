@@ -68,7 +68,7 @@ public class ServerHelper {
     private static String showGameLength() {
         String s = "";
         for (int i = 0; i < GameLength.values().length; i++) {
-            s = s + (GameLength.values()[i].ordinal() + 1) + ". " + GameLength.values()[i].toString() + "\n ";
+            s = s + "\n\t"+(GameLength.values()[i].ordinal() + 1) + ". " + GameLength.values()[i].toString();
         }
         return s;
     }
