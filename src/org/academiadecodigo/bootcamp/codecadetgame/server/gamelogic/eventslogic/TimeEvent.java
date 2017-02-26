@@ -73,7 +73,7 @@ public class TimeEvent implements ChoosableEvent {
         synchronized (this) {
             while (queue.size() != server.getNumberOfPlayers()) {
                 try {
-                    wait(GameHelper.TIME_OUT);
+                    wait();
                 } catch (InterruptedException e) {
                     //Thread.interrupt called, no handling needed
                 }
@@ -91,7 +91,7 @@ public class TimeEvent implements ChoosableEvent {
                 break;
             }
         }
-
+        queue.clear();
 
         if (winner != null) {
 
@@ -170,7 +170,12 @@ public class TimeEvent implements ChoosableEvent {
             queue.offer(answerAndUsername);
         }
 
-        notifyAll();
+        synchronized (this) {
+            if (queue.size() == server.getNumberOfPlayers()){
+                notifyAll();
+            }
+        }
+
     }
 
     private String getConsequence(int index, String sign) {
