@@ -18,10 +18,10 @@ public class TimeEvent implements ChoosableEvent {
     private final EventType eventType = EventType.TIME_EVENT;
     public static final int LENGTH_TIME_EVENTS = 8;
     private final double probabilityPositive = 0.8;
+    private String[] questions;
     private final Server server;
     private BlockingQueue<String[]> queue;
 
-    private String[] questions;
     private String[] positiveConsequences;
     private String[] negativeConsequences;
     private int[] steps;
@@ -46,7 +46,7 @@ public class TimeEvent implements ChoosableEvent {
 
         // Display selected statement
         int index = shuffledIndexes[counterIndex];
-        String eventToDisplay = GameHelper.TimeEvent() + questions[index];
+        String eventToDisplay = GameHelper.displayEventType(username, eventType) + questions[index];
         server.sendMsgToAll(MsgFormatter.gameMsg(eventToDisplay));
 
         // Listen to all players

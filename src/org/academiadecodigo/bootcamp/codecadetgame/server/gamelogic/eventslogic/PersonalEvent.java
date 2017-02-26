@@ -35,7 +35,7 @@ public class PersonalEvent implements Event {
 
         // Display selected statement
         int index = shuffledIndexes[counterIndex];
-        String eventToDisplay = GameHelper.personalEvent(username) + statements[index];
+        String eventToDisplay = GameHelper.displayEventType(username, eventType) + statements[index];
         server.sendMsgToAll(MsgFormatter.gameMsg(eventToDisplay));
 
         // Update player's position

@@ -6,7 +6,9 @@ import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.Player;
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.EventType;
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.GameLength;
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.LifeArea;
+import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.eventslogic.Event;
 
+import java.io.File;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -50,7 +52,7 @@ public class GameHelper {
     }
 
     public static String startGame() {
-        return MsgFormatter.gameMsg("### GAME START ####\n");
+        return MsgFormatter.gameMsg(FileHelper.readFile("resources/game-start.txt"));
     }
 
     public static String gettingOutOfAC() {
@@ -153,27 +155,34 @@ public class GameHelper {
         return MsgFormatter.gameMsg("It's <" + currentPlayer + ">'s turn! Please press <Enter> to roll the dice\n");
     }
 
-    public static String personalEvent(String username) {
-        return "######## <" + username + "> - this just happened to you:\n";
-    }
+    public static String displayEventType(String username, EventType eventType){
 
-    public static String collectiveEvent() {
-        return "******** ALL - This just happened: \n";
-    }
+        String typeOfEvent = null;
 
-    public static String lifeDecision(String username) {
-        return "######## <" + username + "> - " +
-                "You now have to take a life decision:\n";
-    }
+        switch (eventType){
 
-    public static String JAVAQuestion() {
-        return "******** ALL - Let's test your knowledge of Java:\n";
-    }
+            case QUESTION:
+                typeOfEvent = "******** ALL - Let's test your knowledge of Java:\n";
+                break;
+            case TIME_EVENT:
+                typeOfEvent = "******** ALL - First to choose takes it! Think fast!\n";
+                break;
+            case LIFE_DECISION:
+                typeOfEvent = "######## <" + username + "> - " +
+                        "You now have to take a life decision:\n";
+                break;
+            case COLLECTIVE_EVENT:
+                typeOfEvent = "******** ALL - This just happened: \n";
+                break;
+            case PERSONAL_EVENT:
+                typeOfEvent = "######## <" + username + "> - this just happened to you:\n";
+                break;
+        }
 
+        return typeOfEvent;
 
-    public static String TimeEvent() {
-        return "******** ALL - First to choose takes it! Think fast!\n";
     }
+    
 
     public static String informLifeAreaAffected(String username, int step, LifeArea lifeArea, EventType eventType) {
 
