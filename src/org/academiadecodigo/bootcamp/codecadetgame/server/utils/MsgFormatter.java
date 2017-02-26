@@ -41,6 +41,9 @@ public class MsgFormatter {
         return ANSI_YELLOW_BACKGROUND + ANSI_BLACK + msg + ANSI_RESET;
     }
 
+    public static String turnWinner(String msg) {
+        return ANSI_PURPLE + msg + ANSI_RESET;
+    }
 
 
 }

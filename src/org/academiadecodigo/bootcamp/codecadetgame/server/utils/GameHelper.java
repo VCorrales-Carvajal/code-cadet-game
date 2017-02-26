@@ -240,11 +240,8 @@ public class GameHelper {
 
 
     public static String informWinner(String winner) {
-//        return MsgFormatter.gameMsg("----- " + winner + " is the winner -----");
-
-        String result = "´*•.¸(*•.¸♥¸.•*´)¸.•*´\n" +
-            "♥«´¨`•°.."+winner+"..°•´¨`»♥\n" +
-            ".¸.•*(¸.•*´♥`*•.¸)`*•." ;
+        String winnerFormatted = MsgFormatter.gameMsg("<" + winner + "> won this turn!\n");
+        String result = MsgFormatter.turnWinner("•·.·´¯`·.·• ") +  winnerFormatted + MsgFormatter.turnWinner(" •·.·´¯`·.·•");
 
         return result;
 
