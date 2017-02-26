@@ -9,13 +9,13 @@ public enum GameLength {
     MEDIUM(15),
     LONG(30);
 
-    private int numberOfSteps;
+    private int numberOfTurns;
 
-    GameLength(int numberOfSteps) {
-        this.numberOfSteps = numberOfSteps;
+    GameLength(int numberOfTurns) {
+        this.numberOfTurns = numberOfTurns;
     }
 
-    public int getNumberOfSteps() {
-        return numberOfSteps;
+    public int getNumberOfTurns() {
+        return numberOfTurns;
     }
 }

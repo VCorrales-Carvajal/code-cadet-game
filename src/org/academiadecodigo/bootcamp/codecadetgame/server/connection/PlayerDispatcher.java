@@ -75,8 +75,8 @@ public class PlayerDispatcher implements Runnable {
                 server.setNumberOfPlayers(numPlayersAnswer);
 
                 // 2) Game length?
-                int gameLength = askNumberOfSteps();
-                server.setStepsToFinish(gameLength);
+                int gameLength = askNumberOfTurns();
+                server.setTurnsToFinish(gameLength);
 
                 out.println(ServerHelper.waitingForOtherPlayersToConnect());
 
@@ -127,7 +127,7 @@ public class PlayerDispatcher implements Runnable {
 
     }
 
-    private int askNumberOfSteps() throws IOException {
+    private int askNumberOfTurns() throws IOException {
 
         out.println(ServerHelper.insertNumberOfSteps());
 
@@ -136,7 +136,7 @@ public class PlayerDispatcher implements Runnable {
             out.println(ServerHelper.insertNumOfPlayers());
         }
 
-        return GameLength.values()[playerAnswer - 1].getNumberOfSteps();
+        return GameLength.values()[playerAnswer - 1].getNumberOfTurns();
     }
 
     private int askNumberOfPlayers() throws IOException {
