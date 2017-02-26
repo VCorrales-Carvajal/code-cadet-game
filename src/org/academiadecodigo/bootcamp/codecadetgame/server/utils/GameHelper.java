@@ -129,12 +129,13 @@ public class GameHelper {
 
     }
 
-    public static String displayCowWisdomQuote() {
+    public static String cowWisdomQuote() {
+        String quote = (Math.random() > 0.5) ? "      é uma troca!" : "       é lidar!   ";
         String cow =
                 "                 __________________________\n" +
-                        "         }__{   / This is a JAVA wisdom     \\\n" +
-                        "         (00)  (     quote                   )\n" +
-                        "  :****** \\/ ===\\___________________________/\n" +
+                        "         }__{   /                          \\\n" +
+                        "         (00)  (" + quote + "          )\n" +
+                        "  :****** \\/ ===\\__________________________/\n" +
                         " : #     ##\n" +
                         "   ##****##\n" +
                         "   \"\"    \"\"";

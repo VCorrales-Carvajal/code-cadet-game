@@ -93,7 +93,7 @@ public class Game implements Runnable {
             threadSleep();
 
             if (Math.random() < GameHelper.PROB_COW_WISDOM_QUOTE) {
-                server.sendMsgToAll(GameHelper.displayCowWisdomQuote());
+                server.sendMsgToAll(GameHelper.cowWisdomQuote());
             }
 
             updatePlayerCounter(server.getPlayerDispatcherList().size());
