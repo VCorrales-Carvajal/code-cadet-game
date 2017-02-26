@@ -75,7 +75,7 @@ public class GameHelper {
 //            }
 //            field += "\n";
 //        }
-        String field = "PLAYERS' POSITIONS";
+        String field = "PLAYERS' GLOBAL POSITIONS";
         for (int playerIdx = 0; playerIdx < playerPositions.length; playerIdx++) {
             field = field + "\n" + usernames[playerIdx] + ": " + playerPositions[playerIdx];
         }
