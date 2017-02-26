@@ -46,7 +46,7 @@ public class TimeEvent implements ChoosableEvent {
 
         // Display selected statement
         int index = shuffledIndexes[counterIndex];
-        String eventToDisplay = GameHelper.TimeEvent() + questions[index];
+        String eventToDisplay = GameHelper.displayEventType(username, eventType) + questions[index];
         server.sendMsgToAll(MsgFormatter.gameMsg(eventToDisplay));
 
         // Listen to all players

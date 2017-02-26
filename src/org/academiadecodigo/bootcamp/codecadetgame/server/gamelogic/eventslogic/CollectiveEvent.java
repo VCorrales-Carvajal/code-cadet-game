@@ -35,7 +35,7 @@ public class CollectiveEvent implements Event {
 
         // Display selected statement
         int index = shuffledIndex[counterIndex];
-        String eventToDisplay = GameHelper.collectiveEvent() + statements[index];
+        String eventToDisplay = GameHelper.displayEventType(username, eventType) + statements[index];
         server.sendMsgToAll(MsgFormatter.gameMsg(eventToDisplay));
 
         // Update all players' position
