@@ -59,6 +59,15 @@ public class LifeDecision implements ChoosableEvent {
 
     private void processAnswer(String username) {
 
+        while (currentAnswer == null){
+//            try {
+//                wait(GameHelper.TIME_OUT);
+//            } catch (InterruptedException e) {
+//                //Thread.interrupt called, no handling needed
+//            }
+        }
+
+
         int index = -1;
         if (currentAnswer != null) {
             for (int i = 0; i < NUMBER_OF_OPTIONS_SHOWN; i++) {
@@ -85,6 +94,8 @@ public class LifeDecision implements ChoosableEvent {
             server.sendMsgToAll(MsgFormatter.gameMsg(GameHelper.invalidAnswer()));
 
         }
+
+        currentAnswer = null;
 
     }
 
@@ -164,6 +175,7 @@ public class LifeDecision implements ChoosableEvent {
     @Override
     public void chooseAnswer(String answer, String username) {
         currentAnswer = answer;
+//        notifyAll();
     }
 
     private String getConsequence(int index, String positiveOrNegative) {
