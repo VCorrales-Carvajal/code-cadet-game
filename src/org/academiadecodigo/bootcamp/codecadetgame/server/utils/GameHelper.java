@@ -244,7 +244,7 @@ public class GameHelper {
             result = result + MsgFormatter.globalPosition("TOTAL: " + p.getGlobalPosition()) + "\n";
         }
 
-        return MsgFormatter.gameMsg(result + "\n");
+        return MsgFormatter.gameMsg(result);
     }
 
 

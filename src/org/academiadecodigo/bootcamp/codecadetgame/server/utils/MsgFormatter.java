@@ -54,7 +54,7 @@ public class MsgFormatter {
     }
 
     public static String turnWinner(String msg) {
-        return ANSI_PURPLE + msg + ANSI_RESET;
+        return ANSI_YELLOW + msg + ANSI_RESET;
     }
 
     public static String playerPos(String msg) {

@@ -58,14 +58,17 @@ public class ServerHelper {
 
     public static String insertNumberOfSteps() {
 
-        String numberOfSteps = MsgFormatter.serverMsg("Please insert your wished Game Length: \n " + showGameLength());
+        String numberOfSteps = MsgFormatter.serverMsg("Please insert your wished Game Length (" + showGameLength() + "):");
         return numberOfSteps;
     }
 
     private static String showGameLength() {
         String s = "";
         for (int i = 0; i < GameLength.values().length; i++) {
-            s = s + "\n\t"+(GameLength.values()[i].ordinal() + 1) + ". " + GameLength.values()[i].toString();
+            s = s +(GameLength.values()[i].ordinal() + 1) + "-" + GameLength.values()[i].toString();
+            if (i != (GameLength.values().length - 1)) {
+                s = s + ", ";
+            }
         }
         return s;
     }
