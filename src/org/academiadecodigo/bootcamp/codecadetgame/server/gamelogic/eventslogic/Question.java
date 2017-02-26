@@ -67,7 +67,7 @@ public class Question implements ChoosableEvent {
 
         String winner = null; // winner username
 
-        while (queue.size() != server.getNumberOfPlayers()){
+        while (queue.size() != server.getNumberOfPlayers()) {
 //            try {
 //                wait(GameHelper.TIME_OUT);
 //            } catch (InterruptedException e) {
@@ -75,23 +75,24 @@ public class Question implements ChoosableEvent {
 //            }
         }
 
-        synchronized (queue) {
+        while (!queue.isEmpty()) {
 
-            while (!queue.isEmpty()) {
-                String firstAnswer = queue.poll()[0];
+            String[] s = queue.poll();
+            String firstAnswer = s[0];
 
-                if (firstAnswer.equals(correctAnswer[index])) {
-                    winner = queue.poll()[1];
-                    break;
-                }
+            if (firstAnswer.equals(correctAnswer[index])) {
+                winner = s[1];
+                break;
             }
         }
+
 
         if (winner != null) {
 
             // Update winner's position
             GameHelper.updateOnePlayerPosition(steps[index], winner, server, LifeArea.CAREER);
             // Send message to all showing what happened
+            server.sendMsgToAll(GameHelper.informWinner(winner));
             server.sendMsgToAll(GameHelper.informLifeAreaAffected(winner, steps[index], LifeArea.CAREER, eventType));
 
         } else {
