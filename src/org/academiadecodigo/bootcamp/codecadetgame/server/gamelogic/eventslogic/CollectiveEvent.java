@@ -39,7 +39,7 @@ public class CollectiveEvent implements Event {
         server.sendMsgToAll(MsgFormatter.gameMsg(eventToDisplay));
 
         // Update all players' position
-        GameHelper.updatePlayersPositions(steps[index], server, lifeAreas[index]);
+        GameHelper.updatePlayersPositions(steps[index], username, server, lifeAreas[index]);
 
         // Send message to all showing what happened
         String consequenceString = GameHelper.informLifeAreaAffected(username, steps[index], lifeAreas[index], eventType);

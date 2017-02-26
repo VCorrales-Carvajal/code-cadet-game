@@ -101,7 +101,7 @@ public class TimeEvent implements ChoosableEvent {
             server.sendMsgToAll(GameHelper.informLifeAreaAffected(winner, step, lifeAreas[index], eventType));
 
             // Update winner's position
-            GameHelper.updateOnePlayerPosition(step, winner, server, lifeAreas[index]);
+            GameHelper.updatePlayersPositions(step, winner, server, lifeAreas[index]);
 
         } else {
 

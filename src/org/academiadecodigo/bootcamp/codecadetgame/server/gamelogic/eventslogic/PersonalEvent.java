@@ -39,7 +39,7 @@ public class PersonalEvent implements Event {
         server.sendMsgToAll(MsgFormatter.gameMsg(eventToDisplay));
 
         // Update player's position
-        GameHelper.updateOnePlayerPosition(steps[index], username, server, lifeAreas[index]);
+        GameHelper.updatePlayersPositions(steps[index], username, server, lifeAreas[index]);
 
         // Send message to all showing what happened
         String consequenceString = GameHelper.informLifeAreaAffected(username, steps[index], lifeAreas[index], eventType);

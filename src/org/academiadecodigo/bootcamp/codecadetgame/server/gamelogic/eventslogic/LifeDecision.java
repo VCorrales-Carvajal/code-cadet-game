@@ -88,7 +88,7 @@ public class LifeDecision implements ChoosableEvent {
             server.sendMsgToAll(GameHelper.informLifeAreaAffected(username, step, lifeAreas[index], eventType));
 
             // Update player's position
-            GameHelper.updateOnePlayerPosition(step, username, server, lifeAreas[index]);
+            GameHelper.updatePlayersPositions(step, username, server, lifeAreas[index]);
 
         } else {
 
