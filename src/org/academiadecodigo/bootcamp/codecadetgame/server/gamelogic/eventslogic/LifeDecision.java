@@ -60,13 +60,10 @@ public class LifeDecision implements ChoosableEvent {
         synchronized (this) {
             while (currentAnswer == null) {
                 try {
-                    System.out.println("Debugging: LIFEDECISION. I'm going to sleep");
                     wait(GameHelper.TIME_OUT);
-                    System.out.println("Debugging: LIFEDECISION. Someone woke me up");
                 } catch (InterruptedException e) {
                     //Thread.interrupt called, no handling needed
                 }
-                System.out.println("Debugging: LIFEDECISION. Current Answer: " + currentAnswer);
             }
         }
 

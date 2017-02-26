@@ -108,7 +108,6 @@ public class PlayerDispatcher implements Runnable {
 
                 if (currentEvent != null) {
                     currentEvent.chooseAnswer(playerInput, player.getUsername());
-                    System.out.println("Debugging PD: Player dispatcher has set an answer");
                 }
 
                 active = false;
