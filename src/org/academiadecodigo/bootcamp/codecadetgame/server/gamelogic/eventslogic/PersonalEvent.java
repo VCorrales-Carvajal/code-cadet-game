@@ -98,7 +98,7 @@ public class PersonalEvent implements Event {
         steps[8] = +1;
         lifeAreas[8] = LifeArea.HAPPINESS;
 
-        statements[9] = "You delivered your project in time and then slept for 20h straight";
+        statements[9] = "You delivered your project in time and then slept for twenty hours straight";
         steps[9] = +1;
         lifeAreas[9] = LifeArea.HAPPINESS;
 

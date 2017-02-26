@@ -4,6 +4,7 @@ import org.academiadecodigo.bootcamp.codecadetgame.server.connection.PlayerDispa
 import org.academiadecodigo.bootcamp.codecadetgame.server.connection.Server;
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.Player;
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.EventType;
+import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.GameLength;
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.LifeArea;
 
 import java.util.Random;
@@ -15,7 +16,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class GameHelper {
 
     public static final String COLLECTIVE_USERNAME = "All";
-    public static final int MAX_TURNS = 10;
+    public static final int MAX_TURNS = 30;
     public static final double PROB_COW_WISDOM_QUOTE = 0.3;
     public static final long GAME_THREAD_SLEEP = 2000;
 
@@ -142,7 +143,7 @@ public class GameHelper {
     }
 
     public static String informCurrentPlayer(String currentPlayer) {
-        return MsgFormatter.gameMsg("\n\n\nIt's <" + currentPlayer + ">'s turn! Please press any key to roll the dice\n");
+        return MsgFormatter.gameMsg("It's <" + currentPlayer + ">'s turn! Please press <Enter> to roll the dice\n");
     }
 
     public static String personalEvent(String username) {

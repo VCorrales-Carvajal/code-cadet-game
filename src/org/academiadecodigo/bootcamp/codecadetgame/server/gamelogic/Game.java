@@ -49,7 +49,7 @@ public class Game implements Runnable {
 
         String currentPlayerUsername;
 
-        while (noOneFinished() && (turnCounter <= GameHelper.MAX_TURNS)) {
+        while (turnCounter <= server.getTurnsToFinish()) {
 
             currentPlayerUsername = usernames[currentPlayerCounter];
 
@@ -60,7 +60,7 @@ public class Game implements Runnable {
 
             synchronized (this) {
 
-                while (currentAnswer == null){
+                while (currentAnswer == null) {
                     try {
                         wait();
                     } catch (InterruptedException e) {
@@ -74,8 +74,6 @@ public class Game implements Runnable {
             // Select an Event randomly
             EventType eventType = EventType.choose();
             Event event = events[eventType.ordinal()];
-
-            threadSleep();
 
             // The selected event sends a statement and processes consequences accordingly
             if (eventType.isCollective()) {
@@ -114,17 +112,6 @@ public class Game implements Runnable {
         }
     }
 
-    private boolean noOneFinished() {
-        int[] playerPos = GameHelper.getPlayerPositions(server);
-        for (int i = 0; i < playerPos.length; i++) {
-            if (playerPos[i] == server.getStepsToFinish()) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
     private void updatePlayerCounter(int length) {
 
         currentPlayerCounter++;
@@ -144,7 +131,7 @@ public class Game implements Runnable {
         return "Game";
     }
 
-    public void sendInputToGame(String playerInput){
+    public void sendInputToGame(String playerInput) {
         synchronized (this) {
             currentAnswer = playerInput;
             notifyAll();
