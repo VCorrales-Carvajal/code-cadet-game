@@ -25,7 +25,16 @@ public class ServerHelper {
     }
 
     public static String welcome(int playerNumber, int totalPlayers) {
-        return MsgFormatter.serverMsg("Welcome to our fantastic game server! You are player Nº" + playerNumber + " in a game of " + totalPlayers + " players");
+        String informPlayer;
+
+        if (playerNumber == totalPlayers) {
+            informPlayer = "";
+        } else {
+           informPlayer = "You are player Nº" + playerNumber + " in a game of " + totalPlayers + " players";
+        }
+
+        return MsgFormatter.serverMsg("Welcome to our fantastic game server!\n" + informPlayer);
+
     }
 
     public static String askUsername() {
@@ -33,7 +42,7 @@ public class ServerHelper {
     }
 
     public static String userJoined(String username) {
-        return MsgFormatter.serverMsg("< " + username + " > has joined");
+        return MsgFormatter.serverMsg("< " + username + " > has joined the game\n");
     }
 
     public static void informIPAddress(String username, String IPAddress) {
@@ -41,14 +50,11 @@ public class ServerHelper {
     }
 
     public static String insertNumOfPlayers() {
-        String msg = MsgFormatter.serverMsg("Please insert number of Players (min 1, max " +
-                ServerHelper.MAX_CONNECTIONS + ")");
+        String msg = MsgFormatter.serverMsg("Please insert number of players (min 1, max " +
+                ServerHelper.MAX_CONNECTIONS + "):");
         return msg;
     }
 
-    public static String startGame() {
-        return MsgFormatter.serverMsg("The Game is about to start, mis babies.");
-    }
 
     public static String userLeft(String username) {
         return MsgFormatter.serverMsg(username + " has left the game");
@@ -74,6 +80,6 @@ public class ServerHelper {
     }
 
     public static String waitingForOtherPlayersToConnect() {
-        return MsgFormatter.serverMsg("Waiting for the other players to connect...");
+        return MsgFormatter.serverMsg("\nWaiting for the other players to connect...");
     }
 }

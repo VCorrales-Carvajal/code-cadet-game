@@ -1,7 +1,7 @@
 package org.academiadecodigo.bootcamp.codecadetgame.server.connection;
 
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.Game;
-import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.Player;
+import org.academiadecodigo.bootcamp.codecadetgame.server.utils.GameHelper;
 import org.academiadecodigo.bootcamp.codecadetgame.server.utils.ServerHelper;
 
 import java.io.IOException;
@@ -21,7 +21,7 @@ public class Server {
     private Game game;
 
     private int numberOfPlayers = 1; //Initialize as one to ask the first player for the actual number
-    private int stepsToFinish = 10;
+    private int stepsToFinish = GameHelper.MAX_TURNS;
 
     public void start() {
 

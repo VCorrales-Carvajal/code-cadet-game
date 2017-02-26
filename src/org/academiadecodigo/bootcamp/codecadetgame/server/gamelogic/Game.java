@@ -30,6 +30,7 @@ public class Game implements Runnable {
 
     public void start() {
 
+        server.sendMsgToAll((GameHelper.startGame()));
         server.sendMsgToAll(GameHelper.gettingOutOfAC());
         events[EventType.QUESTION.ordinal()].process(GameHelper.COLLECTIVE_USERNAME);
         System.out.println("Debugging: Beginning turn cycle");
@@ -39,22 +40,20 @@ public class Game implements Runnable {
 
 
     private void turnCycle() {
+
         String[] usernames = new String[server.getPlayerDispatcherList().size()];
         for (int i = 0; i < usernames.length; i++) {
             usernames[i] = server.getPlayerDispatcherList().get(i).getPlayer().getUsername();
         }
 
         String currentPlayerUsername;
-        System.out.println("Debugging: NoOneFinished --> " + noOneFinished());
 
         while (noOneFinished() && (turnCounter <= GameHelper.MAX_TURNS)) {
-            System.out.println("Debugging: NoOneFinished --> " + noOneFinished());
 
             currentPlayerUsername = usernames[currentPlayerCounter];
-            System.out.println("Debugging: Current Player is " + currentPlayerUsername);
 
             // Send message to all players informing the player in the current turn
-            server.sendMsgToAll(GameHelper.informCurrentPlayer(currentPlayerUsername));
+//            server.sendMsgToAll(GameHelper.informCurrentPlayer(currentPlayerUsername));
 
             // Select an Event randomly
             EventType eventType = EventType.choose();
@@ -71,7 +70,7 @@ public class Game implements Runnable {
 
             server.sendMsgToAll(GameHelper.renderPlayersPosition(GameHelper.getPlayerPositions(server), usernames));
 
-            if (Math.random() < Constants.PROB_COW_WISDOM_QUOTE) {
+            if (Math.random() < GameHelper.PROB_COW_WISDOM_QUOTE) {
                 GameHelper.displayCowWisdomQuote();
             }
 

@@ -91,7 +91,6 @@ public class PlayerDispatcher implements Runnable {
                 thread.setName("game");
                 thread.start();
 
-                server.sendMsgToAll((ServerHelper.startGame()));
             }
 
             // Get player input throughout the game

@@ -17,6 +17,7 @@ public class GameHelper {
 
     public static final String COLLECTIVE_USERNAME = "All";
     public static final int MAX_TURNS = 10;
+    public static final double PROB_COW_WISDOM_QUOTE = 0.5;
 
     public static String gameCommands() {
         return "\t /quit \t closes your connection to this chat \n";
@@ -46,8 +47,12 @@ public class GameHelper {
         return ar;
     }
 
+    public static String startGame() {
+        return MsgFormatter.gameMsg("### GAME START ####\n");
+    }
+
     public static String gettingOutOfAC() {
-        return MsgFormatter.serverMsg("You are on your last day of your bootcamp and to graduate you have to answer a question: ");
+        return MsgFormatter.gameMsg("You are on your last day of your bootcamp and to graduate you have to answer a question: ");
     }
 
     public static String welcome() {
@@ -139,25 +144,25 @@ public class GameHelper {
     }
 
     public static String personalEvent(String username) {
-        return "<" + username + ">: this just happened to you:\n";
+        return "######## <" + username + "> - this just happened to you:\n";
     }
 
     public static String collectiveEvent() {
-        return "TO ALL: ";
+        return "******** ALL - This just happened: \n";
     }
 
     public static String lifeDecision(String username) {
-        return "<" + username + ">: You now have to take a life decision:\n";
+        return "######## <" + username + "> - " +
+                "You now have to take a life decision:\n";
     }
 
     public static String JAVAQuestion() {
-        return "TO ALL: Quizz!\n";
+        return "******** ALL - Let's test your knowledge of Java:\n";
     }
 
 
     public static String TimeEvent() {
-        return "TO ALL: First to choose takes it! Th" +
-                "ink fast!\n";
+        return "******** ALL - First to choose takes it! Think fast!\n";
     }
 
     public static String informLifeAreaAffected(String username, int step, LifeArea lifeArea, EventType eventType) {
@@ -200,7 +205,7 @@ public class GameHelper {
     }
 
     public static String invalidAnswer() {
-        return MsgFormatter.gameMsg("Invalid Answer. No one moves this turn.");
+        return MsgFormatter.gameMsg("Invalid Answer. No one moves this turn.\n");
     }
 
     public static String informLifeAreaPosition(Server server, String currentPlayerUsername) {
@@ -212,6 +217,6 @@ public class GameHelper {
     }
 
     public static String endGame() {
-        return MsgFormatter.gameMsg("GAME OVER");
+        return MsgFormatter.gameMsg("### GAME OVER ###");
     }
 }
