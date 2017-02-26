@@ -33,7 +33,6 @@ public class Game implements Runnable {
         server.sendMsgToAll((GameHelper.startGame()));
         server.sendMsgToAll(GameHelper.gettingOutOfAC());
         events[EventType.QUESTION.ordinal()].process(GameHelper.COLLECTIVE_USERNAME);
-        System.out.println("Debugging: Beginning turn cycle");
         turnCycle();
 
     }
@@ -83,10 +82,8 @@ public class Game implements Runnable {
 
             threadSleep();
 
+            // Inform players of their state in life
             server.sendMsgToAll(GameHelper.informLifeAreaPosition(server, usernames));
-
-//            threadSleep();
-
             server.sendMsgToAll(GameHelper.renderPlayersPosition(GameHelper.getPlayerPositions(server), usernames, server.getTurnsToFinish()));
 
             threadSleep();
@@ -95,15 +92,19 @@ public class Game implements Runnable {
                 server.sendMsgToAll(GameHelper.cowWisdomQuote());
             }
 
+            // Update player counter
             updatePlayerCounter(server.getPlayerDispatcherList().size());
 
+            // Update turn counter
             turnCounter++;
         }
 
         endGame();
     }
 
+
     private void endGame() {
+
         String absoluteWinner = null;
         int maxPosition = 0;
         int[] positions = GameHelper.getPlayerPositions(server);
