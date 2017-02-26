@@ -117,7 +117,7 @@ public class Game implements Runnable {
     private boolean noOneFinished() {
         int[] playerPos = GameHelper.getPlayerPositions(server);
         for (int i = 0; i < playerPos.length; i++) {
-            if (playerPos[i] == server.getStepsToFinish()) {
+            if (playerPos[i] == server.getTurnsToFinish()) {
                 return false;
             }
         }

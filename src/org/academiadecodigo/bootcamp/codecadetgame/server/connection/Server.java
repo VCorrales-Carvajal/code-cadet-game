@@ -21,7 +21,7 @@ public class Server {
     private Game game;
 
     private int numberOfPlayers = 1; //Initialize as one to ask the first player for the actual number
-    private int stepsToFinish = GameHelper.MAX_TURNS;
+    private int turnsToFinish = GameHelper.MAX_TURNS;
 
     public void start() {
 
@@ -95,12 +95,12 @@ public class Server {
     }
 
 
-    public int getStepsToFinish() {
-        return stepsToFinish;
+    public int getTurnsToFinish() {
+        return turnsToFinish;
     }
 
-    public void setStepsToFinish(int stepsToFinish) {
-        this.stepsToFinish = stepsToFinish;
+    public void setTurnsToFinish(int turnsToFinish) {
+        this.turnsToFinish = turnsToFinish;
     }
 
     public List<PlayerDispatcher> getPlayerDispatcherList() {
