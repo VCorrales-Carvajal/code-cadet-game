@@ -160,20 +160,20 @@ public class GameHelper {
         switch (eventType){
 
             case QUESTION:
-                typeOfEvent = "******** ALL - Let's test your knowledge of Java:\n";
+                typeOfEvent = MsgFormatter.collectiveMessage("\n******** ALL - Let's test your knowledge of Java:") + "\n\n";
                 break;
             case TIME_EVENT:
-                typeOfEvent = "******** ALL - First to choose takes it! Think fast!\n";
+                typeOfEvent = MsgFormatter.collectiveMessage("\n******** ALL - First to choose takes it! Think fast!") + "\n\n";
                 break;
             case LIFE_DECISION:
-                typeOfEvent = "######## <" + username + "> - " +
-                        "You now have to take a life decision:\n";
+                typeOfEvent = MsgFormatter.personalMessage("######## <" + username + "> - " +
+                        "You now have to take a life decision:") + "\n\n";
                 break;
             case COLLECTIVE_EVENT:
-                typeOfEvent = "******** ALL - This just happened: \n";
+                typeOfEvent = MsgFormatter.collectiveMessage("\n******** ALL - This just happened:") + "\n\n";
                 break;
             case PERSONAL_EVENT:
-                typeOfEvent = "######## <" + username + "> - this just happened to you:\n";
+                typeOfEvent = MsgFormatter.personalMessage("######## <" + username + "> - this just happened to you:") + "\n\n";
                 break;
         }
 
