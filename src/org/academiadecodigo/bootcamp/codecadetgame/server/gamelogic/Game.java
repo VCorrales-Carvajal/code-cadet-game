@@ -54,7 +54,7 @@ public class Game implements Runnable {
 
             // The selected event sends a statement and processes consequences accordingly
             if (eventType.isCollective()) {
-                event.process("All");
+                event.process(GameHelper.COLLECTIVE_USERNAME);
             } else {
                 event.process(currentPlayerUsername);
             }

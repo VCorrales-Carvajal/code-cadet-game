@@ -39,7 +39,7 @@ public class TimeEvent implements ChoosableEvent {
     @Override
     public void process(String username) {
 
-        if (!username.equals("All")) {
+        if (!username.equals(GameHelper.COLLECTIVE_USERNAME)) {
             System.out.println("TimeEvent not processing accordingly");
             return;
         }

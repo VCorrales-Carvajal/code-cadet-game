@@ -15,6 +15,8 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class GameHelper {
 
+    public static final String COLLECTIVE_USERNAME = "All";
+
     public static String gameCommands() {
         return "\t /quit \t closes your connection to this chat \n";
     }
@@ -154,7 +156,7 @@ public class GameHelper {
 
     public static String informLifeAreaAffected(String username, int step, LifeArea lifeArea, EventType eventType) {
 
-        boolean isCollective = username.equals("All");
+        boolean isCollective = username.equals(COLLECTIVE_USERNAME);
 
         String lifeAreaConsequence;
         switch (lifeArea) {
