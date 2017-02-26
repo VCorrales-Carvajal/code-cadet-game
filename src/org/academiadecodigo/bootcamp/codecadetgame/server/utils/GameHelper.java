@@ -151,7 +151,7 @@ public class GameHelper {
 
     public static String informCurrentPlayer(String currentPlayer) {
         String result = MsgFormatter.gameMsg("<") + MsgFormatter.highlightUsername(currentPlayer);
-        return result + MsgFormatter.gameMsg(">, Please press <Enter> to roll the dice\n");
+        return result + MsgFormatter.gameMsg(">, please press <Enter> to roll the dice\n");
     }
 
     public static String displayEventType(String username, EventType eventType){
@@ -228,15 +228,18 @@ public class GameHelper {
     }
 
     public static String informLifeAreaPosition(Server server, String[] usernames) {
-        String result = "Let's see how life looks: \n";
+
+        String result = "Let's see how life looks so far: \n";
+
         for (int j = 0; j < usernames.length; j++) {
             Player p = server.getPlayerDispatcherTable().get(usernames[j]).getPlayer();
             result = result + "<" + usernames[j] + "> ";
             for (int i = 0; i < LifeArea.values().length; i++) {
-                result = result + " " + LifeArea.values()[i] + ": " + p.getLifeAreasPosition()[i] + ". ";
+                result = result + MsgFormatter.gameMsg(" " + LifeArea.values()[i] + ": " + p.getLifeAreasPosition()[i] + ". ");
             }
             result = result + MsgFormatter.globalPosition("TOTAL: " + p.getGlobalPosition()) + "\n";
         }
+
         return MsgFormatter.gameMsg(result + "\n");
     }
 

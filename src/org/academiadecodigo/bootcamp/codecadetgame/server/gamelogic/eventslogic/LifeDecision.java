@@ -43,7 +43,10 @@ public class LifeDecision implements ChoosableEvent {
     public void process(String username) {
 
         // Display selected statement
-        String eventToDisplay = GameHelper.displayEventType(username, eventType) + getStatement();
+        String statement = getStatement();
+        int numberOfOptions = statement.split("\\t").length - 1;
+        String eventToDisplay = GameHelper.displayEventType(username, eventType) + getStatement() +
+                "Insert your answer (1 - " + numberOfOptions + "):";
         server.sendMsgToAll(MsgFormatter.gameMsg(eventToDisplay));
 
         // Listen to the answer of this player
