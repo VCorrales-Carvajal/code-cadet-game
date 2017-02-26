@@ -19,11 +19,7 @@ public class Tester {
 //        tester.probabilityTester();
 
         // Testing rendering of player positions
-
-        //tester.renderPlayersPositionsTester();
-
-//        tester.renderPlayersPositionsTester();
-
+        tester.renderPlayersPositionsTester();
 
         // Testing if iteration of map works
 //        tester.mapIterationTester();
@@ -37,7 +33,7 @@ public class Tester {
 //        System.out.println(ServerHelper.insertNumberOfSteps());
 
 //        System.out.println(GameHelper.cowWisdomQuote());
-        System.out.println(GameHelper.welcome());
+//        System.out.println(GameHelper.welcome());
     }
 
     private void shuffleIndicesTester() {
@@ -56,9 +52,9 @@ public class Tester {
 
 
     private void renderPlayersPositionsTester() {
-        int[] playersPositions = {4, 2, 8};
+        int[] playersPositions = {4, 2, 30};
         String[] usernames = {"vero", "micael", "to"};
-        System.out.println(GameHelper.renderPlayersPosition(playersPositions, usernames,10));
+        System.out.println(GameHelper.renderPlayersPosition(playersPositions, usernames, 30));
     }
 
     private void mapIterationTester() {

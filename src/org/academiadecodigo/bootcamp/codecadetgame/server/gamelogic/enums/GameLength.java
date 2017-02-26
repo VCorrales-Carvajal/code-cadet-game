@@ -6,7 +6,7 @@ package org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums;
 public enum GameLength {
 
     SHORT(10),
-    MEDIUM(15),
+    MEDIUM(20),
     LONG(30);
 
     private int numberOfTurns;
