@@ -16,7 +16,7 @@ public class GameHelper {
 
     public static final String COLLECTIVE_USERNAME = "All";
     public static final int MAX_TURNS = 10;
-    public static final double PROB_COW_WISDOM_QUOTE = 0.5;
+    public static final double PROB_COW_WISDOM_QUOTE = 0.3;
     public static final long TIME_OUT = 10000;
 
     public static String gameCommands() {
@@ -136,7 +136,7 @@ public class GameHelper {
                         "   ##****##\n" +
                         "   \"\"    \"\"";
 
-        return MsgFormatter.gameMsg(cow);
+        return MsgFormatter.gameMsg(cow + "\n");
     }
 
     public static String informCurrentPlayer(String currentPlayer) {
@@ -202,19 +202,23 @@ public class GameHelper {
 
         String target = (!isCollective) ? username + ": " : "";
 
-        return MsgFormatter.gameMsg(target + lifeAreaConsequence + " " + changeString + "\n");
+        return MsgFormatter.gameMsg(target + lifeAreaConsequence + changeString + "\n");
     }
 
     public static String invalidAnswer() {
         return MsgFormatter.gameMsg("Invalid Answer. No one moves this turn.\n");
     }
 
-    public static String informLifeAreaPosition(Server server, String currentPlayerUsername) {
-        String lifeAreaPositionString = "Dear <" + currentPlayerUsername + ">, your current state is: ";
-        for (int i = 0; i < LifeArea.values().length; i++) {
-            lifeAreaPositionString = lifeAreaPositionString + " " + LifeArea.values()[i] + ": " + server.getPlayerDispatcherTable().get(currentPlayerUsername).getPlayer().getLifeAreasPosition()[i] + ". ";
+    public static String informLifeAreaPosition(Server server, String[] usernames) {
+        String result = "Let's see how your life looks: \n";
+        for (int j = 0; j < usernames.length; j++) {
+            result = result + "<" + usernames[j] + "> ";
+            for (int i = 0; i < LifeArea.values().length; i++) {
+                result = result + " " + LifeArea.values()[i] + ": " + server.getPlayerDispatcherTable().get(usernames[j]).getPlayer().getLifeAreasPosition()[i] + ". ";
+            }
+            result = result + "\n";
         }
-        return MsgFormatter.gameMsg(lifeAreaPositionString + "\n");
+        return MsgFormatter.gameMsg(result + "\n");
     }
 
     public static String endGame() {

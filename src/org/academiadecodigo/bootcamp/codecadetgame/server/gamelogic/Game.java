@@ -74,7 +74,7 @@ public class Game implements Runnable {
                 event.process(currentPlayerUsername);
             }
 
-            server.sendMsgToAll(GameHelper.informLifeAreaPosition(server, currentPlayerUsername));
+            server.sendMsgToAll(GameHelper.informLifeAreaPosition(server, usernames));
 
             server.sendMsgToAll(GameHelper.renderPlayersPosition(GameHelper.getPlayerPositions(server), usernames));
 
