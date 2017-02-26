@@ -83,7 +83,7 @@ public class GameHelper {
 //        }
         String field = "PLAYERS' GLOBAL POSITIONS";
         for (int playerIdx = 0; playerIdx < playerPositions.length; playerIdx++) {
-            field = field + "\n" + usernames[playerIdx] + ": " + playerPositions[playerIdx];
+            field = field + "\n" + "<" + usernames[playerIdx] + ">: " + playerPositions[playerIdx];
         }
         return MsgFormatter.gameMsg(field + "\n");
     }
@@ -96,33 +96,35 @@ public class GameHelper {
         return pos;
     }
 
-    public static void updatePlayersPositions(int change, Server server, LifeArea lifeArea) {
+    public static void updatePlayersPositions(int change, String username, Server server, LifeArea lifeArea) {
 
-        for (PlayerDispatcher pd : server.getPlayerDispatcherList()) {
-            Player player = pd.getPlayer();
-            // Player's position cannot be negative
-            if ((player.getGlobalPosition() + change) >= 0) {
-                player.setGlobalPosition(player.getGlobalPosition() + change);
-            } else {
-                player.setGlobalPosition(0);
+        Player player;
+        if (!username.equals(GameHelper.COLLECTIVE_USERNAME)) {
+
+            player = server.getPlayerDispatcherTable().get(username).getPlayer();
+            updateOnePlayerPosition(change, player, lifeArea);
+
+        } else {
+
+            for (PlayerDispatcher pd : server.getPlayerDispatcherList()) {
+                player = pd.getPlayer();
+                updateOnePlayerPosition(change, player, lifeArea);
             }
-            // Update lifeArea position
-            player.setLifeAreasPosition(player.getLifeAreasPosition()[lifeArea.ordinal()] + change, lifeArea);
         }
 
     }
 
-    public static void updateOnePlayerPosition(int change, String username, Server server, LifeArea lifeArea) {
+    private static void updateOnePlayerPosition(int change, Player player, LifeArea lifeArea) {
 
-        Player player = server.getPlayerDispatcherTable().get(username).getPlayer();
+        // Player's position cannot be negative
+        if ((player.getGlobalPosition() + change) >= 0) {
+            player.setGlobalPosition(player.getGlobalPosition() + change);
+        } else {
+            player.setGlobalPosition(0);
+        }
+        // Update lifeArea position
+        player.setLifeAreasPosition(player.getLifeAreasPosition()[lifeArea.ordinal()] + change, lifeArea);
 
-        //Set new global position
-        int prevGlobalPos = player.getGlobalPosition();
-        player.setGlobalPosition(prevGlobalPos + change);
-
-        //Set new life area position
-        int prevLifePosition = player.getLifeAreasPosition()[lifeArea.ordinal()];
-        player.setLifeAreasPosition(prevLifePosition + change, lifeArea);
 
     }
 
@@ -210,7 +212,7 @@ public class GameHelper {
     }
 
     public static String informLifeAreaPosition(Server server, String[] usernames) {
-        String result = "Let's see how your life looks: \n";
+        String result = "Let's see how life looks: \n";
         for (int j = 0; j < usernames.length; j++) {
             result = result + "<" + usernames[j] + "> ";
             for (int i = 0; i < LifeArea.values().length; i++) {
