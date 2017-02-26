@@ -83,8 +83,7 @@ public class Game implements Runnable {
             threadSleep();
 
             // Inform players of their state in life
-            server.sendMsgToAll(GameHelper.informLifeAreaPosition(server, usernames));
-            server.sendMsgToAll(GameHelper.renderPlayersPosition(GameHelper.getPlayerPositions(server), usernames, server.getTurnsToFinish()));
+            server.sendMsgToAll(GameHelper.renderPlayersPosition(server, GameHelper.getPlayerPositions(server), usernames, server.getTurnsToFinish()));
 
             threadSleep();
 
