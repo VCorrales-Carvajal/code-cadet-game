@@ -55,13 +55,13 @@ public class Game implements Runnable {
             // Send message to all players informing the player in the current turn
             server.sendMsgToAll(GameHelper.informCurrentPlayer(currentPlayerUsername));
 
-            server.getPlayerDispatcherTable().get(currentPlayerUsername).setActive(true);
-
-            try {
-                wait(GameHelper.TIME_OUT);
-            } catch (InterruptedException e) {
-                //Thread.interrupt called, no handling needed
-            }
+//            server.getPlayerDispatcherTable().get(currentPlayerUsername).setActive(true);
+//
+//            try {
+//                wait(GameHelper.TIME_OUT);
+//            } catch (InterruptedException e) {
+//                //Thread.interrupt called, no handling needed
+//            }
 
 
             // Select an Event randomly

@@ -60,11 +60,11 @@ public class LifeDecision implements ChoosableEvent {
     private void processAnswer(String username) {
 
         while (currentAnswer == null){
-            try {
-                wait(GameHelper.TIME_OUT);
-            } catch (InterruptedException e) {
-                //Thread.interrupt called, no handling needed
-            }
+//            try {
+//                wait(GameHelper.TIME_OUT);
+//            } catch (InterruptedException e) {
+//                //Thread.interrupt called, no handling needed
+//            }
         }
 
 
@@ -175,7 +175,7 @@ public class LifeDecision implements ChoosableEvent {
     @Override
     public void chooseAnswer(String answer, String username) {
         currentAnswer = answer;
-        notifyAll();
+//        notifyAll();
     }
 
     private String getConsequence(int index, String positiveOrNegative) {
