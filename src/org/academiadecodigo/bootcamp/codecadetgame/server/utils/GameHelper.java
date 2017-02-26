@@ -142,7 +142,7 @@ public class GameHelper {
     }
 
     public static String informCurrentPlayer(String currentPlayer) {
-        return MsgFormatter.gameMsg("\n\n\nIt's <" + currentPlayer + ">'s turn! Please press any key to roll the dice\n");
+        return MsgFormatter.gameMsg("It's <" + currentPlayer + ">'s turn! Please press <Enter> to roll the dice\n");
     }
 
     public static String personalEvent(String username) {
