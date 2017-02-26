@@ -106,6 +106,8 @@ public class PlayerDispatcher implements Runnable {
                     continue;
                 }
 
+                server.getGame().sendInputToGame(playerInput);
+
                 if (currentEvent != null) {
                     currentEvent.chooseAnswer(playerInput, player.getUsername());
                 }

@@ -17,7 +17,7 @@ public class GameHelper {
     public static final String COLLECTIVE_USERNAME = "All";
     public static final int MAX_TURNS = 10;
     public static final double PROB_COW_WISDOM_QUOTE = 0.3;
-    public static final long TIME_OUT = 10000;
+    public static final long GAME_THREAD_SLEEP = 2000;
 
     public static String gameCommands() {
         return "\t /quit \t closes your connection to this chat \n";

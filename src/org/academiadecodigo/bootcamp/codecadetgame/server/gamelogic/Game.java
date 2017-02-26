@@ -16,6 +16,7 @@ public class Game implements Runnable {
     private Event[] events = new Event[EventType.values().length];
     private int currentPlayerCounter = 0;
     private int turnCounter = 0;
+    private String currentAnswer;
 
 
     public Game(Server server) {
@@ -55,17 +56,26 @@ public class Game implements Runnable {
             // Send message to all players informing the player in the current turn
             server.sendMsgToAll(GameHelper.informCurrentPlayer(currentPlayerUsername));
 
-//            server.getPlayerDispatcherTable().get(currentPlayerUsername).setActive(true);
-//
-//            try {
-//                wait(GameHelper.TIME_OUT);
-//            } catch (InterruptedException e) {
-//                //Thread.interrupt called, no handling needed
-//            }
+            server.getPlayerDispatcherTable().get(currentPlayerUsername).setActive(true);
+
+            synchronized (this) {
+
+                while (currentAnswer == null){
+                    try {
+                        wait();
+                    } catch (InterruptedException e) {
+                        //Thread.interrupt called, no handling needed
+                    }
+                }
+            }
+
+            currentAnswer = null;
 
             // Select an Event randomly
             EventType eventType = EventType.choose();
             Event event = events[eventType.ordinal()];
+
+            threadSleep();
 
             // The selected event sends a statement and processes consequences accordingly
             if (eventType.isCollective()) {
@@ -74,9 +84,15 @@ public class Game implements Runnable {
                 event.process(currentPlayerUsername);
             }
 
+            threadSleep();
+
             server.sendMsgToAll(GameHelper.informLifeAreaPosition(server, usernames));
 
+            threadSleep();
+
             server.sendMsgToAll(GameHelper.renderPlayersPosition(GameHelper.getPlayerPositions(server), usernames));
+
+            threadSleep();
 
             if (Math.random() < GameHelper.PROB_COW_WISDOM_QUOTE) {
                 server.sendMsgToAll(GameHelper.displayCowWisdomQuote());
@@ -88,6 +104,14 @@ public class Game implements Runnable {
         }
 
         server.sendMsgToAll(GameHelper.endGame());
+    }
+
+    private void threadSleep() {
+        try {
+            Thread.sleep(GameHelper.GAME_THREAD_SLEEP);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     private boolean noOneFinished() {
@@ -118,5 +142,12 @@ public class Game implements Runnable {
     @Override
     public String toString() {
         return "Game";
+    }
+
+    public void sendInputToGame(String playerInput){
+        synchronized (this) {
+            currentAnswer = playerInput;
+            notifyAll();
+        }
     }
 }

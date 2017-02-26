@@ -57,6 +57,7 @@ public class LifeDecision implements ChoosableEvent {
     }
 
     private void processAnswer(String username) {
+
         synchronized (this) {
             while (currentAnswer == null) {
                 try {
