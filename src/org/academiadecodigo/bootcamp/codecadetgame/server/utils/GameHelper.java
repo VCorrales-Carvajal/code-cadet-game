@@ -142,7 +142,7 @@ public class GameHelper {
     }
 
     public static String informCurrentPlayer(String currentPlayer) {
-        return MsgFormatter.gameMsg("It's <" + currentPlayer + ">'s turn! Please press any key to roll the dice\n");
+        return MsgFormatter.gameMsg("\n\n\nIt's <" + currentPlayer + ">'s turn! Please press any key to roll the dice\n");
     }
 
     public static String personalEvent(String username) {
@@ -176,8 +176,8 @@ public class GameHelper {
         switch (lifeArea) {
             case CAREER:
                 lifeAreaConsequence = (isCollective)
-                        ? ((isStepForward) ? "Everyone is moving forward in their career" : "Everyone has a setback in their career")
-                        : ((isStepForward) ? "You moved forward in your career" : "You had a setback in your career");
+                        ? ((isStepForward) ? "Everyone is advancing in their career!" : "Everyone has a setback in their career!")
+                        : ((isStepForward) ? "You advanced in your career!" : "You had a setback in your career!");
                 break;
 
             case MONEY:

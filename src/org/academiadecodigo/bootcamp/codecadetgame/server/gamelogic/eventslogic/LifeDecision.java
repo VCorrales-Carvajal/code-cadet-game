@@ -60,7 +60,7 @@ public class LifeDecision implements ChoosableEvent {
         synchronized (this) {
             while (currentAnswer == null) {
                 try {
-                    wait(GameHelper.TIME_OUT);
+                    wait();
                 } catch (InterruptedException e) {
                     //Thread.interrupt called, no handling needed
                 }
@@ -73,7 +73,8 @@ public class LifeDecision implements ChoosableEvent {
             for (int i = 0; i < NUMBER_OF_OPTIONS_SHOWN; i++) {
                 if (currentAnswer.equals(Integer.toString(i + 1))) {
                     index = currentIndexes[i];
-                    System.out.println("Debugging: LIFEDECISION. selected answer is " + (i + 1) + "corresponds to " + statements[index]);
+                    System.out.println("Debugging: LIFEDECISION. Selected answer is " + (i+1) + ". Current answer: " + currentAnswer +
+                    ". Corresponds to index " + index + " corresponds to " + statements[index]);
                     break;
                 }
             }
@@ -82,7 +83,6 @@ public class LifeDecision implements ChoosableEvent {
         currentAnswer = null;
 
         if (index != -1) {
-            System.out.println("Debugging: LIFEDECISION. Index is " + index);
             // Send message to all showing what happened
             String sign = (Math.random() < probabilityPositive) ? "+" : "-";
             int step = (sign.equals("+")) ? steps[index] : -steps[index];
@@ -105,11 +105,10 @@ public class LifeDecision implements ChoosableEvent {
 
 
     private String getStatement() {
-        int[] statementIndexes = new int[NUMBER_OF_OPTIONS_SHOWN];
         String statement = "";
         for (int i = 0; i < NUMBER_OF_OPTIONS_SHOWN; i++) {
             statement = statement + "\t" + (i + 1) + ". " + statements[shuffledIndexes[counterIndex]] + "\n";
-            statementIndexes[i] = counterIndex;
+            currentIndexes[i] = shuffledIndexes[counterIndex];
 
             counterIndex++;
             if (counterIndex == statements.length) {
@@ -126,6 +125,7 @@ public class LifeDecision implements ChoosableEvent {
         shuffledIndexes = GameHelper.shuffleIndexArray(LENGTH_LIFE_DECISIONS);
 
         currentIndexes = new int[NUMBER_OF_OPTIONS_SHOWN];
+
         statements = new String[LENGTH_LIFE_DECISIONS];
         positiveConsequences = new String[LENGTH_LIFE_DECISIONS];
         negativeConsequences = new String[LENGTH_LIFE_DECISIONS];
