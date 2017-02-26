@@ -13,7 +13,7 @@ import java.util.Scanner;
 public class Client {
     public static final int PORT = 8080;
     Socket clientSocket;
-    private String hostName = "192.168.0.103";
+    private String hostName = "localhost";//"192.168.0.103";
     PrintWriter out;
     BufferedReader in;
 

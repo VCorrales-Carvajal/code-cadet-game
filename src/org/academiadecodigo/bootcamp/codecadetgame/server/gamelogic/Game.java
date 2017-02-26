@@ -32,6 +32,7 @@ public class Game implements Runnable {
 
         server.sendMsgToAll(GameHelper.gettingOutOfAC());
         events[EventType.QUESTION.ordinal()].process(GameHelper.COLLECTIVE_USERNAME);
+        System.out.println("Debugging: Beginning turn cycle");
         turnCycle();
 
     }
@@ -40,10 +41,12 @@ public class Game implements Runnable {
     private void turnCycle() {
 
         String currentPlayerUsername;
+        System.out.println(noOneFinished());
 
         while (noOneFinished()) {
 
             currentPlayerUsername = server.getPlayerDispatcherList().get(currentPlayerCounter).getPlayer().getUsername();
+            System.out.println("Debugging: Current Player is " + currentPlayerUsername);
 
             // Send message to all players informing the player in the current turn
             server.sendMsgToAll(GameHelper.informCurrentPlayer(currentPlayerUsername));
@@ -61,7 +64,7 @@ public class Game implements Runnable {
 
             String lifeAreaPositionString = "Dear " + currentPlayerUsername + ", your points in ";
             for (int i = 0; i < LifeArea.values().length; i++) {
-                lifeAreaPositionString = lifeAreaPositionString + LifeArea.values()[i] + "are : " + server.getPlayerDispatcherTable().get(currentPlayerUsername).getPlayer().getLifeAreasPosition()[i] + "\n";
+                lifeAreaPositionString = lifeAreaPositionString + LifeArea.values()[i] + " are: " + server.getPlayerDispatcherTable().get(currentPlayerUsername).getPlayer().getLifeAreasPosition()[i] + "\n";
             }
             server.sendMsgToAll(lifeAreaPositionString);
             GameHelper.renderPlayersPosition(GameHelper.getPlayersPositions(server));
@@ -75,15 +78,14 @@ public class Game implements Runnable {
     }
 
     private boolean noOneFinished() {
-
-        for (int i = 0; i < GameHelper.getPlayersPositions(server).length - 1; i++) {
-            if (GameHelper.getPlayersPositions(server)[i] == server.getStepsToFinish()) {
-
-                return true;
+        int[] playerPositions = GameHelper.getPlayersPositions(server);
+        for (int i = 0; i < playerPositions.length; i++) {
+            if (playerPositions[i] == server.getStepsToFinish()) {
+                return false;
             }
         }
 
-        return false;
+        return true;
     }
 
     private void updatePlayerCounter(int length) {

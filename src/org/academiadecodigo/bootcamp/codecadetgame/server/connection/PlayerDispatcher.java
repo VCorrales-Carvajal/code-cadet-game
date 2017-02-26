@@ -83,21 +83,16 @@ public class PlayerDispatcher implements Runnable {
             }
 
             // When all players have connected, start the game
-            out.println("You are player Nº" + playerNumber + " in a game of " + server.getNumberOfPlayers() + " players");
+            System.out.println("Debugging: " + player.getUsername() + " is player Nº" + playerNumber + " in a game of " + server.getNumberOfPlayers() + " players");
             out.println(playerNumber == server.getNumberOfPlayers());
             if (playerNumber == server.getNumberOfPlayers()) {
-                out.println("You are the last player (Nº " + playerNumber + "). You are about to start the Game");
-//                server.setGame(Factory.createGame(server));
-                Game game = new Game(server);
-                server.setGame(game);
-                out.println("You have created a new " + game.toString());
-                out.println("After injecting game to server. You have created a new " + server.getGame().toString());
+                server.setGame(Factory.createGame(server));
+                server.setGame(new Game(server));
                 Thread thread = new Thread(server.getGame());
                 thread.setName("game");
                 thread.start();
 
                 server.sendMsgToAll((ServerHelper.startGame()));
-
             }
 
             // Get player input throughout the game

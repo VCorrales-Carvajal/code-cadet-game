@@ -45,14 +45,11 @@ public class Server {
                     Socket clientSocket = serverSocket.accept();
                     ServerHelper.printIPAddress(clientSocket);
 
-                    System.out.println("Player Nº " + playerNumber + ": About to create new thread");
                     PlayerDispatcher playerDispatcher =
                             new PlayerDispatcher(clientSocket, this, playerNumber);
 
                     // Create new thread up to capacity of pool
                     pool.submit(playerDispatcher);
-                    System.out.println("Player Nº " + playerNumber + ": Thread created");
-
 
                 }
 
