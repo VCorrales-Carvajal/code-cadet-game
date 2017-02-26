@@ -20,7 +20,7 @@ public class Tester {
 //        tester.probabilityTester();
 
         // Testing rendering of player positions
-        tester.renderPlayersPositionsTester();
+//        tester.renderPlayersPositionsTester();
 
         // Testing if iteration of map works
 //        tester.mapIterationTester();
@@ -35,7 +35,8 @@ public class Tester {
 
 //        System.out.println(GameHelper.cowWisdomQuote());
 //        System.out.println(GameHelper.welcome());
-        System.out.println(GameHelper.startGame());
+//        System.out.println(GameHelper.informWinner("vero"));
+        System.out.println(GameHelper.endGame());
     }
 
     private void shuffleIndicesTester() {

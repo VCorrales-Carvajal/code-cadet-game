@@ -59,10 +59,6 @@ public class GameHelper {
         return MsgFormatter.gameMsg("You are on your last day of your bootcamp and to graduate you have to answer a question: ");
     }
 
-    public static String welcome() {
-        return MsgFormatter.serverMsg(FileHelper.readFile("resources/game-welcome.txt"));
-    }
-
     public static String renderPlayersPosition(int[] playerPositions, String[] usernames, int maxTurns) {
 
         int[] renderedPositions = new int[usernames.length];
@@ -242,11 +238,28 @@ public class GameHelper {
         return MsgFormatter.gameMsg(result + "\n");
     }
 
-    public static String endGame() {
-        return MsgFormatter.gameMsg("### GAME OVER ###");
-    }
 
     public static String informWinner(String winner) {
-        return MsgFormatter.gameMsg("----- " + winner + " is the winner -----");
+//        return MsgFormatter.gameMsg("----- " + winner + " is the winner -----");
+
+        String result = "´*•.¸(*•.¸♥¸.•*´)¸.•*´\n" +
+            "♥«´¨`•°.."+winner+"..°•´¨`»♥\n" +
+            ".¸.•*(¸.•*´♥`*•.¸)`*•." ;
+
+        return result;
+
+    }
+
+    public static String endGame() {
+//        return MsgFormatter.gameMsg("### GAME OVER ###");
+        return MsgFormatter.gameMsg(
+                "┈┈┏━╮╭━┓┈ ╭━━━━╮\n" +
+                "┈┈┃┏┗┛┓┃╭┫GAME OVER┃\n" +
+                "┈┈╰┓▋▋┏╯╯ ╰━━━━╯\n" +
+                "┈╭━┻╮╲┗━━━━╮╭╮┈\n" +
+                "┈┃▎▎┃╲╲╲╲╲╲┣━╯┈\n" +
+                "┈╰━┳┻▅╯╲╲╲╲┃┈┈┈\n" +
+                "┈┈┈╰━┳┓┏┳┓┏╯┈┈┈\n" +
+                "┈┈┈┈┈┗┻┛┗┻┛┈┈┈┈");
     }
 }
