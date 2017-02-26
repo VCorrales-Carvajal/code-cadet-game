@@ -8,6 +8,7 @@ import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.GameLe
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.LifeArea;
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.eventslogic.Event;
 
+import java.io.File;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -51,7 +52,7 @@ public class GameHelper {
     }
 
     public static String startGame() {
-        return MsgFormatter.gameMsg("### GAME START ####\n");
+        return MsgFormatter.gameMsg(FileHelper.readFile("resources/game-start.txt"));
     }
 
     public static String gettingOutOfAC() {
