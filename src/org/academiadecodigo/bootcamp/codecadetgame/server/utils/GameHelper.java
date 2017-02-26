@@ -17,6 +17,7 @@ public class GameHelper {
 
     public static final String COLLECTIVE_USERNAME = "All";
     public static final int MAX_TURNS = 30;
+    public static final int STEPS_RENDERED = 10;
     public static final double PROB_COW_WISDOM_QUOTE = 0.3;
     public static final long GAME_THREAD_SLEEP = 2000;
 
@@ -61,6 +62,7 @@ public class GameHelper {
     }
 
     public static String renderPlayersPosition(int[] playerPositions, String[] usernames) {
+
         int bonecoLines = 3;
         String[] boneco = new String[bonecoLines];
         boneco[0] = "|\\(º_º)|";
@@ -71,7 +73,7 @@ public class GameHelper {
 
         for (int player = 0; player < playerPositions.length; player++) {
             for (int i = 0; i < bonecoLines; i++) {
-                for (int j = 1; j <= 10; j++) {
+                for (int j = 1; j <= STEPS_RENDERED; j++) {
                     if (j == playerPositions[player]) {
                         field += boneco[i];
                     } else {
@@ -83,10 +85,6 @@ public class GameHelper {
             field += "\n";
         }
 
-//        String field = "PLAYERS' GLOBAL POSITIONS";
-//        for (int playerIdx = 0; playerIdx < playerPositions.length; playerIdx++) {
-//            field = field + "\n" + "<" + usernames[playerIdx] + ">: " + playerPositions[playerIdx];
-//        }
         return MsgFormatter.gameMsg(field + "\n");
     }
 
