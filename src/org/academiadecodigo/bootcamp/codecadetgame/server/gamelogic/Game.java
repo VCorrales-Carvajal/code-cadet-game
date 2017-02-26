@@ -15,6 +15,7 @@ public class Game implements Runnable {
     private Server server;
     private Event[] events = new Event[EventType.values().length];
     private int currentPlayerCounter = 0;
+    private int turnCounter = 0;
 
 
     public Game(Server server) {
@@ -46,7 +47,8 @@ public class Game implements Runnable {
         String currentPlayerUsername;
         System.out.println("Debugging: NoOneFinished --> " + noOneFinished());
 
-        while (noOneFinished()) {
+        while (noOneFinished() && (turnCounter <= GameHelper.MAX_TURNS)) {
+            System.out.println("Debugging: NoOneFinished --> " + noOneFinished());
 
             currentPlayerUsername = usernames[currentPlayerCounter];
             System.out.println("Debugging: Current Player is " + currentPlayerUsername);
@@ -74,7 +76,11 @@ public class Game implements Runnable {
             }
 
             updatePlayerCounter(server.getPlayerDispatcherList().size());
+
+            turnCounter++;
         }
+
+        server.sendMsgToAll(GameHelper.endGame());
     }
 
     private boolean noOneFinished() {

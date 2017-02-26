@@ -16,6 +16,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class GameHelper {
 
     public static final String COLLECTIVE_USERNAME = "All";
+    public static final int MAX_TURNS = 10;
 
     public static String gameCommands() {
         return "\t /quit \t closes your connection to this chat \n";
@@ -79,7 +80,7 @@ public class GameHelper {
         for (int playerIdx = 0; playerIdx < playerPositions.length; playerIdx++) {
             field = field + "\n" + usernames[playerIdx] + ": " + playerPositions[playerIdx];
         }
-        return MsgFormatter.gameMsg(field);
+        return MsgFormatter.gameMsg(field + "\n");
     }
 
     public static int[] getPlayerPositions(Server server) {
@@ -134,28 +135,29 @@ public class GameHelper {
     }
 
     public static String informCurrentPlayer(String currentPlayer) {
-        return MsgFormatter.serverMsg("It's " + currentPlayer + "'s turn!\n");
+        return MsgFormatter.gameMsg("It's <" + currentPlayer + ">'s turn!\n");
     }
 
-    public static String personalEvent() {
-        return ": this event just happened to you:\n";
+    public static String personalEvent(String username) {
+        return "<" + username + ">: this just happened to you:\n";
     }
 
     public static String collectiveEvent() {
-        return "This event just happened to everyone:\n";
+        return "TO ALL: ";
     }
 
     public static String lifeDecision(String username) {
-        return username + ": You now have to take a life decision:\n";
+        return "<" + username + ">: You now have to take a life decision:\n";
     }
 
     public static String JAVAQuestion() {
-        return "Quizz for all! \n";
+        return "TO ALL: Quizz!\n";
     }
 
 
     public static String TimeEvent() {
-        return "First to choose takes it! Think fast!";
+        return "TO ALL: First to choose takes it! Th" +
+                "ink fast!\n";
     }
 
     public static String informLifeAreaAffected(String username, int step, LifeArea lifeArea, EventType eventType) {
@@ -187,7 +189,7 @@ public class GameHelper {
 
         }
 
-        String stepString = (step != 0) ? " steps" : " step";
+        String stepString = (step == 1) ? " step" : " steps";
 
         String changeString = (step > 0) ? " " + Math.abs(step) + stepString + " forward." :
                 " " + Math.abs(step) + stepString + " back.";// n step/steps forward/back.
@@ -202,10 +204,14 @@ public class GameHelper {
     }
 
     public static String informLifeAreaPosition(Server server, String currentPlayerUsername) {
-        String lifeAreaPositionString = "Dear " + currentPlayerUsername + ", your current state is: ";
+        String lifeAreaPositionString = "Dear <" + currentPlayerUsername + ">, your current state is: ";
         for (int i = 0; i < LifeArea.values().length; i++) {
-            lifeAreaPositionString = lifeAreaPositionString + " " + LifeArea.values()[i] + ":" + server.getPlayerDispatcherTable().get(currentPlayerUsername).getPlayer().getLifeAreasPosition()[i] + ". ";
+            lifeAreaPositionString = lifeAreaPositionString + " " + LifeArea.values()[i] + ": " + server.getPlayerDispatcherTable().get(currentPlayerUsername).getPlayer().getLifeAreasPosition()[i] + ". ";
         }
-        return MsgFormatter.gameMsg(lifeAreaPositionString);
+        return MsgFormatter.gameMsg(lifeAreaPositionString + "\n");
+    }
+
+    public static String endGame() {
+        return MsgFormatter.gameMsg("GAME OVER");
     }
 }

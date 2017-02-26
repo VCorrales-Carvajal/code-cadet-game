@@ -28,7 +28,7 @@ public class LifeDecision implements ChoosableEvent {
     private LifeArea[] lifeAreas;
 
     private int[] shuffledIndexes;
-    private int lastIndexUsed = -1;
+    private int counterIndex = 0;
     private int[] currentIndexes;
 
     private String currentAnswer;
@@ -60,10 +60,12 @@ public class LifeDecision implements ChoosableEvent {
     private void processAnswer(String username) {
 
         int index = -1;
-        for (int i = 0; i < (NUMBER_OF_OPTIONS_SHOWN); i++) {
-            if (currentAnswer.equals(Integer.toString(i+1))) {
-                index = currentIndexes[i];
-                break;
+        if (currentAnswer != null) {
+            for (int i = 0; i < NUMBER_OF_OPTIONS_SHOWN; i++) {
+                if (currentAnswer.equals(Integer.toString(i + 1))) {
+                    index = currentIndexes[i];
+                    break;
+                }
             }
         }
 
@@ -88,20 +90,20 @@ public class LifeDecision implements ChoosableEvent {
 
 
     private String getStatement() {
-        int start = shuffledIndexes[lastIndexUsed + 1];
-        int end = shuffledIndexes[start + NUMBER_OF_OPTIONS_SHOWN];
-
         int[] statementIndexes = new int[NUMBER_OF_OPTIONS_SHOWN];
         String statement = "";
-        int j = 0;
-        for (int i = start; i < end; i++) {
-            statement = statement + "\t" + (j+1) + ". " + statements[i] + "\n";
-            statementIndexes[j++] = i;
+        for (int i = 0; i < NUMBER_OF_OPTIONS_SHOWN; i++) {
+            statement = statement + "\t" + (i+1) + ". " + statements[counterIndex] + "\n";
+            statementIndexes[i] = counterIndex;
+
+            counterIndex++;
+            if (counterIndex == statements.length) {
+                counterIndex = 0;
+                shuffledIndexes = GameHelper.shuffleIndexArray(LENGTH_LIFE_DECISIONS);
+            }
         }
 
-        lastIndexUsed = end - 1;
         return statement;
-
     }
 
 
