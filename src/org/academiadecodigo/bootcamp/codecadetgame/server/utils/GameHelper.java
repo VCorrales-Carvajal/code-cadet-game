@@ -168,25 +168,26 @@ public class GameHelper {
     public static String informLifeAreaAffected(String username, int step, LifeArea lifeArea, EventType eventType) {
 
         boolean isCollective = username.equals(COLLECTIVE_USERNAME);
+        boolean isStepForward = (step > 0);
 
         String lifeAreaConsequence;
         switch (lifeArea) {
             case CAREER:
                 lifeAreaConsequence = (isCollective)
-                        ? ((step > 0) ? "Everyone is moving forward in their career" : "Everyone has a setback in their career")
-                        : ((step < 0) ? "You moved forward in your career" : "You had a setback in your career");
+                        ? ((isStepForward) ? "Everyone is moving forward in their career" : "Everyone has a setback in their career")
+                        : ((isStepForward) ? "You moved forward in your career" : "You had a setback in your career");
                 break;
 
             case MONEY:
                 lifeAreaConsequence = (isCollective)
-                        ? ((step > 0) ? "Everyone earns money!" : "Everyone lost money!")
-                        : ((step > 0) ? "You earned money!" : "You lost money!");
+                        ? ((isStepForward) ? "Everyone earns money!" : "Everyone lost money!")
+                        : ((isStepForward) ? "You earned money!" : "You lost money!");
                 break;
 
             case HAPPINESS:
                 lifeAreaConsequence = (isCollective)
-                        ? ((step > 0) ? "Everyone is happier!" : "Everyone is sad.")
-                        : ((step > 0) ? "You are happier!" : "You are sad.");
+                        ? ((isStepForward) ? "Everyone is happier!" : "Everyone is sad.")
+                        : ((isStepForward) ? "You are happier!" : "You are sad.");
                 break;
 
             default:
@@ -196,12 +197,12 @@ public class GameHelper {
 
         String stepString = (step == 1) ? " step" : " steps";
 
-        String changeString = (step > 0) ? " " + Math.abs(step) + stepString + " forward." :
+        String changeString = (isStepForward) ? " " + Math.abs(step) + stepString + " forward." :
                 " " + Math.abs(step) + stepString + " back.";// n step/steps forward/back.
 
         String target = (!isCollective) ? username + ": " : "";
 
-        return MsgFormatter.gameMsg(target + lifeAreaConsequence + " " + changeString);
+        return MsgFormatter.gameMsg(target + lifeAreaConsequence + " " + changeString + "\n");
     }
 
     public static String invalidAnswer() {
