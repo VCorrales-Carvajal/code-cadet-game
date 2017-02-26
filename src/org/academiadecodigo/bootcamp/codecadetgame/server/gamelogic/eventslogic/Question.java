@@ -87,6 +87,7 @@ public class Question implements ChoosableEvent {
                 break;
             }
         }
+        queue.clear();
 
 
         if (winner != null) {

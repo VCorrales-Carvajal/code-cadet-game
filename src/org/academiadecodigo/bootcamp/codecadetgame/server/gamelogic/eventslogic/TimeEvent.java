@@ -91,7 +91,7 @@ public class TimeEvent implements ChoosableEvent {
                 break;
             }
         }
-
+        queue.clear();
 
         if (winner != null) {
 

@@ -48,7 +48,6 @@ public class LifeDecision implements ChoosableEvent {
 
         // Listen to the answer of this player
         PlayerDispatcher p = server.getPlayerDispatcherTable().get(username);
-        //TODO: Send thread to sleep and let it get notified  by the players
         p.setActive(true);
         p.setCurrentEvent(this);
 
@@ -58,33 +57,42 @@ public class LifeDecision implements ChoosableEvent {
     }
 
     private void processAnswer(String username) {
-
-        while (currentAnswer == null){
-//            try {
-//                wait(GameHelper.TIME_OUT);
-//            } catch (InterruptedException e) {
-//                //Thread.interrupt called, no handling needed
-//            }
+        synchronized (this) {
+            while (currentAnswer == null) {
+                try {
+                    System.out.println("Debugging: LIFEDECISION. I'm going to sleep");
+                    wait(GameHelper.TIME_OUT);
+                    System.out.println("Debugging: LIFEDECISION. Someone woke me up");
+                } catch (InterruptedException e) {
+                    //Thread.interrupt called, no handling needed
+                }
+                System.out.println("Debugging: LIFEDECISION. Current Answer: " + currentAnswer);
+            }
         }
 
-
+        System.out.println("Debugging: LIFEDECISION. Current answer: " + currentAnswer);
         int index = -1;
         if (currentAnswer != null) {
             for (int i = 0; i < NUMBER_OF_OPTIONS_SHOWN; i++) {
                 if (currentAnswer.equals(Integer.toString(i + 1))) {
                     index = currentIndexes[i];
+                    System.out.println("Debugging: LIFEDECISION. selected answer is " + (i + 1) + "corresponds to " + statements[index]);
                     break;
                 }
             }
+
         }
+        currentAnswer = null;
 
         if (index != -1) {
-
+            System.out.println("Debugging: LIFEDECISION. Index is " + index);
             // Send message to all showing what happened
             String sign = (Math.random() < probabilityPositive) ? "+" : "-";
             int step = (sign.equals("+")) ? steps[index] : -steps[index];
 
-            server.sendMsgToAll(MsgFormatter.gameMsg(getConsequence(index, sign)));
+            String consequence = getConsequence(index, sign);
+            System.out.println("Consequence is " + consequence);
+            server.sendMsgToAll(MsgFormatter.gameMsg(consequence));
             server.sendMsgToAll(GameHelper.informLifeAreaAffected(username, step, lifeAreas[index], eventType));
 
             // Update player's position
@@ -96,8 +104,6 @@ public class LifeDecision implements ChoosableEvent {
 
         }
 
-        currentAnswer = null;
-
     }
 
 
@@ -105,7 +111,7 @@ public class LifeDecision implements ChoosableEvent {
         int[] statementIndexes = new int[NUMBER_OF_OPTIONS_SHOWN];
         String statement = "";
         for (int i = 0; i < NUMBER_OF_OPTIONS_SHOWN; i++) {
-            statement = statement + "\t" + (i+1) + ". " + statements[counterIndex] + "\n";
+            statement = statement + "\t" + (i + 1) + ". " + statements[shuffledIndexes[counterIndex]] + "\n";
             statementIndexes[i] = counterIndex;
 
             counterIndex++;
@@ -175,8 +181,11 @@ public class LifeDecision implements ChoosableEvent {
 
     @Override
     public void chooseAnswer(String answer, String username) {
-        currentAnswer = answer;
-//        notifyAll();
+        synchronized (this) {
+            currentAnswer = answer;
+            notifyAll();
+            System.out.println("Debugging LIFEDECISION. NotifyAll");
+        }
     }
 
     private String getConsequence(int index, String sign) {
