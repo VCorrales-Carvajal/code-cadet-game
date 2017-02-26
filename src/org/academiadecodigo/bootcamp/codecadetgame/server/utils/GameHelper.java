@@ -7,6 +7,7 @@ import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.EventT
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.GameLength;
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.LifeArea;
 
+import java.io.File;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -50,7 +51,7 @@ public class GameHelper {
     }
 
     public static String startGame() {
-        return MsgFormatter.gameMsg("### GAME START ####\n");
+        return MsgFormatter.gameMsg(FileHelper.readFile("resources/game-start.txt"));
     }
 
     public static String gettingOutOfAC() {
@@ -61,7 +62,13 @@ public class GameHelper {
         return MsgFormatter.serverMsg(FileHelper.readFile("resources/game-welcome.txt"));
     }
 
-    public static String renderPlayersPosition(int[] playerPositions, String[] usernames) {
+    public static String renderPlayersPosition(int[] playerPositions, String[] usernames, int maxTurns) {
+
+        int[] renderedPositions = new int[usernames.length];
+
+        for (int i = 0; i < usernames.length; i++) {
+            renderedPositions[i] = (int) Math.ceil((playerPositions[i]/maxTurns) * STEPS_RENDERED);
+        }
 
         int bonecoLines = 3;
         String[] boneco = new String[bonecoLines];
@@ -74,7 +81,7 @@ public class GameHelper {
         for (int player = 0; player < playerPositions.length; player++) {
             for (int i = 0; i < bonecoLines; i++) {
                 for (int j = 1; j <= STEPS_RENDERED; j++) {
-                    if (j == playerPositions[player]) {
+                    if (j == renderedPositions[player]) {
                         field += boneco[i];
                     } else {
                         field += emptyPosition;
