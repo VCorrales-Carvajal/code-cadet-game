@@ -153,10 +153,10 @@ public class PlayerDispatcher implements Runnable {
 
     private String getUsernameFromPlayer() throws IOException {
 
-        String usernameInserted = in.readLine().toLowerCase();
+        String usernameInserted = in.readLine();
         while (server.getPlayerDispatcherTable().containsKey(usernameInserted)) {
             out.println(ServerHelper.userExistsTryAgain());
-            usernameInserted = in.readLine().toLowerCase();
+            usernameInserted = in.readLine();
         }
 
         return usernameInserted;
