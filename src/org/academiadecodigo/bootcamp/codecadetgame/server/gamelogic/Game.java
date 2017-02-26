@@ -30,7 +30,6 @@ public class Game implements Runnable {
     }
 
     public void start() {
-        server.sendMsgToAll((GameHelper.welcome()));
         server.sendMsgToAll((GameHelper.startGame()));
         server.sendMsgToAll(GameHelper.gettingOutOfAC());
         events[EventType.QUESTION.ordinal()].process(GameHelper.COLLECTIVE_USERNAME);

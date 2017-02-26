@@ -20,7 +20,7 @@ public class Tester {
 //        tester.probabilityTester();
 
         // Testing rendering of player positions
-        tester.renderPlayersPositionsTester();
+        //tester.renderPlayersPositionsTester();
 
         // Testing if iteration of map works
 //        tester.mapIterationTester();
