@@ -69,7 +69,9 @@ public class GameHelper {
 
         for (int i = 0; i < usernames.length; i++) {
             renderedPositions[i] = (int) Math.ceil((playerPositions[i]/(1.1*maxTurns)) * STEPS_RENDERED);
-            System.out.println(renderedPositions[i]);
+            if (renderedPositions[i] == 0) {
+                renderedPositions[i] = 1;
+            }
         }
 
         int bonecoLines = 3;
