@@ -57,10 +57,11 @@ public class LifeDecision implements ChoosableEvent {
     }
 
     private void processAnswer(String username) {
+
         synchronized (this) {
             while (currentAnswer == null) {
                 try {
-                    wait(GameHelper.TIME_OUT);
+                    wait();
                 } catch (InterruptedException e) {
                     //Thread.interrupt called, no handling needed
                 }
