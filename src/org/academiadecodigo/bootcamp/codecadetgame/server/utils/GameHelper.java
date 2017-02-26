@@ -72,10 +72,10 @@ public class GameHelper {
 
         int bonecoLines = 3;
         String[] boneco = new String[bonecoLines];
-        boneco[0] = "|\\(º_º)|";
-        boneco[1] = "|  ) )Z|";
-        boneco[2] = "|  / \\ |";
-        String emptyPosition = "|     |";
+        boneco[0] = MsgFormatter.gameMsg("|") + MsgFormatter.playerPos("\\(º_º)") + MsgFormatter.gameMsg("|");
+        boneco[1] = MsgFormatter.gameMsg("|") + MsgFormatter.playerPos("  ) )Z") + MsgFormatter.gameMsg("|");
+        boneco[2] = MsgFormatter.gameMsg("|") + MsgFormatter.playerPos("  / \\ ") + MsgFormatter.gameMsg("|");
+        String emptyPosition = MsgFormatter.gameMsg("|     |");
         String field = "";
 
         for (int player = 0; player < playerPositions.length; player++) {
@@ -87,7 +87,11 @@ public class GameHelper {
                         field += emptyPosition;
                     }
                 }
-                field += usernames[player] + "\n";
+                if (i == 1) {
+                    field += " " + MsgFormatter.playerPos(usernames[player]) + "\n";
+                } else {
+                    field += "\n";
+                }
             }
             field += "\n";
         }
