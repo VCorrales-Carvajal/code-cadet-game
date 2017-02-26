@@ -88,7 +88,7 @@ public class Game implements Runnable {
 
             threadSleep();
 
-            server.sendMsgToAll(GameHelper.renderPlayersPosition(GameHelper.getPlayerPositions(server), usernames));
+            server.sendMsgToAll(GameHelper.renderPlayersPosition(GameHelper.getPlayerPositions(server), usernames, server.getTurnsToFinish()));
 
             threadSleep();
 

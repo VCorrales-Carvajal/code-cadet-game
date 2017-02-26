@@ -54,7 +54,7 @@ public class Tester {
     private void renderPlayersPositionsTester() {
         int[] playersPositions = {4, 2, 8};
         String[] usernames = {"vero", "micael", "to"};
-        System.out.println(GameHelper.renderPlayersPosition(playersPositions, usernames));
+        System.out.println(GameHelper.renderPlayersPosition(playersPositions, usernames,10));
     }
 
     private void mapIterationTester() {
