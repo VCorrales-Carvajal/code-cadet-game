@@ -67,12 +67,14 @@ public class Question implements ChoosableEvent {
 
         String winner = null; // winner username
 
-        while (queue.size() != server.getNumberOfPlayers()) {
-//            try {
-//                wait(GameHelper.TIME_OUT);
-//            } catch (InterruptedException e) {
-//                //Thread.interrupt called, no handling needed
-//            }
+        synchronized (this) {
+            while (queue.size() != server.getNumberOfPlayers()) {
+                try {
+                    wait(GameHelper.TIME_OUT);
+                } catch (InterruptedException e) {
+                    //Thread.interrupt called, no handling needed
+                }
+            }
         }
 
         while (!queue.isEmpty()) {
@@ -210,8 +212,8 @@ public class Question implements ChoosableEvent {
             String[] answerAndUsername = {answer, username};
             queue.offer(answerAndUsername);
         }
+        notifyAll();
 
-//        notifyAll();
 
     }
 
