@@ -36,7 +36,7 @@ public class Tester {
 //        System.out.println(GameHelper.cowWisdomQuote());
 //        System.out.println(GameHelper.welcome());
 //        System.out.println(GameHelper.informWinner("vero"));
-        System.out.println(GameHelper.endGame());
+        System.out.println(GameHelper.endGame("Tó"));
     }
 
     private void shuffleIndicesTester() {
