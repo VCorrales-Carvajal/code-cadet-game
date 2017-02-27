@@ -65,24 +65,23 @@ public class GameHelper {
         boneco[1] = MsgFormatter.gameMsg("|") + MsgFormatter.playerPos("  ) )Z") + MsgFormatter.gameMsg("|");
         boneco[2] = MsgFormatter.gameMsg("|") + MsgFormatter.playerPos("  / \\ ") + MsgFormatter.gameMsg("|");
         String emptyPosition = MsgFormatter.gameMsg("|     |");
-        String field = "";
-        String lifeUpdate = "Let's see how life looks so far: \n";
+        String field = "Let's see how life looks so far: \n";
 
         for (int player = 0; player < usernames.length; player++) {
 
             Player p = server.getPlayerDispatcherMap().get(usernames[player]).getPlayer();
+
             renderedPositions[player] = (int) Math.ceil((p.getGlobalPosition()/(1.1*maxTurns)) * STEPS_RENDERED);
+
             if (renderedPositions[player] == 0) {
                 renderedPositions[player] = 1;
             }
 
-
-            lifeUpdate = lifeUpdate + MsgFormatter.gameMsg("<") + MsgFormatter.playerPos(usernames[player]) + MsgFormatter.gameMsg("> ");
+            field += MsgFormatter.gameMsg("<") + MsgFormatter.playerPos(usernames[player]) + MsgFormatter.gameMsg("> ");
             for (int j = 0; j < LifeArea.values().length; j++) {
-                lifeUpdate = lifeUpdate + MsgFormatter.gameMsg(" " + LifeArea.values()[j] + ": " + p.getLifeAreasPosition()[j] + ". ");
+                field += MsgFormatter.gameMsg(" " + LifeArea.values()[j] + ": " + p.getLifeAreasPosition()[j] + ". ");
             }
-
-            field = lifeUpdate + MsgFormatter.globalPosition("TOTAL: " + p.getGlobalPosition()) + "\n";
+            field += MsgFormatter.globalPosition("TOTAL: " + p.getGlobalPosition()) + "\n";
             for (int i = 0; i < bonecoLines; i++) {
                 for (int j = 1; j <= STEPS_RENDERED; j++) {
                     if (j == renderedPositions[player]) {
@@ -99,6 +98,7 @@ public class GameHelper {
             }
             field += "\n";
         }
+
 
         return MsgFormatter.gameMsg(field + "\n");
     }
