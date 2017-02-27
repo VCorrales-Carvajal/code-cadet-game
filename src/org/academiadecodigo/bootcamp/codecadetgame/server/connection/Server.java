@@ -70,7 +70,7 @@ public class Server {
         }
     }
 
-    public Map<String, PlayerDispatcher> getPlayerDispatcherTable() {
+    public Map<String, PlayerDispatcher> getPlayerDispatcherMap() {
         return playerDispatcherTable;
     }
 

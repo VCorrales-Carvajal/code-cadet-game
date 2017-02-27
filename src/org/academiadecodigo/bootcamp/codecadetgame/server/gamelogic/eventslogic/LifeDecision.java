@@ -50,7 +50,7 @@ public class LifeDecision implements ChoosableEvent {
         server.sendMsgToAll(MsgFormatter.gameMsg(eventToDisplay));
 
         // Listen to the answer of this player
-        PlayerDispatcher p = server.getPlayerDispatcherTable().get(username);
+        PlayerDispatcher p = server.getPlayerDispatcherMap().get(username);
         p.setActive(true);
         p.setCurrentEvent(this);
 

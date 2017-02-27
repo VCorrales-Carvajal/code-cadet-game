@@ -4,11 +4,8 @@ import org.academiadecodigo.bootcamp.codecadetgame.server.connection.PlayerDispa
 import org.academiadecodigo.bootcamp.codecadetgame.server.connection.Server;
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.Player;
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.EventType;
-import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.GameLength;
 import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.enums.LifeArea;
-import org.academiadecodigo.bootcamp.codecadetgame.server.gamelogic.eventslogic.Event;
 
-import java.io.File;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -79,7 +76,7 @@ public class GameHelper {
         }
 
         for (int player = 0; player < playerPositions.length; player++) {
-            Player p = server.getPlayerDispatcherTable().get(usernames[player]).getPlayer();
+            Player p = server.getPlayerDispatcherMap().get(usernames[player]).getPlayer();
             result = result + MsgFormatter.gameMsg("<") + MsgFormatter.playerPos(usernames[player]) + MsgFormatter.gameMsg("> ");
             for (int j = 0; j < LifeArea.values().length; j++) {
                 result = result + MsgFormatter.gameMsg(" " + LifeArea.values()[j] + ": " + p.getLifeAreasPosition()[j] + ". ");
@@ -119,7 +116,7 @@ public class GameHelper {
         Player player;
         if (!username.equals(GameHelper.COLLECTIVE_USERNAME)) {
 
-            player = server.getPlayerDispatcherTable().get(username).getPlayer();
+            player = server.getPlayerDispatcherMap().get(username).getPlayer();
             updateOnePlayerPosition(change, player, lifeArea);
 
         } else {
@@ -243,7 +240,7 @@ public class GameHelper {
         String result = "Let's see how life looks so far: \n";
 
         for (int j = 0; j < usernames.length; j++) {
-            Player p = server.getPlayerDispatcherTable().get(usernames[j]).getPlayer();
+            Player p = server.getPlayerDispatcherMap().get(usernames[j]).getPlayer();
             result = result + MsgFormatter.gameMsg("<" + usernames[j] + "> ");
             for (int i = 0; i < LifeArea.values().length; i++) {
                 result = result + MsgFormatter.gameMsg(" " + LifeArea.values()[i] + ": " + p.getLifeAreasPosition()[i] + ". ");

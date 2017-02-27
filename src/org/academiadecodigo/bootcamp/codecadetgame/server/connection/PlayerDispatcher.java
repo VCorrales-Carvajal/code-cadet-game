@@ -54,7 +54,7 @@ public class PlayerDispatcher implements Runnable {
             String username = getUsernameFromPlayer();
 
             // Add Player Dispatcher to the server table (container of player dispatchers)
-            server.getPlayerDispatcherTable().put(username, this);
+            server.getPlayerDispatcherMap().put(username, this);
             server.getPlayerDispatcherList().add(this);
 
             // Create player
@@ -154,7 +154,7 @@ public class PlayerDispatcher implements Runnable {
     private String getUsernameFromPlayer() throws IOException {
 
         String usernameInserted = in.readLine();
-        while (server.getPlayerDispatcherTable().containsKey(usernameInserted)) {
+        while (server.getPlayerDispatcherMap().containsKey(usernameInserted)) {
             out.println(ServerHelper.userExistsTryAgain());
             usernameInserted = in.readLine();
         }
