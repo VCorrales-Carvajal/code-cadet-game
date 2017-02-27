@@ -64,7 +64,7 @@ public class Game implements Runnable {
             threadSleep();
 
             // Inform players of their state in life
-            server.sendMsgToAll(GameHelper.renderPlayersPosition(server, GameHelper.getPlayerPositions(server), usernames, server.getTurnsToFinish()));
+            server.sendMsgToAll(GameHelper.renderPlayersPosition(server, usernames, server.getTurnsToFinish()));
 
             threadSleep();
 
@@ -74,7 +74,7 @@ public class Game implements Runnable {
             }
 
             // Update player counter
-            updatePlayerCounter(server.getPlayerDispatcherList().size());
+            updatePlayerCounter();
 
             // Update turn counter
             turnCounter++;
@@ -96,10 +96,10 @@ public class Game implements Runnable {
     }
 
     private void awaitPlayerAnswer(String currentPlayerUsername) {
+
         server.getPlayerDispatcherMap().get(currentPlayerUsername).setActive(true);
 
         synchronized (this) {
-
             while (currentAnswer == null) {
                 try {
                     wait();
@@ -126,7 +126,7 @@ public class Game implements Runnable {
         for (int i = 0; i < usernames.length; i++) {
             int playerPos = server.getPlayerDispatcherMap().get(usernames[i]).getPlayer().getGlobalPosition();
             if (playerPos > maxPosition) {
-                absoluteWinner = server.getPlayerDispatcherList().get(i).getPlayer().getUsername();
+                absoluteWinner = usernames[i];
                 maxPosition = playerPos;
             }
         }
@@ -142,10 +142,10 @@ public class Game implements Runnable {
         }
     }
 
-    private void updatePlayerCounter(int length) {
+    private void updatePlayerCounter() {
 
         currentPlayerCounter++;
-        if (currentPlayerCounter == length) {
+        if (currentPlayerCounter == usernames.length) {
             currentPlayerCounter = 0;
         }
 

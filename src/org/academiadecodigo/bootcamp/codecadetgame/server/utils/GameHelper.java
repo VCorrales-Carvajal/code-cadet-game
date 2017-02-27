@@ -56,7 +56,7 @@ public class GameHelper {
         return MsgFormatter.gameMsg("You are on your last day of your bootcamp and to graduate you have to answer a question: ");
     }
 
-    public static String renderPlayersPosition(Server server, int[] playerPositions, String[] usernames, int maxTurns) {
+    public static String renderPlayersPosition(Server server, String[] usernames, int maxTurns) {
 
         int[] renderedPositions = new int[usernames.length];
         int bonecoLines = 3;
@@ -66,23 +66,23 @@ public class GameHelper {
         boneco[2] = MsgFormatter.gameMsg("|") + MsgFormatter.playerPos("  / \\ ") + MsgFormatter.gameMsg("|");
         String emptyPosition = MsgFormatter.gameMsg("|     |");
         String field = "";
-        String result = "Let's see how life looks so far: \n";
+        String lifeUpdate = "Let's see how life looks so far: \n";
 
-        for (int i = 0; i < usernames.length; i++) {
-            renderedPositions[i] = (int) Math.ceil((playerPositions[i]/(1.1*maxTurns)) * STEPS_RENDERED);
-            if (renderedPositions[i] == 0) {
-                renderedPositions[i] = 1;
-            }
-        }
+        for (int player = 0; player < usernames.length; player++) {
 
-        for (int player = 0; player < playerPositions.length; player++) {
             Player p = server.getPlayerDispatcherMap().get(usernames[player]).getPlayer();
-            result = result + MsgFormatter.gameMsg("<") + MsgFormatter.playerPos(usernames[player]) + MsgFormatter.gameMsg("> ");
-            for (int j = 0; j < LifeArea.values().length; j++) {
-                result = result + MsgFormatter.gameMsg(" " + LifeArea.values()[j] + ": " + p.getLifeAreasPosition()[j] + ". ");
+            renderedPositions[player] = (int) Math.ceil((p.getGlobalPosition()/(1.1*maxTurns)) * STEPS_RENDERED);
+            if (renderedPositions[player] == 0) {
+                renderedPositions[player] = 1;
             }
 
-            field = result + MsgFormatter.globalPosition("TOTAL: " + p.getGlobalPosition()) + "\n";
+
+            lifeUpdate = lifeUpdate + MsgFormatter.gameMsg("<") + MsgFormatter.playerPos(usernames[player]) + MsgFormatter.gameMsg("> ");
+            for (int j = 0; j < LifeArea.values().length; j++) {
+                lifeUpdate = lifeUpdate + MsgFormatter.gameMsg(" " + LifeArea.values()[j] + ": " + p.getLifeAreasPosition()[j] + ". ");
+            }
+
+            field = lifeUpdate + MsgFormatter.globalPosition("TOTAL: " + p.getGlobalPosition()) + "\n";
             for (int i = 0; i < bonecoLines; i++) {
                 for (int j = 1; j <= STEPS_RENDERED; j++) {
                     if (j == renderedPositions[player]) {
@@ -101,14 +101,6 @@ public class GameHelper {
         }
 
         return MsgFormatter.gameMsg(field + "\n");
-    }
-
-    public static int[] getPlayerPositions(Server server) {
-        int[] pos = new int[server.getPlayerDispatcherList().size()];
-        for (int i = 0; i < pos.length; i++) {
-            pos[i] = server.getPlayerDispatcherList().get(i).getPlayer().getGlobalPosition();
-        }
-        return pos;
     }
 
     public static void updatePlayersPositions(int change, String username, Server server, LifeArea lifeArea) {
@@ -234,23 +226,6 @@ public class GameHelper {
     public static String invalidAnswer() {
         return MsgFormatter.gameMsg("Invalid Answer. No one moves this turn.\n");
     }
-
-    public static String informLifeAreaPosition(Server server, String[] usernames) {
-
-        String result = "Let's see how life looks so far: \n";
-
-        for (int j = 0; j < usernames.length; j++) {
-            Player p = server.getPlayerDispatcherMap().get(usernames[j]).getPlayer();
-            result = result + MsgFormatter.gameMsg("<" + usernames[j] + "> ");
-            for (int i = 0; i < LifeArea.values().length; i++) {
-                result = result + MsgFormatter.gameMsg(" " + LifeArea.values()[i] + ": " + p.getLifeAreasPosition()[i] + ". ");
-            }
-            result = result + MsgFormatter.globalPosition("TOTAL: " + p.getGlobalPosition()) + "\n";
-        }
-
-        return MsgFormatter.gameMsg(result);
-    }
-
 
     public static String informWinner(String winner) {
         String result = MsgFormatter.turnWinner("•·.·´¯`·.·• " + "<" + winner + "> won this turn! •·.·´¯`·.·•");

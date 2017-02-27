@@ -32,7 +32,6 @@ public class CollectiveEvent implements Event {
     @Override
     public void process(String username) {
 
-
         // Display selected statement
         int index = shuffledIndex[counterIndex];
         String eventToDisplay = GameHelper.displayEventType(username, eventType) + statements[index];
