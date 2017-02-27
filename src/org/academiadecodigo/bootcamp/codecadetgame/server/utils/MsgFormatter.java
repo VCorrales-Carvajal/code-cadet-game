@@ -50,7 +50,7 @@ public class MsgFormatter {
     }
 
     public static String globalPosition(String msg) {
-        return ANSI_WHITE_BACKGROUND + ANSI_BLACK + msg + ANSI_RESET;
+        return ANSI_YELLOW_BACKGROUND + ANSI_BLACK + msg + ANSI_RESET;
     }
 
     public static String turnWinner(String msg) {
@@ -58,7 +58,7 @@ public class MsgFormatter {
     }
 
     public static String playerPos(String msg) {
-        return ANSI_PURPLE + msg + ANSI_RESET;
+        return ANSI_YELLOW + msg + ANSI_RESET;
     }
 
 }

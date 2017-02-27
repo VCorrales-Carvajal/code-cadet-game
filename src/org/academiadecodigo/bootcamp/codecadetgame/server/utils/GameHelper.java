@@ -80,10 +80,11 @@ public class GameHelper {
 
         for (int player = 0; player < playerPositions.length; player++) {
             Player p = server.getPlayerDispatcherTable().get(usernames[player]).getPlayer();
-            result = result + MsgFormatter.gameMsg("<" + MsgFormatter.playerPos(usernames[player]) + "> ");
+            result = result + MsgFormatter.gameMsg("<") + MsgFormatter.playerPos(usernames[player]) + MsgFormatter.gameMsg("> ");
             for (int j = 0; j < LifeArea.values().length; j++) {
                 result = result + MsgFormatter.gameMsg(" " + LifeArea.values()[j] + ": " + p.getLifeAreasPosition()[j] + ". ");
             }
+
             field = result + MsgFormatter.globalPosition("TOTAL: " + p.getGlobalPosition()) + "\n";
             for (int i = 0; i < bonecoLines; i++) {
                 for (int j = 1; j <= STEPS_RENDERED; j++) {
